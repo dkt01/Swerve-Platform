@@ -5,7 +5,9 @@
 
 #pragma once
 
+#include <SDL.h>
+
 class XBoxController {
   public:
   private:
-}
+};

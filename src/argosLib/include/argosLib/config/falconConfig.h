@@ -6,8 +6,10 @@
 
 #include <units/current.h>
 #include <units/time.h>
+#include <units/voltage.h>
 
 #include "compileTimeMemberCheck.h"
+#define Phoenix_No_WPI // remove WPI dependencies
 #include "ctre/Phoenix.h"
 
 HAS_MEMBER(forwardLimit_deviceID)
@@ -68,7 +70,7 @@ HAS_MEMBER(voltCompSat)
  * @return false Configuration failed
  */
 template <typename T>
-bool FalconConfig(WPI_TalonFX& motorController, units::millisecond_t configTimeout) {
+bool FalconConfig(TalonFX& motorController, units::millisecond_t configTimeout) {
   TalonFXConfiguration config;
   auto timeout = configTimeout.to<int>();
 

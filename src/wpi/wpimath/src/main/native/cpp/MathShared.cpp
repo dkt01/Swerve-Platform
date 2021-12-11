@@ -11,8 +11,8 @@ using namespace wpi::math;
 namespace {
 class DefaultMathShared : public MathShared {
  public:
-  void ReportError(const wpi::Twine& error) override {}
-  void ReportUsage(MathUsageId id, int count) override {}
+  void ReportError(const wpi::Twine& error[[maybe_unused]]) override {}
+  void ReportUsage(MathUsageId id [[maybe_unused]], int count [[maybe_unused]]) override {}
 };
 }  // namespace
 

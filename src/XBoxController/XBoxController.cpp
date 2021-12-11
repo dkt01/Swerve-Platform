@@ -2,3 +2,5 @@
 /// @copyright Copyright (c) 2021, David K Turner. All rights reserved.
 /// @license This project is released under the BSD 3-Clause License
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+#include "XBoxController.h"

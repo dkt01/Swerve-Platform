@@ -6,8 +6,6 @@
 
 #include <cmath>
 
-#include "Constants.h"
-
 units::degree_t nearestAngle(units::degree_t desiredAngle, units::degree_t referenceAngle) {
   const auto normalizedDesiredAngle = constrainAngle(desiredAngle, 0_deg, 360_deg);
   const auto normalizedReferenceAngle = constrainAngle(referenceAngle, 0_deg, 360_deg);
@@ -48,7 +46,8 @@ double constrainAngle(double inVal, double minVal, double maxVal) {
 frc::SwerveModuleState Optimize(frc::SwerveModuleState desiredState,
                                 units::degree_t currentModuleAngle,
                                 units::degrees_per_second_t currentModuleAngularRate,
-                                units::feet_per_second_t currentModuleDriveVel) {
+                                units::feet_per_second_t currentModuleDriveVel,
+                                const units::feet_per_second_t maxVelocity) {
   frc::SwerveModuleState closestForwardState{desiredState};
   frc::SwerveModuleState closestInverseState{desiredState};
 
@@ -59,8 +58,8 @@ frc::SwerveModuleState Optimize(frc::SwerveModuleState desiredState,
   const auto fwdTurnSign = std::signbit((closestForwardState.angle.Degrees() - currentModuleAngle).to<double>());
   const auto revTurnSign = std::signbit((closestInverseState.angle.Degrees() - currentModuleAngle).to<double>());
 
-  [[maybe_unused]] const auto velPreferFwd = currentModuleDriveVel > speedLimits::drive::maxVelocity / 2;
-  const auto velPreferRev = currentModuleDriveVel < -speedLimits::drive::maxVelocity / 2;
+  [[maybe_unused]] const auto velPreferFwd = currentModuleDriveVel > maxVelocity / 2;
+  const auto velPreferRev = currentModuleDriveVel < -maxVelocity / 2;
   const auto angVelHasPreference = units::math::fabs(currentModuleAngularRate) > 20_deg_per_s;
   [[maybe_unused]] const auto angVelPreferFwd =
       angVelHasPreference && fwdTurnSign == std::signbit(currentModuleAngularRate.to<double>());

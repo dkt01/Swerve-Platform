@@ -9,6 +9,9 @@
 #include "ctre/Phoenix.h"
 #include <frc/kinematics/SwerveDriveKinematics.h>
 #include <frc/kinematics/SwerveModuleState.h>
+#include <units/velocity.h>
+
+using units::feet_per_second_t;
 
 class SwervePlatform {
   public:
@@ -33,7 +36,9 @@ class SwervePlatform {
       ModuleInset   rearLeftModule;
     };
 
-    SwervePlatform(const auto &frontLeftDriveConfig,
+    SwervePlatform(const PlatformDimensions &dimensions,
+                   const feet_per_second_t maxVelocity,
+                   const auto &frontLeftDriveConfig,
                    const auto &frontRightDriveConfig,
                    const auto &rearRightDriveConfig,
                    const auto &rearLeftDriveConfig,
@@ -41,12 +46,10 @@ class SwervePlatform {
                    const auto &frontRightTurnConfig,
                    const auto &rearRightTurnConfig,
                    const auto &rearLeftTurnConfig,
-                   const auto &frontLeftTurnConfig,
-                   const auto &frontRightTurnConfig,
-                   const auto &rearRightTurnConfig,
-                   const auto &rearLeftTurnConfig,
-                   const PlatformDimensions &dimensions,
-                   const feet_per_second_t maxVelocity);
+                   const auto &frontLeftTurnEncoderConfig,
+                   const auto &frontRightTurnEncoderConfig,
+                   const auto &rearRightTurnEncoderConfig,
+                   const auto &rearLeftTurnEncoderConfig);
 
     void SwerveDrive(const double fwVelocity, const double latVelocity, const double rotateVelocity);
 
@@ -79,8 +82,42 @@ class SwervePlatform {
     CANCoder m_encoderTurnRearLeft;
 
     units::angular_velocity::degrees_per_second_t m_maxAngularRate;
+    units::feet_per_second_t m_maxVelocity;
 
     std::unique_ptr<frc::SwerveDriveKinematics<4>> m_pSwerveKinematicsModel;
 
     ControlMode m_activeControlMode;
-}
+};
+
+namespace measureUp {
+  namespace drive {
+    constexpr auto wheelDiameter = 4.0_in;
+    constexpr auto wheelCircumference = wheelDiameter * M_PI;
+  }  // namespace drive
+  namespace sensorConversion {
+    namespace swerveRotate {
+      constexpr auto ticksPerDegree = 4096.0 / 360.0;
+      constexpr auto toAngle(double sensorVal) { return units::make_unit<units::degree_t>(sensorVal / ticksPerDegree); }
+      constexpr auto fromAngle(units::degree_t angVal) { return angVal.to<double>() * ticksPerDegree; }
+      constexpr auto toAngVel(double sensorVal) {
+        return units::make_unit<units::degrees_per_second_t>(sensorVal / ticksPerDegree);
+      }
+      constexpr auto fromAngVel(units::degree_t angVelVal) { return angVelVal.to<double>() * ticksPerDegree; }
+    }  // namespace swerveRotate
+    namespace swerveDrive {
+      constexpr auto toDist(double sensorVal) { return measureUp::drive::wheelCircumference / 8.16 * sensorVal; }
+      constexpr auto fromDist(units::inch_t distVal) {
+        return (distVal * 8.16 / measureUp::drive::wheelCircumference).to<double>();
+      }
+      constexpr auto toVel(double sensorVal) {
+        return measureUp::drive::wheelCircumference / 8.16 / 100_ms * sensorVal;
+      }
+      constexpr auto fromVel(units::feet_per_second_t velValue) {
+        return (velValue * 8.16 * 100_ms / measureUp::drive::wheelCircumference).to<double>();
+      }
+    }  // namespace swerveDrive
+  }    // namespace sensorConversion
+}  // namespace measureUp
+
+
+#include "SwervePlatform.inc"

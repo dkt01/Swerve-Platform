@@ -19,4 +19,5 @@ double constrainAngle(double, double, double);
 frc::SwerveModuleState Optimize(frc::SwerveModuleState,
                                 units::degree_t,
                                 units::degrees_per_second_t,
+                                units::feet_per_second_t,
                                 units::feet_per_second_t);
