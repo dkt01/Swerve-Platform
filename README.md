@@ -24,13 +24,13 @@ Steps 1-4 may be skipped once the environment is set up appropriately.
 ## SSH
 pi@NWCC-platform-alpha
 
-## Required software packages
+## Required Software Packages
 
-### Linux platform software
+### Linux Platform Software
 'sudo apt-get update'
 'sudo apt-get upgrade'
 
-### hostname loopback
+### hostname Loopback
 Add the following line to '/etc/hosts'
 '127.0.1.1 NWCC-platform-alpha'
 
