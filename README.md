@@ -1,12 +1,12 @@
 # Swerve-Platform
 
-Robotic swerve drive platform developed for Northwoods Church Christmas program  
+Robotic swerve drive platform developed for Northwoods Church Christmas program
 
 ## How To Build
 
 ### Prerequisites
 
-Tested in Linux, but might work in other environments because most of build is conducted in Docker for cross compilation.  
+Tested in Linux, but might work in other environments because most of build is conducted in Docker for cross compilation.
 
 * [Docker](https://docs.docker.com/get-docker/)
 * [CMake](https://cmake.org/install/)
@@ -19,37 +19,37 @@ Tested in Linux, but might work in other environments because most of build is c
 4. `cmake -DCMAKE_TOOLCHAIN_FILE=../utils/aarch64-rpi3-linux-gnu.cmake -DCMAKE_BUILD_TYPE=Debug ..`
 5. ``make -j`nproc` ``
 
-Steps 1-4 may be skipped once the environment is set up appropriately.  
+Steps 1-4 may be skipped once the environment is set up appropriately.
 
 ## SSH
-pi@NWCC-platform-alpha
+`pi@NWCC-platform-alpha`
 
 ## Required Software Packages
 
 ### Linux Platform Software
 
-'sudo apt-get update'
-'sudo apt-get upgrade'
+1. `sudo apt-get update`
+2. `sudo apt-get upgrade`
 
 ### hostname Loopback
 
-Add the following line to '/etc/hosts'  
-'127.0.1.1 NWCC-platform-alpha'  
+Add the following lines to `/etc/hosts`
+1. `127.0.1.1 NWCC-platform-alpha`
 
 ### PiCAN
 
-Add the following lines to '/boot/config.txt'  
-'dtparam=spi=on'  
-'dtoverlay=mcp2515-can0,oscillator=16000000,interrupt=25'  
-'dtoverlay=spi-bcm2835-overlay'  
+Add the following lines to `/boot/config.txt`
+1. `dtparam=spi=on`
+2. `dtoverlay=mcp2515-can0,oscillator=16000000,interrupt=25`
+3. `dtoverlay=spi-bcm2835-overlay`
 
 ### CAN-Utils
 
-'sudo apt-get install can-utils'  
+1. `sudo apt-get install can-utils`
 
 ## Attribution
 
-Content from the following external sources is used within this project:  
+Content from the following external sources is used within this project:
 
 * [wpilibsuite/allwpilib](https://github.com/wpilibsuite/allwpilib/tree/v2021.3.1)
 * [CrossTheRoadElec/Phoenix-Linux-SocketCAN-Example](https://github.com/CrossTheRoadElec/Phoenix-Linux-SocketCAN-Example/tree/9ed6d7f370c6effea245790cd5c5d393a3f26a6a)
