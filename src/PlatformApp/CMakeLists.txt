@@ -5,7 +5,7 @@ add_executable(${PROJECT_NAME} PlatformApp.cpp)
 find_package (Threads REQUIRED)
 
 target_link_libraries(${PROJECT_NAME} SwervePlatform
-                                      XBoxController
+                                      # XBoxController
                                       wpimath
                                       wpiutil
                                       argosLib
@@ -15,8 +15,8 @@ target_link_libraries(${PROJECT_NAME} SwervePlatform
                                       CTRE_PhoenixPlatform_socketcan
                                       CTRE_PhoenixCanutils
                                       CTRE_PhoenixCore
-                                      Threads::Threads
-                                      SDL2)
+                                      Threads::Threads)
+                                      # SDL2)
 
 target_include_directories(${PROJECT_NAME}
     PUBLIC

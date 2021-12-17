@@ -5,10 +5,18 @@
 
 #include "PlatformApp.h"
 
+#include "ctre/phoenix/platform/Platform.h"
+#include <unistd.h>
+#include <thread>
 #include <units/velocity.h>
 
 int main(int argc, char* argv[]) {
-  XBoxController controller;
+  //XBoxController controller;
+
+  std::string interface;
+	interface = "can0";
+  ctre::phoenix::platform::can::SetCANInterface(interface.c_str());
+
   SwervePlatform platform(dimensions,
                           2_fps,
                           motorConfig::drive::frontLeftDrive{},
@@ -23,4 +31,8 @@ int main(int argc, char* argv[]) {
                           sensorConfig::drive::frontRightTurn{},
                           sensorConfig::drive::rearRightTurn{},
                           sensorConfig::drive::rearLeftTurn{});
+
+  while(true) {
+    std::this_thread::sleep_for(std::chrono::milliseconds(20));
+  }
 }
