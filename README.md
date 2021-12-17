@@ -15,14 +15,14 @@ Tested in Linux, but might work in other environments because most of build is c
 
 1. `mkdir build`
 2. `cd build`
-3. `../utils/toolchain.sh rpi3-aarch64 --pull --export`
-4. `cmake -DCMAKE_TOOLCHAIN_FILE=../utils/aarch64-rpi3-linux-gnu.cmake -DCMAKE_BUILD_TYPE=Debug ..`
+3. `../utils/toolchain.sh rpi3-armv8 --pull --export`
+4. `cmake -DCMAKE_TOOLCHAIN_FILE=../utils/armv8-rpi3-linux-gnueabihf.cmake -DCMAKE_BUILD_TYPE=Debug ..`
 5. ``make -j`nproc` ``
 
 Steps 1-4 may be skipped once the environment is set up appropriately.
 
 ## SSH
-`pi@NWCC-platform-alpha`
+`ssh pi@NWCC-platform-alpha.local`
 
 ## Required Software Packages
 
@@ -46,6 +46,10 @@ Add the following lines to `/boot/config.txt`
 ### CAN-Utils
 
 1. `sudo apt-get install can-utils`
+
+### SDL2
+
+1. `sudo apt-get install libsdl2-dev`
 
 ## Attribution
 

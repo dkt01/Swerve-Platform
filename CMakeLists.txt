@@ -42,7 +42,8 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} \
                      -Wno-missing-braces \
                      -Wno-unknown-pragmas \
                      -Wno-psabi \
-                     -fdiagnostics-show-option")
+                     -fdiagnostics-show-option \
+                     -fconcepts")
 # removed: -Werror
 
 link_directories(${CMAKE_CURRENT_SOURCE_DIR}/lib/raspberryPi)
