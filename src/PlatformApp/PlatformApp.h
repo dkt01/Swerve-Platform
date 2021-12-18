@@ -35,6 +35,7 @@ constexpr SwervePlatform::PlatformDimensions dimensions{
 
 namespace controlLoop {
   namespace main {
+    constexpr units::millisecond_t timeout = 100_ms;
     constexpr units::millisecond_t period = 20_ms;
   }   // namespace main
   namespace drive {
@@ -104,12 +105,12 @@ namespace motorConfig {
       constexpr static auto neutralDeadband = 0.001;
       constexpr static auto neutralMode = ctre::phoenix::motorcontrol::NeutralMode::Brake;
       constexpr static auto voltCompSat = 11.0_V;
-      constexpr static auto forwardLimit_normalState = ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyOpen;
-      constexpr static auto forwardLimit_source = ctre::phoenix::motorcontrol::LimitSwitchSource_RemoteTalonSRX;
-      constexpr static auto forwardLimit_deviceID = 1;
-      constexpr static auto reverseLimit_normalState = ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyOpen;
-      constexpr static auto reverseLimit_source = ctre::phoenix::motorcontrol::LimitSwitchSource_RemoteTalonSRX;
-      constexpr static auto reverseLimit_deviceID = 1;
+      // constexpr static auto forwardLimit_normalState = ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyOpen;
+      // constexpr static auto forwardLimit_source = ctre::phoenix::motorcontrol::LimitSwitchSource_RemoteTalonSRX;
+      // constexpr static auto forwardLimit_deviceID = 1;
+      // constexpr static auto reverseLimit_normalState = ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyOpen;
+      // constexpr static auto reverseLimit_source = ctre::phoenix::motorcontrol::LimitSwitchSource_RemoteTalonSRX;
+      // constexpr static auto reverseLimit_deviceID = 1;
     };
     struct rearRightDrive {
       constexpr static auto address = 3;
@@ -180,12 +181,12 @@ namespace motorConfig {
       constexpr static auto pid0_kF = controlLoop::drive::rotate::kF;
       constexpr static auto pid0_iZone = controlLoop::drive::rotate::iZone;
       constexpr static auto pid0_allowableError = controlLoop::drive::rotate::allowableError;
-      constexpr static auto forwardLimit_normalState = ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyOpen;
-      constexpr static auto forwardLimit_source = ctre::phoenix::motorcontrol::LimitSwitchSource_RemoteTalonSRX;
-      constexpr static auto forwardLimit_deviceID = 1;
-      constexpr static auto reverseLimit_normalState = ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyOpen;
-      constexpr static auto reverseLimit_source = ctre::phoenix::motorcontrol::LimitSwitchSource_RemoteTalonSRX;
-      constexpr static auto reverseLimit_deviceID = 1;
+      // constexpr static auto forwardLimit_normalState = ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyOpen;
+      // constexpr static auto forwardLimit_source = ctre::phoenix::motorcontrol::LimitSwitchSource_RemoteTalonSRX;
+      // constexpr static auto forwardLimit_deviceID = 1;
+      // constexpr static auto reverseLimit_normalState = ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyOpen;
+      // constexpr static auto reverseLimit_source = ctre::phoenix::motorcontrol::LimitSwitchSource_RemoteTalonSRX;
+      // constexpr static auto reverseLimit_deviceID = 1;
     };
     struct rearRightTurn {
       constexpr static auto address = 7;
@@ -237,14 +238,3 @@ namespace motorConfig {
     };
   }  // namespace drive
 } // namespace motorConfig
-
-class PlatformApp {
-  public:
-    PlatformApp();
-
-    void Init();
-    void Periodic();
-
-  private:
-
-};

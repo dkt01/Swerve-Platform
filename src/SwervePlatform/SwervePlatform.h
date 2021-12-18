@@ -58,6 +58,8 @@ class SwervePlatform {
 
     void SetControlMode(const ControlMode);
 
+    void TestModuleFrontRight();
+
   private:
 
     void InitializeTurnEncoderAngles();

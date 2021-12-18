@@ -171,3 +171,9 @@ wpi::array<frc::SwerveModuleState, 4> SwervePlatform::RawModuleStates(const doub
   // This shouldn't be reachable (and there will be a compiler warning if a switch case is unhandled), but stop if in unknown drive state
   return m_pSwerveKinematicsModel->ToSwerveModuleStates(frc::ChassisSpeeds{0_mps, 0_mps, 0_rpm});
 }
+
+void SwervePlatform::TestModuleFrontRight() {
+  double testVal = 0.1;
+  m_motorDriveFrontRight.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, testVal);
+  m_motorTurnFrontRight.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, testVal);
+}
