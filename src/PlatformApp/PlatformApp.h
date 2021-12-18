@@ -7,6 +7,7 @@
 
 #include <units/voltage.h>
 #include <units/length.h>
+#include <units/time.h>
 
 #include "SwervePlatform.h"
 // #include "XBoxController.h"
@@ -20,19 +21,22 @@ constexpr SwervePlatform::PlatformDimensions dimensions{
   },
   .frontRightModule = SwervePlatform::ModuleInset{
     .lateralInset = 6.75_in,
-    .longitudinalInset=5.1875_in
+    .longitudinalInset = 5.1875_in
   },
   .rearRightModule = SwervePlatform::ModuleInset{
     .lateralInset = 6.75_in,
-    .longitudinalInset=38.8125_in
+    .longitudinalInset = 38.8125_in
   },
   .rearLeftModule = SwervePlatform::ModuleInset{
     .lateralInset = 6.75_in,
-    .longitudinalInset=38.8125_in
+    .longitudinalInset = 38.8125_in
   }
 };
 
 namespace controlLoop {
+  namespace main {
+    constexpr units::millisecond_t period = 20_ms;
+  }   // namespace main
   namespace drive {
     namespace rotate {
       constexpr double kP = 1.4;
@@ -233,3 +237,14 @@ namespace motorConfig {
     };
   }  // namespace drive
 } // namespace motorConfig
+
+class PlatformApp {
+  public:
+    PlatformApp();
+
+    void Init();
+    void Periodic();
+
+  private:
+
+};
