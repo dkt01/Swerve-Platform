@@ -51,6 +51,40 @@ Add the following lines to `/boot/config.txt`
 
 1. `sudo apt-get install libsdl2-dev`
 
+### Bare Minimum To Pair XBox Series Controller
+
+1. Update controller firmware in Windows using [XBox Accessories App](https://www.microsoft.com/en-us/p/xbox-accessories/9nblggh30xj3)
+2. `echo 'options bluetooth disable_ertm=Y' | sudo tee -a /etc/modprobe.d/bluetooth.conf`
+3. `systemctl edit bthelper@*` and add the following content (exact name of this service may change after the `@`):
+   ```
+   [Unit]
+   After=hciuart.service bluetooth.service
+   Before=
+
+   [Service]
+   ExecStartPre=/bin/sleep 5
+   ```
+4. Add `Privacy = device` to /etc/bluetooth/main.conf
+5. Reboot
+6. Run the following with XBox controller in pair mode.  Lines after `sudo bluetoothctl` are run inside bluetoothctl prompt:
+   ```
+   sudo bluetoothctl
+   agent on
+   default-agent
+   scan on
+   ** note MAC address of XBox controller.  Will be XX:XX:XX:XX:XX:XX in future steps**
+   scan off
+   pair XX:XX:XX:XX:XX:XX
+   trust XX:XX:XX:XX:XX:XX
+   exit
+7. Controller should change to solid light after `pair` step.  Controller will reconnect on reboot.  Use `jstest /dev/input/js0` to test joystick inputs (from `sudo apt install joystick` package)
+
+#### References:
+
+* [Main steps](https://pimylifeup.com/xbox-controllers-raspberry-pi/)
+* [bthelper instructions](https://retropie.org.uk/forum/topic/28560/xbox-series-x-controller-wont-pair-with-rp4/36)
+* [Mostly complete steps](https://retropie.org.uk/forum/topic/28560/xbox-series-x-controller-wont-pair-with-rp4/16)
+
 ## Attribution
 
 Content from the following external sources is used within this project:
