@@ -19,19 +19,19 @@ int main(int argc, char* argv[]) {
   ctre::phoenix::platform::can::SetCANInterface(interface.c_str());
 
   SwervePlatform swervePlatform(dimensions,
-                          2_fps,
-                          motorConfig::drive::frontLeftDrive{},
-                          motorConfig::drive::frontRightDrive{},
-                          motorConfig::drive::rearRightDrive{},
-                          motorConfig::drive::rearLeftDrive{},
-                          motorConfig::drive::frontLeftTurn{},
-                          motorConfig::drive::frontRightTurn{},
-                          motorConfig::drive::rearRightTurn{},
-                          motorConfig::drive::rearLeftTurn{},
-                          sensorConfig::drive::frontLeftTurn{},
-                          sensorConfig::drive::frontRightTurn{},
-                          sensorConfig::drive::rearRightTurn{},
-                          sensorConfig::drive::rearLeftTurn{});
+                                2_fps,
+                                motorConfig::drive::frontLeftDrive{},
+                                motorConfig::drive::frontRightDrive{},
+                                motorConfig::drive::rearRightDrive{},
+                                motorConfig::drive::rearLeftDrive{},
+                                motorConfig::drive::frontLeftTurn{},
+                                motorConfig::drive::frontRightTurn{},
+                                motorConfig::drive::rearRightTurn{},
+                                motorConfig::drive::rearLeftTurn{},
+                                sensorConfig::drive::frontLeftTurn{},
+                                sensorConfig::drive::frontRightTurn{},
+                                sensorConfig::drive::rearRightTurn{},
+                                sensorConfig::drive::rearLeftTurn{});
 
   while(true) {
     printf("periodic\n");
@@ -41,7 +41,6 @@ int main(int argc, char* argv[]) {
 
     // TODO: read xbox controller inputs
     // TODO: robot drive
-    swervePlatform.TestModuleFrontRight();
 
     std::this_thread::sleep_for(std::chrono::milliseconds(controlLoop::main::period.to<int>()));
   }

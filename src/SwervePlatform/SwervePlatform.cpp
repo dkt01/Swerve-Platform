@@ -80,6 +80,19 @@ void SwervePlatform::SwerveDrive(const double fwVelocity, const double latVeloci
       measureUp::sensorConversion::swerveRotate::fromAngle(moduleStates.at(ModuleIndex::rearLeft).angle.Degrees()));
 }
 
+void SwervePlatform::Stop() {
+  for(const auto motor : {&m_motorDriveFrontLeft,
+                          &m_motorDriveFrontRight,
+                          &m_motorDriveRearRight,
+                          &m_motorDriveRearLeft,
+                          &m_motorTurnFrontLeft,
+                          &m_motorTurnFrontRight,
+                          &m_motorTurnRearRight,
+                          &m_motorTurnRearLeft}) {
+    motor->Set(ctre::phoenix::motorcontrol::TalonFXControlMode::PercentOutput, 0);
+  }
+}
+
 void SwervePlatform::Home(const units::degree_t currentAngle) {
   // SetPosition expects a value in degrees
   m_encoderTurnFrontLeft.SetPosition(currentAngle.to<double>(), 50);
@@ -170,10 +183,4 @@ wpi::array<frc::SwerveModuleState, 4> SwervePlatform::RawModuleStates(const doub
   }
   // This shouldn't be reachable (and there will be a compiler warning if a switch case is unhandled), but stop if in unknown drive state
   return m_pSwerveKinematicsModel->ToSwerveModuleStates(frc::ChassisSpeeds{0_mps, 0_mps, 0_rpm});
-}
-
-void SwervePlatform::TestModuleFrontRight() {
-  double testVal = 0.1;
-  m_motorDriveFrontRight.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, testVal);
-  m_motorTurnFrontRight.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, testVal);
 }

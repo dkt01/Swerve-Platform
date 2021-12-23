@@ -52,13 +52,12 @@ class SwervePlatform {
                    const auto &rearLeftTurnEncoderConfig);
 
     void SwerveDrive(const double fwVelocity, const double latVelocity, const double rotateVelocity);
+    void Stop();
 
     void Home(const units::degree_t currentAngle);
     void SetFieldOrientation(const units::degree_t);
 
     void SetControlMode(const ControlMode);
-
-    void TestModuleFrontRight();
 
   private:
 

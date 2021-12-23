@@ -10,7 +10,7 @@
 #include <units/time.h>
 
 #include "SwervePlatform.h"
-// #include "XBoxController.h"
+#include "XBoxController.h"
 
 constexpr SwervePlatform::PlatformDimensions dimensions{
   .platformLateralWidth = 48_in,
