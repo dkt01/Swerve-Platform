@@ -12,9 +12,7 @@
 #include <units/velocity.h>
 #include <units/mass.h>
 
-int main(int argc, char* argv[]) {
-  //XBoxController controller;
-
+int main(int /*argc*/, char** /*argv*/) {
   std::string interface = "can0";
   ctre::phoenix::platform::can::SetCANInterface(interface.c_str());
 
@@ -33,14 +31,34 @@ int main(int argc, char* argv[]) {
                                 sensorConfig::drive::rearRightTurn{},
                                 sensorConfig::drive::rearLeftTurn{});
 
-  while(true) {
-    printf("periodic\n");
-    // TODO: xbox controller connection management
-    // TODO: robot mode management
-    ctre::phoenix::unmanaged::FeedEnable(controlLoop::main::timeout.to<int>());
+  XBoxController controller(0);
 
-    // TODO: read xbox controller inputs
-    // TODO: robot drive
+  const interpolationMap<decltype(joystickAxisMaps::driveLongSpeed.front().inVal), joystickAxisMaps::driveLongSpeed.size()>
+    driveMapLon(joystickAxisMaps::driveLongSpeed);
+  const interpolationMap<decltype(joystickAxisMaps::driveLatSpeed.front().inVal), joystickAxisMaps::driveLatSpeed.size()>
+    driveMapLat(joystickAxisMaps::driveLatSpeed);
+  const interpolationMap<decltype(joystickAxisMaps::driveRotSpeed.front().inVal), joystickAxisMaps::driveRotSpeed.size()>
+    driveMapRot(joystickAxisMaps::driveRotSpeed);
+
+  while(true) {
+    /// @todo robot mode management
+    ctre::phoenix::unmanaged::FeedEnable(controlLoop::main::timeout.to<int>());
+    auto controllerState = controller.CurrentState();
+
+    // Error with controller, stop platform
+    if(!controllerState) {
+      printf("No controller\n");
+      swervePlatform.Stop();
+    }
+    else {
+      if(controllerState.value().Buttons.LB) {
+        swervePlatform.SwerveDrive(driveMapLon.map(controllerState.value().Axes.LeftY),
+                                   driveMapLat.map(controllerState.value().Axes.LeftX),
+                                   driveMapRot.map(controllerState.value().Axes.RightX));
+      } else {
+        swervePlatform.Stop();
+      }
+    }
 
     std::this_thread::sleep_for(std::chrono::milliseconds(controlLoop::main::period.to<int>()));
   }

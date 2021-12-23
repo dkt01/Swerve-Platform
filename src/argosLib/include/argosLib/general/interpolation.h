@@ -37,7 +37,7 @@ class interpolationMap {
     // assert(("Map values must be sorted.", std::is_sorted(initArray.cbegin(), initArray.cend())));
   }
 
-  constexpr T map(const T inVal) {
+  constexpr T map(const T inVal) const {
     if (inVal >= m_mapArray.back().inVal) {
       return m_mapArray.back().outVal;
     } else if (inVal <= m_mapArray.front().inVal) {
