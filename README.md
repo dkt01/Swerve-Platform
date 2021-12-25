@@ -24,6 +24,14 @@ Steps 1-4 may be skipped once the environment is set up appropriately.
 ## SSH
 `ssh pi@NWCC-platform-alpha.local`
 
+## How To Run At Startup
+
+1. Copy `bin`, `lib`, and `scripts` to `/home/pi/swerve-platform/`
+2. Copy `scripts/swerve-platform.service` to `/etc/systemd/system/`: `sudo cp /home/pi/swerve-platform/scripts/swerve-platform.service /etc/systemd/system`
+3. Adjust permissions of unit file: `sudo chmod 644 /etc/systemd/system/swerve-platform.service`
+4. Enable service: `sudo systemctl enable swerve-platform.service`
+5. Reboot
+
 ## Required Software Packages
 
 ### Linux Platform Software
@@ -51,7 +59,7 @@ Add the following lines to `/boot/config.txt`
 
 1. `sudo apt-get install libsdl2-dev`
 
-### Bare Minimum To Pair XBox Series Controller
+## Bare Minimum To Pair XBox Series Controller
 
 1. Update controller firmware in Windows using [XBox Accessories App](https://www.microsoft.com/en-us/p/xbox-accessories/9nblggh30xj3)
 2. `echo 'options bluetooth disable_ertm=Y' | sudo tee -a /etc/modprobe.d/bluetooth.conf`
@@ -79,7 +87,7 @@ Add the following lines to `/boot/config.txt`
    exit
 7. Controller should change to solid light after `pair` step.  Controller will reconnect on reboot.  Use `jstest /dev/input/js0` to test joystick inputs (from `sudo apt install joystick` package)
 
-#### References:
+### References:
 
 * [Main steps](https://pimylifeup.com/xbox-controllers-raspberry-pi/)
 * [bthelper instructions](https://retropie.org.uk/forum/topic/28560/xbox-series-x-controller-wont-pair-with-rp4/36)

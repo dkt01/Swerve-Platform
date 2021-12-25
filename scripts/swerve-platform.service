@@ -1,0 +1,13 @@
+[Unit]
+Description=Swerve platform application to drive using gamepad input.
+After=bluetooth.target
+
+[Service]
+Type=simple
+ExecStart=/bin/bash /home/pi/Swerve-Platform/scripts/robotInit.sh
+Restart=always
+RestartSec=2
+TimeoutSec=5
+
+[Install]
+WantedBy=multi-user.target
