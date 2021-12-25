@@ -4,6 +4,7 @@
 
 #include "argosLib/config/canCoderConfig.h"
 #include "argosLib/config/falconConfig.h"
+#include <units/length.h>
 
 SwervePlatform::SwervePlatform(const PlatformDimensions &dimensions,
                                const feet_per_second_t maxVelocity,
@@ -53,20 +54,20 @@ SwervePlatform::SwervePlatform(const PlatformDimensions &dimensions,
   m_maxAngularRate = units::degree_t(360.0) * (maxVelocity / turnCircumference);
 
   // Config Sensors
-  CanCoderConfig<decltype(frontLeftTurnEncoderConfig)>(m_encoderTurnFrontLeft, 100_ms);
-  CanCoderConfig<decltype(frontRightTurnEncoderConfig)>(m_encoderTurnFrontRight, 100_ms);
-  CanCoderConfig<decltype(rearRightTurnEncoderConfig)>(m_encoderTurnRearRight, 100_ms);
-  CanCoderConfig<decltype(rearLeftTurnEncoderConfig)>(m_encoderTurnRearLeft, 100_ms);
+  CanCoderConfig<std::remove_reference_t<decltype(frontLeftTurnEncoderConfig)>>(m_encoderTurnFrontLeft, 100_ms);
+  CanCoderConfig<std::remove_reference_t<decltype(frontRightTurnEncoderConfig)>>(m_encoderTurnFrontRight, 100_ms);
+  CanCoderConfig<std::remove_reference_t<decltype(rearRightTurnEncoderConfig)>>(m_encoderTurnRearRight, 100_ms);
+  CanCoderConfig<std::remove_reference_t<decltype(rearLeftTurnEncoderConfig)>>(m_encoderTurnRearLeft, 100_ms);
 
   // Configure motors
-  FalconConfig<decltype(frontLeftDriveConfig)>(m_motorDriveFrontLeft, 100_ms);
-  FalconConfig<decltype(frontRightDriveConfig)>(m_motorDriveFrontRight, 100_ms);
-  FalconConfig<decltype(rearRightDriveConfig)>(m_motorDriveRearRight, 100_ms);
-  FalconConfig<decltype(rearLeftDriveConfig)>(m_motorDriveRearLeft, 100_ms);
-  FalconConfig<decltype(frontLeftTurnConfig)>(m_motorTurnFrontLeft, 100_ms);
-  FalconConfig<decltype(frontRightTurnConfig)>(m_motorTurnFrontRight, 100_ms);
-  FalconConfig<decltype(rearRightTurnConfig)>(m_motorTurnRearRight, 100_ms);
-  FalconConfig<decltype(rearLeftTurnConfig)>(m_motorTurnRearLeft, 100_ms);
+  FalconConfig<std::remove_reference_t<decltype(frontLeftDriveConfig)>>(m_motorDriveFrontLeft, 100_ms);
+  FalconConfig<std::remove_reference_t<decltype(frontRightDriveConfig)>>(m_motorDriveFrontRight, 100_ms);
+  FalconConfig<std::remove_reference_t<decltype(rearRightDriveConfig)>>(m_motorDriveRearRight, 100_ms);
+  FalconConfig<std::remove_reference_t<decltype(rearLeftDriveConfig)>>(m_motorDriveRearLeft, 100_ms);
+  FalconConfig<std::remove_reference_t<decltype(frontLeftTurnConfig)>>(m_motorTurnFrontLeft, 100_ms);
+  FalconConfig<std::remove_reference_t<decltype(frontRightTurnConfig)>>(m_motorTurnFrontRight, 100_ms);
+  FalconConfig<std::remove_reference_t<decltype(rearRightTurnConfig)>>(m_motorTurnRearRight, 100_ms);
+  FalconConfig<std::remove_reference_t<decltype(rearLeftTurnConfig)>>(m_motorTurnRearLeft, 100_ms);
 
   InitializeTurnEncoderAngles();
 }

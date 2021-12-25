@@ -9,6 +9,7 @@
 #include "ctre/Phoenix.h"
 #include <frc/kinematics/SwerveDriveKinematics.h>
 #include <frc/kinematics/SwerveModuleState.h>
+#include <units/length.h>
 #include <units/velocity.h>
 
 using units::feet_per_second_t;
@@ -106,15 +107,20 @@ namespace measureUp {
       constexpr auto fromAngVel(units::degree_t angVelVal) { return angVelVal.to<double>() * ticksPerDegree; }
     }  // namespace swerveRotate
     namespace swerveDrive {
-      constexpr auto toDist(double sensorVal) { return measureUp::drive::wheelCircumference / 8.16 * sensorVal; }
-      constexpr auto fromDist(units::inch_t distVal) {
-        return (distVal * 8.16 / measureUp::drive::wheelCircumference).to<double>();
+      constexpr units::foot_t toDist(double sensorVal) {
+        return measureUp::drive::wheelCircumference / 8.14 / 2048 * sensorVal;
       }
-      constexpr auto toVel(double sensorVal) {
-        return measureUp::drive::wheelCircumference / 8.16 / 100_ms * sensorVal;
+      constexpr auto fromDist(units::inch_t distVal) {
+        return (distVal / measureUp::drive::wheelCircumference * 8.14 * 2048).to<double>();
+      }
+      // sensor value is in pulses/100ms (2048 pulses/revolution)
+      // 8.14:1 gear ratio
+      constexpr units::feet_per_second_t toVel(double sensorVal) {
+        return units::unit_t<units::inverse<units::decisecond>>(sensorVal) / 8.14 / 2048 * measureUp::drive::wheelCircumference;
       }
       constexpr auto fromVel(units::feet_per_second_t velValue) {
-        return (velValue * 8.16 * 100_ms / measureUp::drive::wheelCircumference).to<double>();
+        units::unit_t<units::inverse<units::decisecond>> val = velValue * 8.14 * 2048 / measureUp::drive::wheelCircumference;
+        return val.to<double>();
       }
     }  // namespace swerveDrive
   }    // namespace sensorConversion

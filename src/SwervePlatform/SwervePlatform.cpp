@@ -58,23 +58,23 @@ void SwervePlatform::SwerveDrive(const double fwVelocity, const double latVeloci
   m_motorTurnRearRight.GetFaults(turnRearRightFaults);
   m_motorTurnRearLeft.GetFaults(turnRearLeftFaults);
 
-  m_motorDriveFrontLeft.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput,
-      ModuleDriveSpeed(moduleStates.at(ModuleIndex::frontLeft).speed, m_maxVelocity, turnFrontLeftFaults));
+  m_motorDriveFrontLeft.Set(ctre::phoenix::motorcontrol::ControlMode::Velocity,
+      measureUp::sensorConversion::swerveDrive::fromVel(moduleStates.at(ModuleIndex::frontLeft).speed));
   m_motorTurnFrontLeft.Set(
       ctre::phoenix::motorcontrol::TalonFXControlMode::Position,
       measureUp::sensorConversion::swerveRotate::fromAngle(moduleStates.at(ModuleIndex::frontLeft).angle.Degrees()));
-  m_motorDriveFrontRight.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput,
-      ModuleDriveSpeed(moduleStates.at(ModuleIndex::frontRight).speed, m_maxVelocity, turnFrontRightFaults));
+  m_motorDriveFrontRight.Set(ctre::phoenix::motorcontrol::ControlMode::Velocity,
+      measureUp::sensorConversion::swerveDrive::fromVel(moduleStates.at(ModuleIndex::frontRight).speed));
   m_motorTurnFrontRight.Set(
       ctre::phoenix::motorcontrol::TalonFXControlMode::Position,
       measureUp::sensorConversion::swerveRotate::fromAngle(moduleStates.at(ModuleIndex::frontRight).angle.Degrees()));
-  m_motorDriveRearRight.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput,
-      ModuleDriveSpeed(moduleStates.at(ModuleIndex::rearRight).speed, m_maxVelocity, turnRearRightFaults));
+  m_motorDriveRearRight.Set(ctre::phoenix::motorcontrol::ControlMode::Velocity,
+      measureUp::sensorConversion::swerveDrive::fromVel(moduleStates.at(ModuleIndex::rearRight).speed));
   m_motorTurnRearRight.Set(
       ctre::phoenix::motorcontrol::TalonFXControlMode::Position,
       measureUp::sensorConversion::swerveRotate::fromAngle(moduleStates.at(ModuleIndex::rearRight).angle.Degrees()));
-  m_motorDriveRearLeft.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput,
-      ModuleDriveSpeed(moduleStates.at(ModuleIndex::rearLeft).speed, m_maxVelocity, turnRearLeftFaults));
+  m_motorDriveRearLeft.Set(ctre::phoenix::motorcontrol::ControlMode::Velocity,
+      measureUp::sensorConversion::swerveDrive::fromVel(moduleStates.at(ModuleIndex::rearLeft).speed));
   m_motorTurnRearLeft.Set(
       ctre::phoenix::motorcontrol::TalonFXControlMode::Position,
       measureUp::sensorConversion::swerveRotate::fromAngle(moduleStates.at(ModuleIndex::rearLeft).angle.Degrees()));

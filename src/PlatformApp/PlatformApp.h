@@ -40,6 +40,14 @@ namespace controlLoop {
     constexpr units::millisecond_t period = 20_ms;
   }   // namespace main
   namespace drive {
+    namespace drive {
+      constexpr double kP = 0.11;
+      constexpr double kI = 0.0;
+      constexpr double kD = 0.0;
+      constexpr double kF = 0.05;
+      constexpr double iZone = 100.0;
+      constexpr double allowableError = 0.0;
+    }  // namespace drive
     namespace rotate {
       constexpr double kP = 1.4;
       constexpr double kI = 0.01;
@@ -52,18 +60,18 @@ namespace controlLoop {
 }  // namespace controlLoop
 
 namespace joystickAxisMaps {
-  constexpr std::array driveLongSpeed{interpMapPoint{-1.0,  -0.6},
+  constexpr std::array driveLongSpeed{interpMapPoint{-1.0,  -1.0},
                                       interpMapPoint{-0.75, -0.4},
                                       interpMapPoint{-0.15,  0.0},
                                       interpMapPoint{ 0.15,  0.0},
                                       interpMapPoint{ 0.75,  0.4},
-                                      interpMapPoint{ 1.0,   0.6}};
-  constexpr std::array driveLatSpeed{interpMapPoint{-1.0,  -0.6},
+                                      interpMapPoint{ 1.0,   1.0}};
+  constexpr std::array driveLatSpeed{interpMapPoint{-1.0,  -1.0},
                                      interpMapPoint{-0.75, -0.4},
                                      interpMapPoint{-0.15,  0.0},
                                      interpMapPoint{ 0.15,  0.0},
                                      interpMapPoint{ 0.75,  0.4},
-                                     interpMapPoint{ 1.0,   0.6}};
+                                     interpMapPoint{ 1.0,   1.0}};
   constexpr std::array driveRotSpeed{interpMapPoint{-1.0,  -1.0},
                                      interpMapPoint{-0.15,  0.0},
                                      interpMapPoint{ 0.15,  0.0},
@@ -113,6 +121,17 @@ namespace motorConfig {
       constexpr static auto neutralDeadband = 0.001;
       constexpr static auto neutralMode = ctre::phoenix::motorcontrol::NeutralMode::Brake;
       constexpr static auto voltCompSat = 11.0_V;
+      constexpr static auto nominalOutputForward = 0.0;
+      constexpr static auto nominalOutputReverse = 0.0;
+      constexpr static auto peakOutputForward = 1.0;
+      constexpr static auto peakOutputReverse = -1.0;
+      constexpr static auto pid0_selectedSensor = ctre::phoenix::motorcontrol::FeedbackDevice::IntegratedSensor;
+      constexpr static auto pid0_kP = controlLoop::drive::drive::kP;
+      constexpr static auto pid0_kI = controlLoop::drive::drive::kI;
+      constexpr static auto pid0_kD = controlLoop::drive::drive::kD;
+      constexpr static auto pid0_kF = controlLoop::drive::drive::kF;
+      constexpr static auto pid0_iZone = controlLoop::drive::drive::iZone;
+      constexpr static auto pid0_allowableError = controlLoop::drive::drive::allowableError;
       constexpr static auto forwardLimit_normalState = ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyOpen;
       constexpr static auto forwardLimit_source = ctre::phoenix::motorcontrol::LimitSwitchSource_FeedbackConnector;
       constexpr static auto reverseLimit_normalState = ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyOpen;
@@ -125,6 +144,17 @@ namespace motorConfig {
       constexpr static auto neutralDeadband = 0.001;
       constexpr static auto neutralMode = ctre::phoenix::motorcontrol::NeutralMode::Brake;
       constexpr static auto voltCompSat = 11.0_V;
+      constexpr static auto nominalOutputForward = 0.0;
+      constexpr static auto nominalOutputReverse = 0.0;
+      constexpr static auto peakOutputForward = 1.0;
+      constexpr static auto peakOutputReverse = -1.0;
+      constexpr static auto pid0_selectedSensor = ctre::phoenix::motorcontrol::FeedbackDevice::IntegratedSensor;
+      constexpr static auto pid0_kP = controlLoop::drive::drive::kP;
+      constexpr static auto pid0_kI = controlLoop::drive::drive::kI;
+      constexpr static auto pid0_kD = controlLoop::drive::drive::kD;
+      constexpr static auto pid0_kF = controlLoop::drive::drive::kF;
+      constexpr static auto pid0_iZone = controlLoop::drive::drive::iZone;
+      constexpr static auto pid0_allowableError = controlLoop::drive::drive::allowableError;
       // constexpr static auto forwardLimit_normalState = ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyOpen;
       // constexpr static auto forwardLimit_source = ctre::phoenix::motorcontrol::LimitSwitchSource_RemoteTalonSRX;
       // constexpr static auto forwardLimit_deviceID = 1;
@@ -139,6 +169,17 @@ namespace motorConfig {
       constexpr static auto neutralDeadband = 0.001;
       constexpr static auto neutralMode = ctre::phoenix::motorcontrol::NeutralMode::Brake;
       constexpr static auto voltCompSat = 11.0_V;
+      constexpr static auto nominalOutputForward = 0.0;
+      constexpr static auto nominalOutputReverse = 0.0;
+      constexpr static auto peakOutputForward = 1.0;
+      constexpr static auto peakOutputReverse = -1.0;
+      constexpr static auto pid0_selectedSensor = ctre::phoenix::motorcontrol::FeedbackDevice::IntegratedSensor;
+      constexpr static auto pid0_kP = controlLoop::drive::drive::kP;
+      constexpr static auto pid0_kI = controlLoop::drive::drive::kI;
+      constexpr static auto pid0_kD = controlLoop::drive::drive::kD;
+      constexpr static auto pid0_kF = controlLoop::drive::drive::kF;
+      constexpr static auto pid0_iZone = controlLoop::drive::drive::iZone;
+      constexpr static auto pid0_allowableError = controlLoop::drive::drive::allowableError;
       constexpr static auto forwardLimit_normalState = ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyOpen;
       constexpr static auto forwardLimit_source = ctre::phoenix::motorcontrol::LimitSwitchSource_RemoteTalonSRX;
       constexpr static auto forwardLimit_deviceID = 1;
@@ -153,6 +194,17 @@ namespace motorConfig {
       constexpr static auto neutralDeadband = 0.001;
       constexpr static auto neutralMode = ctre::phoenix::motorcontrol::NeutralMode::Brake;
       constexpr static auto voltCompSat = 11.0_V;
+      constexpr static auto nominalOutputForward = 0.0;
+      constexpr static auto nominalOutputReverse = 0.0;
+      constexpr static auto peakOutputForward = 1.0;
+      constexpr static auto peakOutputReverse = -1.0;
+      constexpr static auto pid0_selectedSensor = ctre::phoenix::motorcontrol::FeedbackDevice::IntegratedSensor;
+      constexpr static auto pid0_kP = controlLoop::drive::drive::kP;
+      constexpr static auto pid0_kI = controlLoop::drive::drive::kI;
+      constexpr static auto pid0_kD = controlLoop::drive::drive::kD;
+      constexpr static auto pid0_kF = controlLoop::drive::drive::kF;
+      constexpr static auto pid0_iZone = controlLoop::drive::drive::iZone;
+      constexpr static auto pid0_allowableError = controlLoop::drive::drive::allowableError;
       constexpr static auto forwardLimit_normalState = ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyOpen;
       constexpr static auto forwardLimit_source = ctre::phoenix::motorcontrol::LimitSwitchSource_RemoteTalonSRX;
       constexpr static auto forwardLimit_deviceID = 1;

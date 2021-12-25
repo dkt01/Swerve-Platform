@@ -5,8 +5,9 @@
 
 #pragma once
 
-#include <optional>
+#include <chrono>
 #include <iostream>
+#include <optional>
 #include <SDL.h>
 
 class XBoxController {
@@ -77,7 +78,9 @@ class XBoxController {
     [[nodiscard]] bool operator()();
     [[nodiscard]] std::optional<ControllerState> CurrentState();
 
-    void SetVibration(double leftPercent, double rightPercent);
+    void SetVibration(double leftPercent,
+                      double rightPercent,
+                      std::optional<std::chrono::milliseconds> duration = std::nullopt);
 
   private:
     bool Initialize();
@@ -85,6 +88,10 @@ class XBoxController {
 
     const int m_index;
     SDL_Joystick* m_pJoystick;
+
+    double m_leftRumblePct;
+    double m_rightRumblePct;
+
     constexpr static auto JsIntToPct = [](int jsVal){ return static_cast<double>(jsVal) / 32767.0; };
 };
 
