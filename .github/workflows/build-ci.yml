@@ -41,7 +41,7 @@ jobs:
       working-directory: build
 
     - name: Gather build artifacts
-      run: mkdir output && cp -r build/bin && build/lib scripts output/.
+      run: mkdir output && cp -r build/bin build/lib scripts output/.
 
     - name: Compress artifacts
       run: tar czf Swerve-Platform.tar.gz ./*
