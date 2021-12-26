@@ -44,10 +44,10 @@ jobs:
       run: mkdir output && cp -r build/bin build/lib scripts output/.
 
     - name: Compress artifacts
-      run: tar czf Swerve-Platform.tar.gz ./*
+      run: tar czf ../Swerve-Platform.tar.gz .
       working-directory: output
 
     - uses: actions/upload-artifact@v2
       with:
         name: build-output
-        path: output/Swerve-Platform.tar.gz
+        path: Swerve-Platform.tar.gz
