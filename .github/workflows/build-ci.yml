@@ -1,4 +1,4 @@
-name: build-image
+name: build-ci
 
 # Controls when the action will run. Triggers the workflow on push events but to the release branch
 on:
@@ -27,8 +27,13 @@ jobs:
       run: ../utils/toolchain.sh rpi3-armv8 --pull --export
       working-directory: build
 
+    - name: Setup cmake
+      uses: jwlawson/actions-setup-cmake@v1.9
+      with:
+        cmake-version: '3.22.x'
+
     - name: CMake configure
-      run: cmake -DCMAKE_TOOLCHAIN_FILE=../utils/armv8-rpi3-linux-gnueabihf.cmake -DCMAKE_BUILD_TYPE=Debug ..
+      run: cmake --version && cmake -DCMAKE_TOOLCHAIN_FILE=../utils/armv8-rpi3-linux-gnueabihf.cmake -DCMAKE_BUILD_TYPE=Debug ..
       working-directory: build
 
     - name: Build
