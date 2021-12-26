@@ -1,0 +1,48 @@
+name: build-image
+
+# Controls when the action will run. Triggers the workflow on push events but to the release branch
+on:
+  push:
+    branches:
+      - "**"
+  pull_request:
+    branches:
+      - main
+      - release
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+
+    - name: Set up directories
+      run: mkdir build
+
+    - name: Set up cross compiler
+      run: ../utils/toolchain.sh rpi3-armv8 --pull --export
+      working-directory: build
+
+    - name: CMake configure
+      run: cmake -DCMAKE_TOOLCHAIN_FILE=../utils/armv8-rpi3-linux-gnueabihf.cmake -DCMAKE_BUILD_TYPE=Debug ..
+      working-directory: build
+
+    - name: Build
+      run: make -j`nproc`
+      working-directory: build
+
+    - name: Gather build artifacts
+      run: mkdir output && cp -r build/bin && build/lib scripts output/.
+
+    - name: Compress artifacts
+      run: tar czf Swerve-Platform.tar.gz ./*
+      working-directory: output
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: build-output
+        path: output/Swerve-Platform.tar.gz
