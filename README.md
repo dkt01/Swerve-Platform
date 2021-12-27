@@ -55,15 +55,11 @@ Add the following lines to `/boot/config.txt`
 
 1. `sudo apt-get install can-utils`
 
-### SDL2
-
-1. `sudo apt-get install libsdl2-dev`
-
 ## Bare Minimum To Pair XBox Series Controller
 
 1. Update controller firmware in Windows using [XBox Accessories App](https://www.microsoft.com/en-us/p/xbox-accessories/9nblggh30xj3)
 2. `echo 'options bluetooth disable_ertm=Y' | sudo tee -a /etc/modprobe.d/bluetooth.conf`
-3. `systemctl edit bthelper@*` and add the following content (exact name of this service may change after the `@`):
+3. `systemctl edit bthelper@hci0` and add the following content:
    ```
    [Unit]
    After=hciuart.service bluetooth.service

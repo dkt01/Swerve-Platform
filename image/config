@@ -1,0 +1,4 @@
+export IMG_NAME="Swerve-Platform"
+export TARGET_HOSTNAME="NWCC-platform-alpha"
+export TIMEZONE_DEFAULT="America/Chicago"
+export ENABLE_SSH=1
