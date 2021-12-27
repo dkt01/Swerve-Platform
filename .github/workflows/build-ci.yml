@@ -1,0 +1,123 @@
+name: build-ci
+
+# Controls when the action will run. Triggers the workflow on push events but to the release branch
+on:
+  push:
+    branches:
+      - "**"
+  pull_request:
+    branches:
+      - main
+      - release
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # Build application
+  build:
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+
+    - name: Set up directories
+      run: mkdir build
+
+    - name: Set up cross compiler
+      run: ../utils/toolchain.sh rpi3-armv8 --pull --export
+      working-directory: build
+
+    - name: Setup cmake
+      uses: jwlawson/actions-setup-cmake@v1.9
+      with:
+        cmake-version: '3.22.x'
+
+    - name: CMake configure
+      run: cmake --version && cmake -DCMAKE_TOOLCHAIN_FILE=../utils/armv8-rpi3-linux-gnueabihf.cmake -DCMAKE_BUILD_TYPE=Release ..
+      working-directory: build
+
+    - name: Build
+      run: make -j`nproc`
+      working-directory: build
+
+    - name: Gather build artifacts
+      run: mkdir output && cp -r build/bin build/lib scripts output/.
+
+    - name: Compress artifacts
+      run: tar czf ../Swerve-Platform.tar.gz .
+      working-directory: output
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: raw-build-output
+        path: Swerve-Platform.tar.gz
+
+  # Add raw build artifacts to release
+  release-raw:
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: raw-build-output
+      - uses: softprops/action-gh-release@v1
+        with:
+          files: '**/*'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # Build image that includes application
+  # @todo This isn't working... Only run on ciTest branch for now
+  build-image:
+    needs: [build]
+    if: github.ref == 'refs/heads/ciTest'
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v1
+
+    - name: APT update
+      run: sudo apt update
+
+    # Get artifacts from CI build
+    - uses: actions/download-artifact@v2
+      with:
+        name: raw-build-output
+
+    - name: Extract artifacts
+      run: mkdir buildOutput && tar xf Swerve-Platform.tar.gz -C buildOutput
+
+    - name: Move artifacts
+      run: mkdir build && mv buildOutput/bin build/ && mv buildOutput/lib build/
+
+    # Build image with docker
+    - name: Run build-docker.sh
+      run: sudo modprobe binfmt_misc && sudo ./build-docker.sh
+      working-directory: image
+
+    - name: Upload built image
+      uses: actions/upload-artifact@v2
+      with:
+        name: built-image
+        path: image/deploy/image_*Swerve-Platform.zip
+        if-no-files-found: error
+
+  # Add image to release
+  release-image:
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: [build-image]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: built-image
+      - uses: softprops/action-gh-release@v1
+        with:
+          files: '**/*'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
