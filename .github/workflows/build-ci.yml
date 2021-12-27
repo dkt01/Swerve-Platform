@@ -78,7 +78,7 @@ jobs:
 
     # Build image with docker
     - name: Run build-docker.sh
-      run: sudo ./build-docker.sh
+      run: sudo modprobe binfmt_misc && sudo ./build-docker.sh
       working-directory: image
 
     - name: Upload built image
