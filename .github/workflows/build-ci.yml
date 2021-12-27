@@ -55,7 +55,7 @@ jobs:
   build-image:
     needs: [build]
     # The type of runner that the job will run on
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -78,7 +78,7 @@ jobs:
 
     # Build image with docker
     - name: Run build-docker.sh
-      run: ./build-docker.sh
+      run: sudo ./build-docker.sh
       working-directory: image
 
     - name: Upload built image
