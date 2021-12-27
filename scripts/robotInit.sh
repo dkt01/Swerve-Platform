@@ -2,6 +2,8 @@
 
 # Designed to run as systemd service and output logged to journalctl
 
+export HOME="${HOME:-"/home/pi"}"
+
 if [ "$EUID" -ne 0 ]
 then
   echo "[ERROR] Run this script using sudo"
