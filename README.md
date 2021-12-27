@@ -1,5 +1,7 @@
 # Swerve-Platform
 
+[![build-ci](https://github.com/dkt01/Swerve-Platform/actions/workflows/build-ci.yml/badge.svg)](https://github.com/dkt01/Swerve-Platform/actions/workflows/build-ci.yml)
+
 Robotic swerve drive platform developed for Northwoods Church Christmas program
 
 ## How To Build
