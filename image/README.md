@@ -112,7 +112,7 @@ The following environment variables are supported:
 
    Default system locale.
 
- * `TARGET_HOSTNAME` (Default: "NWCC-platform-alpha" )
+ * `TARGET_HOSTNAME` (Default: "raspberrypi" )
 
    Setting the hostname to the specified value.
 

@@ -12,6 +12,7 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  # Build application
   build:
     runs-on: ubuntu-latest
 
@@ -52,8 +53,26 @@ jobs:
         name: raw-build-output
         path: Swerve-Platform.tar.gz
 
+  # Add raw build artifacts to release
+  release-raw:
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: raw-build-output
+      - uses: softprops/action-gh-release@v1
+        with:
+          files: '**/*'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # Build image that includes application
+  # @todo This isn't working... Only run on ciTest branch for now
   build-image:
     needs: [build]
+    if: github.ref == 'refs/heads/ciTest'
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -88,7 +107,8 @@ jobs:
         path: image/deploy/image_*Swerve-Platform.zip
         if-no-files-found: error
 
-  release:
+  # Add image to release
+  release-image:
     if: startsWith(github.ref, 'refs/tags/')
     needs: [build-image]
     runs-on: ubuntu-latest
