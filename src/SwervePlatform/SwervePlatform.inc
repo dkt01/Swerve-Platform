@@ -8,6 +8,7 @@
 
 SwervePlatform::SwervePlatform(const PlatformDimensions &dimensions,
                                const feet_per_second_t maxVelocity,
+                               std::unique_ptr<ArgosLib::SwerveHomeStorageInterface> homingStorage,
                                const auto &frontLeftDriveConfig,
                                const auto &frontRightDriveConfig,
                                const auto &rearRightDriveConfig,
@@ -33,6 +34,7 @@ SwervePlatform::SwervePlatform(const PlatformDimensions &dimensions,
     , m_encoderTurnRearRight(rearRightTurnEncoderConfig.address)
     , m_encoderTurnRearLeft(rearLeftTurnEncoderConfig.address)
     , m_maxVelocity(maxVelocity)
+    , m_pHomingStorage(std::move(homingStorage))
     , m_activeControlMode(ControlMode::robotCentric) {
   // Set lever arms for each module
   frc::Translation2d leverArmFrontLeft{dimensions.platformLongitudinalLength / 2 - dimensions.frontLeftModule.longitudinalInset,

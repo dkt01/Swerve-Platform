@@ -10,8 +10,7 @@
 XBoxController::XBoxController(int index)
     : m_index{index}
     , m_pJoystick{nullptr}
-    , m_leftRumblePct{0}
-    , m_rightRumblePct{0} {
+    , m_vibrationModel{ArgosLib::VibrationOff()} {
   Initialize();
 }
 
@@ -23,8 +22,7 @@ XBoxController::~XBoxController() {
 XBoxController::XBoxController(XBoxController&& other)
     : m_index(other.m_index)
     , m_pJoystick(other.m_pJoystick)
-    , m_leftRumblePct{other.m_leftRumblePct}
-    , m_rightRumblePct{other.m_rightRumblePct} {
+    , m_vibrationModel{other.m_vibrationModel} {
   other.m_pJoystick = nullptr;
 }
 
@@ -129,22 +127,42 @@ std::optional<XBoxController::ControllerState> XBoxController::CurrentState() {
       }
     };
 
+    UpdateVibration();
+
     return currentState;
   }
   return std::nullopt;
 }
 
+void XBoxController::UpdateVibration() {
+  if(m_pJoystick != nullptr) {
+    const auto vibrationIntensity = m_vibrationModel();
+    SDL_JoystickRumbleTriggers(m_pJoystick,
+                               std::numeric_limits<uint16_t>::max() * vibrationIntensity.intensityLeft,
+                               std::numeric_limits<uint16_t>::max() * vibrationIntensity.intensityRight,
+                               std::numeric_limits<uint32_t>::max());
+  }
+}
+
 void XBoxController::SetVibration(double leftPercent,
                                   double rightPercent,
                                   std::optional<std::chrono::milliseconds> duration) {
-  if(m_pJoystick != nullptr) {
-    m_leftRumblePct = std::clamp(leftPercent, 0.0, 1.0);
-    m_rightRumblePct = std::clamp(rightPercent, 0.0, 1.0);
-    SDL_JoystickRumbleTriggers(m_pJoystick,
-                               std::numeric_limits<uint16_t>::max() * m_leftRumblePct,
-                               std::numeric_limits<uint16_t>::max() * m_rightRumblePct,
-                               duration ? static_cast<uint32_t>(duration.value().count()) : std::numeric_limits<uint32_t>::max());
+  if(!duration) {
+    m_vibrationModel = ArgosLib::VibrationConstant(leftPercent, rightPercent);
+  } else {
+    auto startTime = std::chrono::steady_clock::now();
+    m_vibrationModel = [startTime, leftPercent, rightPercent, duration]() {
+      auto expired = (std::chrono::steady_clock::now() - startTime) >= duration;
+      return ArgosLib::VibrationStatus{.intensityLeft{expired ? 0.0 : leftPercent},
+                                       .intensityRight{expired ? 0.0 : rightPercent}};
+    };
   }
+  UpdateVibration();
+}
+
+void XBoxController::SetVibration(ArgosLib::VibrationModel newModel) {
+  m_vibrationModel = newModel;
+  UpdateVibration();
 }
 
 std::ostream& operator<<(std::ostream& os, const XBoxController::ButtonStates buttons) {

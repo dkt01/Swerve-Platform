@@ -6,5 +6,6 @@ add_subdirectory("SDL2")
 
 # Application content
 add_subdirectory("SwervePlatform")
+add_subdirectory("SwervePlatformHomingStorage")
 add_subdirectory("XBoxController")
 add_subdirectory("PlatformApp")

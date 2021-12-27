@@ -101,12 +101,14 @@ void SwervePlatform::Home(const units::degree_t currentAngle) {
   m_encoderTurnRearLeft.SetPosition(currentAngle.to<double>(), 50);
 
   // GetAbsolutePosition returns degrees in configured range
-  /// @todo: Save to persistent storage
-  // ntTable->PutNumber(ntKeys::subsystemDrive::homePosition::turnFrontLeft, m_encoderTurnFrontLeft.GetAbsolutePosition());
-  // ntTable->PutNumber(ntKeys::subsystemDrive::homePosition::turnFrontRight,
-  //                    m_encoderTurnFrontRight.GetAbsolutePosition());
-  // ntTable->PutNumber(ntKeys::subsystemDrive::homePosition::turnRearRight, m_encoderTurnRearRight.GetAbsolutePosition());
-  // ntTable->PutNumber(ntKeys::subsystemDrive::homePosition::turnRearLeft, m_encoderTurnRearLeft.GetAbsolutePosition());
+  const ArgosLib::SwerveModulePositions newHomePositions {
+    .FrontLeft{units::make_unit<units::degree_t>(m_encoderTurnFrontLeft.GetAbsolutePosition()) + currentAngle},
+    .FrontRight{units::make_unit<units::degree_t>(m_encoderTurnFrontRight.GetAbsolutePosition()) + currentAngle},
+    .RearRight{units::make_unit<units::degree_t>(m_encoderTurnRearRight.GetAbsolutePosition()) + currentAngle},
+    .RearLeft{units::make_unit<units::degree_t>(m_encoderTurnRearLeft.GetAbsolutePosition()) + currentAngle},
+  };
+
+  m_pHomingStorage->Save(newHomePositions);
 }
 
 void SwervePlatform::SetFieldOrientation(const units::degree_t currentAngle [[maybe_unused]]) {
@@ -127,33 +129,26 @@ void SwervePlatform::SetControlMode(const ControlMode newControlMode) {
 }
 
 void SwervePlatform::InitializeTurnEncoderAngles() {
-  /// @todo: Load from persistent storage
-  // auto ntInstance{nt::NetworkTableInstance::GetDefault()};
-  // auto ntTable{ntInstance.GetTable(ntKeys::tableName)};
-  // // Read positions are in degrees
-  // const auto homePositionTurnFrontLeft =
-  //     units::make_unit<units::degree_t>(ntTable->GetNumber(ntKeys::subsystemDrive::homePosition::turnFrontLeft, 0));
-  // const auto homePositionTurnFrontRight =
-  //     units::make_unit<units::degree_t>(ntTable->GetNumber(ntKeys::subsystemDrive::homePosition::turnFrontRight, 0));
-  // const auto homePositionTurnRearRight =
-  //     units::make_unit<units::degree_t>(ntTable->GetNumber(ntKeys::subsystemDrive::homePosition::turnRearRight, 0));
-  // const auto homePositionTurnRearLeft =
-  //     units::make_unit<units::degree_t>(ntTable->GetNumber(ntKeys::subsystemDrive::homePosition::turnRearLeft, 0));
+  const auto homeAngles = m_pHomingStorage->Load();
 
-  // const auto curFrontLeftPosition =
-  //     units::make_unit<units::degree_t>(m_encoderTurnFrontLeft.GetAbsolutePosition()) - homePositionTurnFrontLeft;
-  // const auto curFrontRighPosition =
-  //     units::make_unit<units::degree_t>(m_encoderTurnFrontRight.GetAbsolutePosition()) - homePositionTurnFrontRight;
-  // const auto curRearRightPosition =
-  //     units::make_unit<units::degree_t>(m_encoderTurnRearRight.GetAbsolutePosition()) - homePositionTurnRearRight;
-  // const auto curRearLeftPosition =
-  //     units::make_unit<units::degree_t>(m_encoderTurnRearLeft.GetAbsolutePosition()) - homePositionTurnRearLeft;
+  if(homeAngles) {
+    const units::degree_t curFrontLeftPosition =
+        units::make_unit<units::degree_t>(m_encoderTurnFrontLeft.GetAbsolutePosition()) - homeAngles.value().FrontLeft;
+    const units::degree_t curFrontRighPosition =
+        units::make_unit<units::degree_t>(m_encoderTurnFrontRight.GetAbsolutePosition()) - homeAngles.value().FrontRight;
+    const units::degree_t curRearRightPosition =
+        units::make_unit<units::degree_t>(m_encoderTurnRearRight.GetAbsolutePosition()) - homeAngles.value().RearRight;
+    const units::degree_t curRearLeftPosition =
+        units::make_unit<units::degree_t>(m_encoderTurnRearLeft.GetAbsolutePosition()) - homeAngles.value().RearLeft;
 
-  // // SetPosition expects a value in degrees
-  // m_encoderTurnFrontLeft.SetPosition(curFrontLeftPosition.to<double>(), 50);
-  // m_encoderTurnFrontRight.SetPosition(curFrontRighPosition.to<double>(), 50);
-  // m_encoderTurnRearRight.SetPosition(curRearRightPosition.to<double>(), 50);
-  // m_encoderTurnRearLeft.SetPosition(curRearLeftPosition.to<double>(), 50);
+    // SetPosition expects a value in degrees
+    m_encoderTurnFrontLeft.SetPosition(curFrontLeftPosition.to<double>(), 50);
+    m_encoderTurnFrontRight.SetPosition(curFrontRighPosition.to<double>(), 50);
+    m_encoderTurnRearRight.SetPosition(curRearRightPosition.to<double>(), 50);
+    m_encoderTurnRearLeft.SetPosition(curRearLeftPosition.to<double>(), 50);
+  } else {
+    std::cout << "[ERROR] Could not load home positions from persistent storage.\n";
+  }
 }
 
 double SwervePlatform::ModuleDriveSpeed(const units::velocity::feet_per_second_t desiredSpeed,

@@ -9,6 +9,7 @@
 #include <iostream>
 #include <optional>
 #include <SDL.h>
+#include <argosLib/controller/Vibration.h>
 
 class XBoxController {
   public:
@@ -82,15 +83,18 @@ class XBoxController {
                       double rightPercent,
                       std::optional<std::chrono::milliseconds> duration = std::nullopt);
 
+    void SetVibration(ArgosLib::VibrationModel newModel);
+
   private:
     bool Initialize();
     void Deinitialize();
 
+    void UpdateVibration();
+
     const int m_index;
     SDL_Joystick* m_pJoystick;
 
-    double m_leftRumblePct;
-    double m_rightRumblePct;
+    ArgosLib::VibrationModel m_vibrationModel;
 
     constexpr static auto JsIntToPct = [](int jsVal){ return static_cast<double>(jsVal) / 32767.0; };
 };

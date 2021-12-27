@@ -5,12 +5,15 @@
 
 #pragma once
 
+#include <memory>
+
 #define Phoenix_No_WPI // remove WPI dependencies
 #include "ctre/Phoenix.h"
 #include <frc/kinematics/SwerveDriveKinematics.h>
 #include <frc/kinematics/SwerveModuleState.h>
 #include <units/length.h>
 #include <units/velocity.h>
+#include <argosLib/general/swerveHomeStorage.h>
 
 using units::feet_per_second_t;
 
@@ -39,6 +42,7 @@ class SwervePlatform {
 
     SwervePlatform(const PlatformDimensions &dimensions,
                    const feet_per_second_t maxVelocity,
+                   std::unique_ptr<ArgosLib::SwerveHomeStorageInterface> homingStorage,
                    const auto &frontLeftDriveConfig,
                    const auto &frontRightDriveConfig,
                    const auto &rearRightDriveConfig,
@@ -87,6 +91,8 @@ class SwervePlatform {
     units::feet_per_second_t m_maxVelocity;
 
     std::unique_ptr<frc::SwerveDriveKinematics<4>> m_pSwerveKinematicsModel;
+
+    std::unique_ptr<ArgosLib::SwerveHomeStorageInterface> m_pHomingStorage;
 
     ControlMode m_activeControlMode;
 };

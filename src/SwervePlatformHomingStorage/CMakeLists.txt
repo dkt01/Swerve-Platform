@@ -1,9 +1,8 @@
-project(XBoxController)
+project(SwervePlatformHomingStorage)
 
-add_library(${PROJECT_NAME} XBoxController.cpp)
+add_library(${PROJECT_NAME} SwervePlatformHomingStorage.cpp)
 
-target_link_libraries(${PROJECT_NAME} SDL2
-                                      argosLib)
+target_link_libraries(${PROJECT_NAME} argosLib)
 
 target_include_directories(${PROJECT_NAME}
     PUBLIC

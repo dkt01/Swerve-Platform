@@ -1,6 +1,7 @@
 project(argosLib)
 
-add_library(${PROJECT_NAME} cpp/general/swerveUtils.cpp)
+add_library(${PROJECT_NAME} cpp/general/swerveUtils.cpp
+                            cpp/controller/Vibration.cpp)
 
 target_link_libraries(${PROJECT_NAME} wpimath)
 

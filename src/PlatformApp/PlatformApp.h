@@ -310,3 +310,14 @@ namespace motorConfig {
     };
   }  // namespace drive
 } // namespace motorConfig
+
+class TimedDebounce {
+  public:
+    TimedDebounce(units::second_t activationTime, units::second_t deactivationTime);
+    bool operator()(const bool newValue);
+  private:
+    bool m_activeVal;
+    std::chrono::time_point<std::chrono::steady_clock> m_changeTime;
+    units::second_t m_activationTime;
+    units::second_t m_deactivationTime;
+};
