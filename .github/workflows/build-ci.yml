@@ -49,5 +49,58 @@ jobs:
 
     - uses: actions/upload-artifact@v2
       with:
-        name: build-output
+        name: raw-build-output
         path: Swerve-Platform.tar.gz
+
+  build-image:
+    needs: [build]
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v1
+
+    - name: APT update
+      run: sudo apt update
+
+    # Get artifacts from CI build
+    - uses: actions/download-artifact@v2
+      with:
+        name: raw-build-output
+
+    - name: Extract artifacts
+      run: mkdir buildOutput && tar xf Swerve-Platform.tar.gz -C buildOutput
+
+    - name: Move artifacts
+      run: mkdir build && mv buildOutput/bin build/ && mv buildOutput/lib build/
+
+    # Build image with docker
+    - name: Run build-docker.sh
+      run: ./build-docker.sh
+
+    # Print output directory files
+    - name: List output files
+      run: ls -lh deploy
+
+    - name: Upload built image
+      uses: actions/upload-artifact@v2
+      with:
+        name: built-image
+        path: ./deploy/image_*Swerve-Platform.zip
+        if-no-files-found: error
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: [build-image]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: built-image
+      - uses: softprops/action-gh-release@v1
+        with:
+          files: '**/*'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
