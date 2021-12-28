@@ -42,18 +42,30 @@ bool XBoxController::Initialize() {
 
   // Restart SDL
   SDL_SetHint(SDL_HINT_NO_SIGNAL_HANDLERS, "1"); //so Ctrl-C still works
-  if (SDL_WasInit(SDL_INIT_GAMECONTROLLER) != 1)
-    SDL_InitSubSystem(SDL_INIT_GAMECONTROLLER);
+  if (SDL_WasInit(SDL_INIT_GAMECONTROLLER) != 0)
+  {
+    SDL_QuitSubSystem(SDL_INIT_GAMECONTROLLER);
+  }
+  SDL_InitSubSystem(SDL_INIT_GAMECONTROLLER);
 
   // Fail if desired index is unavailable
   const int numJoysticks = SDL_NumJoysticks();
-  if (numJoysticks <= m_index) { return false; }
+  if (numJoysticks <= m_index) {
+    std::cout << "Joystick index " << m_index << " unavailable\n";
+    return false;
+  }
 
-  if(!SDL_IsGameController(m_index)) { return false; }
+  if(!SDL_IsGameController(m_index)) {
+    std::cout << "Joystick index " << m_index << "is not a game controller\n";
+    return false;
+  }
 
   // Check if joystick at requested index matches XBox controller
   SDL_GameController *candidateJoystick = SDL_GameControllerOpen(m_index);
-  if(!SDL_GameControllerGetAttached(candidateJoystick)) { return false; } // Failed to open
+  if(!SDL_GameControllerGetAttached(candidateJoystick)) {
+    std::cout << "Game controller open failed\n";
+    return false;
+  }
 
   const char *name =  SDL_GameControllerName(candidateJoystick);
   const int num_axes = SDL_JoystickNumAxes(SDL_GameControllerGetJoystick(candidateJoystick));

@@ -16,6 +16,8 @@
 
 using namespace std::chrono_literals;
 
+bool shutdown = false;
+
 TimedDebounce::TimedDebounce(units::second_t activationTime, units::second_t deactivationTime)
   : m_activeVal{false}
   , m_changeTime{std::chrono::steady_clock::now()}
@@ -35,9 +37,21 @@ bool TimedDebounce::operator()(const bool newValue) {
   return m_activeVal;
 }
 
+void signal_callback_handler(int signum) {
+   std::cout << "Caught signal " << signum << '\n';
+   // Terminate program
+   shutdown = true;
+}
+
 int main(int /*argc*/, char** /*argv*/) {
+  // Register signal and signal handler]
+  signal(SIGINT, signal_callback_handler);
+  signal(SIGTERM, signal_callback_handler);
+
   std::string interface = "can0";
   ctre::phoenix::platform::can::SetCANInterface(interface.c_str());
+
+  XBoxController controller(0);
 
   SwervePlatform swervePlatform(dimensions,
                                 2_fps,
@@ -55,8 +69,6 @@ int main(int /*argc*/, char** /*argv*/) {
                                 sensorConfig::drive::rearRightTurn{},
                                 sensorConfig::drive::rearLeftTurn{});
 
-  XBoxController controller(0);
-
   const interpolationMap<decltype(joystickAxisMaps::driveLongSpeed.front().inVal), joystickAxisMaps::driveLongSpeed.size()>
     driveMapLon(joystickAxisMaps::driveLongSpeed);
   const interpolationMap<decltype(joystickAxisMaps::driveLatSpeed.front().inVal), joystickAxisMaps::driveLatSpeed.size()>
@@ -71,7 +83,7 @@ int main(int /*argc*/, char** /*argv*/) {
   static bool calMode = false;
   static bool calTrigger = false;
 
-  while(true) {
+  while(!shutdown) {
     /// @todo robot mode management
     ctre::phoenix::unmanaged::FeedEnable(controlLoop::main::timeout.to<int>());
     auto controllerState = controller.CurrentState();
@@ -114,7 +126,7 @@ int main(int /*argc*/, char** /*argv*/) {
              driveMapLat.map(controllerState.value().Axes.LeftX) == 0 &&
              driveMapRot.map(controllerState.value().Axes.RightX) == 0) {
             // Vibration pulse to indicate drive mode activated
-            controller.SetVibration(1.0, 1.0, 500ms);
+            controller.SetVibration(0.3, 0.3, 500ms);
             driveMode = true;
           }
           else {
