@@ -57,6 +57,12 @@ Add the following lines to `/boot/config.txt`
 
 1. `sudo apt-get install can-utils`
 
+### xpadneo
+1. `sudo apt install dkms linux-headers`
+2. `git clone https://github.com/atar-axis/xpadneo.git`
+3. `cd xpadneo`
+4. `sudo ./install.sh`
+
 ## Bare Minimum To Pair XBox Series Controller
 
 1. Update controller firmware in Windows using [XBox Accessories App](https://www.microsoft.com/en-us/p/xbox-accessories/9nblggh30xj3)

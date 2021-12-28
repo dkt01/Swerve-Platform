@@ -100,7 +100,7 @@ int main(int /*argc*/, char** /*argv*/) {
         }
         else {
           calTrigger = false;
-          controller.SetVibration(ArgosLib::VibrationAlternateWave(1_s, 1.0, 1.0));
+          controller.SetVibration(ArgosLib::VibrationAlternatePulse(1_s, 0.0, 1.0));
         }
       }
       else {
@@ -119,7 +119,7 @@ int main(int /*argc*/, char** /*argv*/) {
           }
           else {
             // Require 0 input before activating drive.  Vibrate to indicate error
-            controller.SetVibration(ArgosLib::VibrationSyncPulse(500_ms, 1.0, 1.0));
+            controller.SetVibration(ArgosLib::VibrationSyncPulse(500_ms, 0.0, 1.0));
             active = false;
           }
         }
@@ -132,6 +132,10 @@ int main(int /*argc*/, char** /*argv*/) {
           swervePlatform.Stop();
         }
       } else {
+        if(!calMode) {
+          // Prevent sticky cal mode vibration
+          controller.SetVibration(0.0, 0.0);
+        }
         driveMode = false;
         swervePlatform.Stop();
       }

@@ -45,6 +45,7 @@ class XBoxController {
       bool RB;
       bool Back;
       bool Start;
+      bool XBox;
       bool StickLeft;
       bool StickRight;
       bool LT;
@@ -92,7 +93,8 @@ class XBoxController {
     void UpdateVibration();
 
     const int m_index;
-    SDL_Joystick* m_pJoystick;
+    SDL_GameController* m_pJoystick;
+    ControllerState m_latestState;
 
     ArgosLib::VibrationModel m_vibrationModel;
 
