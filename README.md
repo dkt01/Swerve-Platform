@@ -4,6 +4,51 @@
 
 Robotic swerve drive platform developed for Northwoods Church Christmas program
 
+## Controls
+
+Control is all using an XBox Series wireless controller.
+
+### Driving Inputs
+
+| Input | Control Description |
+| ----- | ------------------- |
+| <kbd>RB</kbd> | Hold to enable driving |
+| Left Joystick Forward/Reverse | Drive forward/reverse |
+| Left Joystick Left/Right | Drive left/right |
+| Right Joystick Left/Right | Rotate counter-clockwise/clockwise |
+| <kbd>LT</kbd> + <kbd>RT</kbd> | Hold for 2 seconds to enable module homing |
+| <kbd>A</kbd> | When in homing mode, hold for 1 second to save new home position |
+
+### Vibration Feedback
+
+The driver controller will vibrate to indicate various events.
+
+| Vibration Pattern | Description |
+| ----------------- | ----------- |
+| Faint rumble with no buttons/joysticks moved | XBox Controller connected to Raspberry Pi after controller power on or platform reboot |
+| 500ms pulse | Indicates drive mode has been activated and joysticks now command platform motion.  Will occur when <kbd>RB<k/bd> is pressed and joysticks are centered. |
+| Rapid pulses | Indicates drive mode is locked out because joysticks are not centered.  Will occur when <kbd>RB</kbd> is pressed while joysticks are not centered. |
+| Continuous waves | Indicates homing mode is primed.  Will occur when <kbd>LT</kbd> and <kbd>RT</kbd> are both held for at least two seconds. |
+| Continuous medium intensity | Indicates new home position was saved.  Will occur after homing mode is primed and <kbd>A</kbd> is held for an additional 1 second. |
+
+### Homing
+
+Whenever a module is swapped; a module, motor, or sensor is unmounted and remounted; or a freshly imaged Raspberry Pi controller is installed, you will need to "home" the swerve modules so they all move together properly.  Symptoms of an improperly homed platform range from the platform not driving straight to the platform moving erratically or stalling.  You should see all modules pointed in the same direction when moving using only the left joystick after homing is performed successfully.
+
+To save a new home position, do the following:
+
+1. Turn platform power off
+2. Align all modules so the bevel gear on the wheel is facing toward the right side of the platform.  Using a square is best to ensure each module is aligned to the platform
+3. Turn platform power on
+4. Connect XBox Controller
+5. Prime homing calibration by holding <kbd>LT</kbd> & <kbd>RT</kbd> for at least 2 seconds
+6. You should feel a continuous wave vibration pattern when homing is primed
+7. While continuing to hold <kbd>LT</kbd> & <kbd>RT</kbd>, press and hold <kbd>A</kbd> for at least 1 second
+8. You should feel continuous steady vibration when homing has saved
+9. Release all buttons and try driving to validate homing
+
+Homing values save to `/home/pi/.config/Swerve-Platform/moduleHomes` on the Raspberry Pi, so everything is saved across power cycles.
+
 ## How To Build
 
 ### Prerequisites
@@ -36,15 +81,26 @@ Steps 1-4 may be skipped once the environment is set up appropriately.
 
 ## Required Software Packages
 
+### Raspberry Pi Image
+
+The `image/` directory contains directives to set up an image with most settings preconfigured.  Unfortunately, this is not building correctly in GitHub actions, so the manual steps are documented here.
+
+Start with [Raspberry Pi OS Lite](https://www.raspberrypi.com/software/operating-systems/#raspberry-pi-os-legacy).  Legacy (Buster) definitely works.  Latest (Bullseye) should also work, but may have some compatibility issues.  Use 32-bit OS version if prompted.
+
+Use [Balena Etcher](https://www.balena.io/etcher/) to write the downloaded Raspberry Pi OS image to a microSD card.
+   
+On first boot,
+
+1. Expand the filesystem so the full SD card space is usable.  This can be done using [`raspi-config`](https://piwithvic.com/raspberry-pi-expand-filesystem-micro-sd-card)
+2. [Change the hostname](https://www.tomshardware.com/how-to/raspberry-pi-change-hostname#change-raspberry-pi-hostname-at-command-prompt-xa0) to `NWCC-platform-alpha` (or your preferred hostname that will later be used for SSH access)
+3. [Enable SSH access](https://phoenixnap.com/kb/enable-ssh-raspberry-pi#ftoc-heading-4)
+   
+Then reboot before continuing setup.
+
 ### Linux Platform Software
 
 1. `sudo apt-get update`
 2. `sudo apt-get upgrade`
-
-### hostname Loopback
-
-Add the following lines to `/etc/hosts`
-1. `127.0.1.1 NWCC-platform-alpha`
 
 ### PiCAN
 
