@@ -96,14 +96,14 @@ namespace sensorConfig {
       constexpr static auto magOffset = 0;
     };
     struct rearRightTurn {
-      constexpr static auto address = 12;
+      constexpr static auto address = 11;
       constexpr static bool direction = false;
       constexpr static auto initMode = ctre::phoenix::sensors::SensorInitializationStrategy::BootToAbsolutePosition;
       constexpr static auto range = ctre::phoenix::sensors::AbsoluteSensorRange::Unsigned_0_to_360;
       constexpr static auto magOffset = 0;
     };
     struct rearLeftTurn {
-      constexpr static auto address = 13;
+      constexpr static auto address = 12;
       constexpr static bool direction = false;
       constexpr static auto initMode = ctre::phoenix::sensors::SensorInitializationStrategy::BootToAbsolutePosition;
       constexpr static auto range = ctre::phoenix::sensors::AbsoluteSensorRange::Unsigned_0_to_360;
@@ -132,10 +132,15 @@ namespace motorConfig {
       constexpr static auto pid0_kF = controlLoop::drive::drive::kF;
       constexpr static auto pid0_iZone = controlLoop::drive::drive::iZone;
       constexpr static auto pid0_allowableError = controlLoop::drive::drive::allowableError;
-      constexpr static auto forwardLimit_normalState = ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyOpen;
-      constexpr static auto forwardLimit_source = ctre::phoenix::motorcontrol::LimitSwitchSource_FeedbackConnector;
-      constexpr static auto reverseLimit_normalState = ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyOpen;
-      constexpr static auto reverseLimit_source = ctre::phoenix::motorcontrol::LimitSwitchSource_FeedbackConnector;
+      constexpr static auto supplyCurrentLimit = 30_A;
+      constexpr static auto supplyCurrentThreshold = 30_A;
+      constexpr static auto supplyCurrentThresholdTime = 100_ms;
+      constexpr static auto forwardLimit_normalState = ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyClosed;
+      constexpr static auto forwardLimit_source = ctre::phoenix::motorcontrol::LimitSwitchSource_RemoteTalonSRX;
+      constexpr static auto forwardLimit_deviceID = 4;
+      // constexpr static auto reverseLimit_normalState = ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyClosed;
+      // constexpr static auto reverseLimit_source = ctre::phoenix::motorcontrol::LimitSwitchSource_RemoteTalonSRX;
+      // constexpr static auto reverseLimit_deviceID = 4;
     };
     struct frontRightDrive {
       constexpr static auto address = 2;
@@ -155,12 +160,15 @@ namespace motorConfig {
       constexpr static auto pid0_kF = controlLoop::drive::drive::kF;
       constexpr static auto pid0_iZone = controlLoop::drive::drive::iZone;
       constexpr static auto pid0_allowableError = controlLoop::drive::drive::allowableError;
-      // constexpr static auto forwardLimit_normalState = ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyOpen;
-      // constexpr static auto forwardLimit_source = ctre::phoenix::motorcontrol::LimitSwitchSource_RemoteTalonSRX;
-      // constexpr static auto forwardLimit_deviceID = 1;
-      // constexpr static auto reverseLimit_normalState = ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyOpen;
+      constexpr static auto supplyCurrentLimit = 30_A;
+      constexpr static auto supplyCurrentThreshold = 30_A;
+      constexpr static auto supplyCurrentThresholdTime = 100_ms;
+      constexpr static auto forwardLimit_normalState = ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyClosed;
+      constexpr static auto forwardLimit_source = ctre::phoenix::motorcontrol::LimitSwitchSource_RemoteTalonSRX;
+      constexpr static auto forwardLimit_deviceID = 4;
+      // constexpr static auto reverseLimit_normalState = ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyClosed;
       // constexpr static auto reverseLimit_source = ctre::phoenix::motorcontrol::LimitSwitchSource_RemoteTalonSRX;
-      // constexpr static auto reverseLimit_deviceID = 1;
+      // constexpr static auto reverseLimit_deviceID = 4;
     };
     struct rearRightDrive {
       constexpr static auto address = 3;
@@ -180,12 +188,15 @@ namespace motorConfig {
       constexpr static auto pid0_kF = controlLoop::drive::drive::kF;
       constexpr static auto pid0_iZone = controlLoop::drive::drive::iZone;
       constexpr static auto pid0_allowableError = controlLoop::drive::drive::allowableError;
-      constexpr static auto forwardLimit_normalState = ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyOpen;
+      constexpr static auto supplyCurrentLimit = 30_A;
+      constexpr static auto supplyCurrentThreshold = 30_A;
+      constexpr static auto supplyCurrentThresholdTime = 100_ms;
+      constexpr static auto forwardLimit_normalState = ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyClosed;
       constexpr static auto forwardLimit_source = ctre::phoenix::motorcontrol::LimitSwitchSource_RemoteTalonSRX;
-      constexpr static auto forwardLimit_deviceID = 1;
-      constexpr static auto reverseLimit_normalState = ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyOpen;
-      constexpr static auto reverseLimit_source = ctre::phoenix::motorcontrol::LimitSwitchSource_RemoteTalonSRX;
-      constexpr static auto reverseLimit_deviceID = 1;
+      constexpr static auto forwardLimit_deviceID = 4;
+      // constexpr static auto reverseLimit_normalState = ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyClosed;
+      // constexpr static auto reverseLimit_source = ctre::phoenix::motorcontrol::LimitSwitchSource_RemoteTalonSRX;
+      // constexpr static auto reverseLimit_deviceID = 4;
     };
     struct rearLeftDrive {
       constexpr static auto address = 4;
@@ -205,12 +216,13 @@ namespace motorConfig {
       constexpr static auto pid0_kF = controlLoop::drive::drive::kF;
       constexpr static auto pid0_iZone = controlLoop::drive::drive::iZone;
       constexpr static auto pid0_allowableError = controlLoop::drive::drive::allowableError;
-      constexpr static auto forwardLimit_normalState = ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyOpen;
-      constexpr static auto forwardLimit_source = ctre::phoenix::motorcontrol::LimitSwitchSource_RemoteTalonSRX;
-      constexpr static auto forwardLimit_deviceID = 1;
-      constexpr static auto reverseLimit_normalState = ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyOpen;
-      constexpr static auto reverseLimit_source = ctre::phoenix::motorcontrol::LimitSwitchSource_RemoteTalonSRX;
-      constexpr static auto reverseLimit_deviceID = 1;
+      constexpr static auto supplyCurrentLimit = 30_A;
+      constexpr static auto supplyCurrentThreshold = 30_A;
+      constexpr static auto supplyCurrentThresholdTime = 100_ms;
+      constexpr static auto forwardLimit_normalState = ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyClosed;
+      constexpr static auto forwardLimit_source = ctre::phoenix::motorcontrol::LimitSwitchSource_FeedbackConnector;
+      constexpr static auto reverseLimit_normalState = ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyClosed;
+      constexpr static auto reverseLimit_source = ctre::phoenix::motorcontrol::LimitSwitchSource_FeedbackConnector;
     };
     struct frontLeftTurn {
       constexpr static auto address = 5;
@@ -229,12 +241,15 @@ namespace motorConfig {
       constexpr static auto pid0_kF = controlLoop::drive::rotate::kF;
       constexpr static auto pid0_iZone = controlLoop::drive::rotate::iZone;
       constexpr static auto pid0_allowableError = controlLoop::drive::rotate::allowableError;
-      constexpr static auto forwardLimit_normalState = ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyOpen;
+      constexpr static auto supplyCurrentLimit = 30_A;
+      constexpr static auto supplyCurrentThreshold = 30_A;
+      constexpr static auto supplyCurrentThresholdTime = 100_ms;
+      constexpr static auto forwardLimit_normalState = ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyClosed;
       constexpr static auto forwardLimit_source = ctre::phoenix::motorcontrol::LimitSwitchSource_RemoteTalonSRX;
-      constexpr static auto forwardLimit_deviceID = 1;
-      constexpr static auto reverseLimit_normalState = ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyOpen;
-      constexpr static auto reverseLimit_source = ctre::phoenix::motorcontrol::LimitSwitchSource_RemoteTalonSRX;
-      constexpr static auto reverseLimit_deviceID = 1;
+      constexpr static auto forwardLimit_deviceID = 4;
+      // constexpr static auto reverseLimit_normalState = ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyClosed;
+      // constexpr static auto reverseLimit_source = ctre::phoenix::motorcontrol::LimitSwitchSource_RemoteTalonSRX;
+      // constexpr static auto reverseLimit_deviceID = 4;
     };
     struct frontRightTurn {
       constexpr static auto address = 6;
@@ -253,12 +268,15 @@ namespace motorConfig {
       constexpr static auto pid0_kF = controlLoop::drive::rotate::kF;
       constexpr static auto pid0_iZone = controlLoop::drive::rotate::iZone;
       constexpr static auto pid0_allowableError = controlLoop::drive::rotate::allowableError;
-      // constexpr static auto forwardLimit_normalState = ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyOpen;
-      // constexpr static auto forwardLimit_source = ctre::phoenix::motorcontrol::LimitSwitchSource_RemoteTalonSRX;
-      // constexpr static auto forwardLimit_deviceID = 1;
-      // constexpr static auto reverseLimit_normalState = ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyOpen;
+      constexpr static auto supplyCurrentLimit = 30_A;
+      constexpr static auto supplyCurrentThreshold = 30_A;
+      constexpr static auto supplyCurrentThresholdTime = 100_ms;
+      constexpr static auto forwardLimit_normalState = ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyClosed;
+      constexpr static auto forwardLimit_source = ctre::phoenix::motorcontrol::LimitSwitchSource_RemoteTalonSRX;
+      constexpr static auto forwardLimit_deviceID = 4;
+      // constexpr static auto reverseLimit_normalState = ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyClosed;
       // constexpr static auto reverseLimit_source = ctre::phoenix::motorcontrol::LimitSwitchSource_RemoteTalonSRX;
-      // constexpr static auto reverseLimit_deviceID = 1;
+      // constexpr static auto reverseLimit_deviceID = 4;
     };
     struct rearRightTurn {
       constexpr static auto address = 7;
@@ -277,12 +295,15 @@ namespace motorConfig {
       constexpr static auto pid0_kF = controlLoop::drive::rotate::kF;
       constexpr static auto pid0_iZone = controlLoop::drive::rotate::iZone;
       constexpr static auto pid0_allowableError = controlLoop::drive::rotate::allowableError;
-      constexpr static auto forwardLimit_normalState = ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyOpen;
+      constexpr static auto supplyCurrentLimit = 30_A;
+      constexpr static auto supplyCurrentThreshold = 30_A;
+      constexpr static auto supplyCurrentThresholdTime = 100_ms;
+      constexpr static auto forwardLimit_normalState = ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyClosed;
       constexpr static auto forwardLimit_source = ctre::phoenix::motorcontrol::LimitSwitchSource_RemoteTalonSRX;
-      constexpr static auto forwardLimit_deviceID = 1;
-      constexpr static auto reverseLimit_normalState = ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyOpen;
-      constexpr static auto reverseLimit_source = ctre::phoenix::motorcontrol::LimitSwitchSource_RemoteTalonSRX;
-      constexpr static auto reverseLimit_deviceID = 1;
+      constexpr static auto forwardLimit_deviceID = 4;
+      // constexpr static auto reverseLimit_normalState = ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyClosed;
+      // constexpr static auto reverseLimit_source = ctre::phoenix::motorcontrol::LimitSwitchSource_RemoteTalonSRX;
+      // constexpr static auto reverseLimit_deviceID = 4;
     };
     struct rearLeftTurn {
       constexpr static auto address = 8;
@@ -301,12 +322,15 @@ namespace motorConfig {
       constexpr static auto pid0_kF = controlLoop::drive::rotate::kF;
       constexpr static auto pid0_iZone = controlLoop::drive::rotate::iZone;
       constexpr static auto pid0_allowableError = controlLoop::drive::rotate::allowableError;
-      constexpr static auto forwardLimit_normalState = ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyOpen;
+      constexpr static auto supplyCurrentLimit = 30_A;
+      constexpr static auto supplyCurrentThreshold = 30_A;
+      constexpr static auto supplyCurrentThresholdTime = 100_ms;
+      constexpr static auto forwardLimit_normalState = ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyClosed;
       constexpr static auto forwardLimit_source = ctre::phoenix::motorcontrol::LimitSwitchSource_RemoteTalonSRX;
-      constexpr static auto forwardLimit_deviceID = 1;
-      constexpr static auto reverseLimit_normalState = ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyOpen;
-      constexpr static auto reverseLimit_source = ctre::phoenix::motorcontrol::LimitSwitchSource_RemoteTalonSRX;
-      constexpr static auto reverseLimit_deviceID = 1;
+      constexpr static auto forwardLimit_deviceID = 4;
+      // constexpr static auto reverseLimit_normalState = ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyClosed;
+      // constexpr static auto reverseLimit_source = ctre::phoenix::motorcontrol::LimitSwitchSource_RemoteTalonSRX;
+      // constexpr static auto reverseLimit_deviceID = 4;
     };
   }  // namespace drive
 } // namespace motorConfig

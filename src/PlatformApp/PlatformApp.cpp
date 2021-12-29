@@ -97,7 +97,7 @@ int main(int /*argc*/, char** /*argv*/) {
     else {
       if(homingModeDebounce(controllerState.value().Buttons.LT &&
                             controllerState.value().Buttons.RT &&
-                            !controllerState.value().Buttons.LB &&
+                            !controllerState.value().Buttons.RB &&
                             ! driveMode)) {
         if(!calMode) {
           homingCalDebounce(false); // Don't activate immediately
@@ -119,7 +119,7 @@ int main(int /*argc*/, char** /*argv*/) {
         calMode = false;
       }
 
-      if(controllerState.value().Buttons.LB) {
+      if(controllerState.value().Buttons.RB) {
         bool active = true;
         if(!driveMode) {
           if(driveMapLon.map(controllerState.value().Axes.LeftY) == 0 &&
