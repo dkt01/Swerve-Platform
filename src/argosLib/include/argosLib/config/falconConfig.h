@@ -39,6 +39,8 @@ HAS_MEMBER(supplyCurrentLimit)
 HAS_MEMBER(supplyCurrentThreshold)
 HAS_MEMBER(supplyCurrentThresholdTime)
 HAS_MEMBER(voltCompSat)
+HAS_MEMBER(closedLoopRamp)
+HAS_MEMBER(openLoopRamp)
 
 /**
  * @brief Configures a CTRE Falcon with only the fields provided.  All other fields
@@ -72,6 +74,8 @@ HAS_MEMBER(voltCompSat)
  *           - supplyCurrentThreshold
  *           - supplyCurrentThresholdTime
  *           - voltCompSat
+ *           - closedLoopRamp
+ *           - openLoopRamp
  * @param motorController Falcon object to configure
  * @param configTimeout Time to wait for response from Falcon
  * @return true Configuration succeeded
@@ -97,6 +101,14 @@ bool FalconConfig(TalonFX& motorController, units::millisecond_t configTimeout) 
     motorController.EnableVoltageCompensation(true);
   } else {
     motorController.EnableVoltageCompensation(false);
+  }
+  if constexpr (has_closedLoopRamp<T>{}) {
+    constexpr units::second_t rampTime = T::closedLoopRamp;
+    config.closedloopRamp = rampTime.to<double>();
+  }
+  if constexpr (has_openLoopRamp<T>{}) {
+    constexpr units::second_t rampTime = T::openLoopRamp;
+    config.openloopRamp = rampTime.to<double>();
   }
   if constexpr (has_remoteFilter0_addr<T>{} && has_remoteFilter0_type<T>{}) {
     ctre::phoenix::motorcontrol::can::FilterConfiguration filterConfig;
