@@ -26,7 +26,7 @@ The driver controller will vibrate to indicate various events.
 | Vibration Pattern | Description |
 | ----------------- | ----------- |
 | Faint rumble with no buttons/joysticks moved | XBox Controller connected to Raspberry Pi after controller power on or platform reboot |
-| 500ms pulse | Indicates drive mode has been activated and joysticks now command platform motion.  Will occur when <kbd>RB<k/bd> is pressed and joysticks are centered. |
+| 500ms pulse | Indicates drive mode has been activated and joysticks now command platform motion.  Will occur when <kbd>RB</kbd> is pressed and joysticks are centered. |
 | Rapid pulses | Indicates drive mode is locked out because joysticks are not centered.  Will occur when <kbd>RB</kbd> is pressed while joysticks are not centered. |
 | Continuous waves | Indicates homing mode is primed.  Will occur when <kbd>LT</kbd> and <kbd>RT</kbd> are both held for at least two seconds. |
 | Continuous medium intensity | Indicates new home position was saved.  Will occur after homing mode is primed and <kbd>A</kbd> is held for an additional 1 second. |
@@ -88,13 +88,13 @@ The `image/` directory contains directives to set up an image with most settings
 Start with [Raspberry Pi OS Lite](https://www.raspberrypi.com/software/operating-systems/#raspberry-pi-os-legacy).  Legacy (Buster) definitely works.  Latest (Bullseye) should also work, but may have some compatibility issues.  Use 32-bit OS version if prompted.
 
 Use [Balena Etcher](https://www.balena.io/etcher/) to write the downloaded Raspberry Pi OS image to a microSD card.
-   
+
 On first boot,
 
 1. Expand the filesystem so the full SD card space is usable.  This can be done using [`raspi-config`](https://piwithvic.com/raspberry-pi-expand-filesystem-micro-sd-card)
 2. [Change the hostname](https://www.tomshardware.com/how-to/raspberry-pi-change-hostname#change-raspberry-pi-hostname-at-command-prompt-xa0) to `NWCC-platform-alpha` (or your preferred hostname that will later be used for SSH access)
 3. [Enable SSH access](https://phoenixnap.com/kb/enable-ssh-raspberry-pi#ftoc-heading-4)
-   
+
 Then reboot before continuing setup.
 
 ### Linux Platform Software
