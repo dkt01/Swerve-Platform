@@ -78,6 +78,9 @@ namespace joystickAxisMaps {
                                      interpMapPoint{ 1.0,   1.0}};
 }
 
+
+constexpr static auto canInterfaceName = "can0";
+
 namespace sensorConfig {
   namespace drive {
     struct frontLeftTurn {

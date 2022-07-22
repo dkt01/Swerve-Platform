@@ -9,6 +9,7 @@
 SwervePlatform::SwervePlatform(const PlatformDimensions &dimensions,
                                const feet_per_second_t maxVelocity,
                                std::unique_ptr<ArgosLib::SwerveHomeStorageInterface> homingStorage,
+                               const std::string& canInterfaceName,
                                const auto &frontLeftDriveConfig,
                                const auto &frontRightDriveConfig,
                                const auto &rearRightDriveConfig,
@@ -21,18 +22,18 @@ SwervePlatform::SwervePlatform(const PlatformDimensions &dimensions,
                                const auto &frontRightTurnEncoderConfig,
                                const auto &rearRightTurnEncoderConfig,
                                const auto &rearLeftTurnEncoderConfig)
-    : m_motorDriveFrontLeft(frontLeftDriveConfig.address)
-    , m_motorDriveFrontRight(frontRightDriveConfig.address)
-    , m_motorDriveRearRight(rearRightDriveConfig.address)
-    , m_motorDriveRearLeft(rearLeftDriveConfig.address)
-    , m_motorTurnFrontLeft(frontLeftTurnConfig.address)
-    , m_motorTurnFrontRight(frontRightTurnConfig.address)
-    , m_motorTurnRearRight(rearRightTurnConfig.address)
-    , m_motorTurnRearLeft(rearLeftTurnConfig.address)
-    , m_encoderTurnFrontLeft(frontLeftTurnEncoderConfig.address)
-    , m_encoderTurnFrontRight(frontRightTurnEncoderConfig.address)
-    , m_encoderTurnRearRight(rearRightTurnEncoderConfig.address)
-    , m_encoderTurnRearLeft(rearLeftTurnEncoderConfig.address)
+    : m_motorDriveFrontLeft(frontLeftDriveConfig.address, canInterfaceName)
+    , m_motorDriveFrontRight(frontRightDriveConfig.address, canInterfaceName)
+    , m_motorDriveRearRight(rearRightDriveConfig.address, canInterfaceName)
+    , m_motorDriveRearLeft(rearLeftDriveConfig.address, canInterfaceName)
+    , m_motorTurnFrontLeft(frontLeftTurnConfig.address, canInterfaceName)
+    , m_motorTurnFrontRight(frontRightTurnConfig.address, canInterfaceName)
+    , m_motorTurnRearRight(rearRightTurnConfig.address, canInterfaceName)
+    , m_motorTurnRearLeft(rearLeftTurnConfig.address, canInterfaceName)
+    , m_encoderTurnFrontLeft(frontLeftTurnEncoderConfig.address, canInterfaceName)
+    , m_encoderTurnFrontRight(frontRightTurnEncoderConfig.address, canInterfaceName)
+    , m_encoderTurnRearRight(rearRightTurnEncoderConfig.address, canInterfaceName)
+    , m_encoderTurnRearLeft(rearLeftTurnEncoderConfig.address, canInterfaceName)
     , m_maxVelocity(maxVelocity)
     , m_pHomingStorage(std::move(homingStorage))
     , m_activeControlMode(ControlMode::robotCentric) {

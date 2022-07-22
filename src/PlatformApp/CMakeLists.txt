@@ -12,10 +12,6 @@ target_link_libraries(${PROJECT_NAME} SwervePlatform
                                       argosLib
                                       CTRE_Phoenix
                                       CTRE_PhoenixCCI
-                                      CTRE_PhoenixDiagnostics
-                                      CTRE_PhoenixPlatform_socketcan
-                                      CTRE_PhoenixCanutils
-                                      CTRE_PhoenixCore
                                       Threads::Threads
                                       SDL2)
 

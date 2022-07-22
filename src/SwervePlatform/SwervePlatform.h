@@ -43,6 +43,7 @@ class SwervePlatform {
     SwervePlatform(const PlatformDimensions &dimensions,
                    const feet_per_second_t maxVelocity,
                    std::unique_ptr<ArgosLib::SwerveHomeStorageInterface> homingStorage,
+                   const std::string& canInterfaceName,
                    const auto &frontLeftDriveConfig,
                    const auto &frontRightDriveConfig,
                    const auto &rearRightDriveConfig,

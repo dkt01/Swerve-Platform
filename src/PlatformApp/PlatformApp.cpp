@@ -10,6 +10,7 @@
 #include "SwervePlatformHomingStorage.h"
 #include <chrono>
 #include <unistd.h>
+#include <signal.h>
 #include <thread>
 #include <units/velocity.h>
 #include <units/mass.h>
@@ -48,14 +49,12 @@ int main(int /*argc*/, char** /*argv*/) {
   signal(SIGINT, signal_callback_handler);
   signal(SIGTERM, signal_callback_handler);
 
-  std::string interface = "can0";
-  ctre::phoenix::platform::can::SetCANInterface(interface.c_str());
-
   XBoxController controller(0);
 
   SwervePlatform swervePlatform(dimensions,
                                 2_fps,
                                 std::make_unique<SwervePlatformHomingStorage>(),
+                                canInterfaceName,
                                 motorConfig::drive::frontLeftDrive{},
                                 motorConfig::drive::frontRightDrive{},
                                 motorConfig::drive::rearRightDrive{},
@@ -85,7 +84,7 @@ int main(int /*argc*/, char** /*argv*/) {
 
   while(!shutdown) {
     /// @todo robot mode management
-    ctre::phoenix::unmanaged::FeedEnable(controlLoop::main::timeout.to<int>());
+    ctre::phoenix::unmanaged::Unmanaged::FeedEnable(controlLoop::main::timeout.to<int>());
     auto controllerState = controller.CurrentState();
 
     // Error with controller, stop platform
