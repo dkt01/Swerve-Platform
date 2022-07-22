@@ -2,7 +2,7 @@
 
 #include <cstddef>
 
-namespace ctre{ namespace phoenix{ namespace led{ 
+namespace ctre{ namespace phoenix{ namespace led{
 
 class BaseStandardAnimation;
 class BaseTwoSizeAnimation;
@@ -16,7 +16,7 @@ class Animation {
 public:
     /**
      * Constructor for an Animation class
-     * @param idx The animation-specific ID 
+     * @param idx The animation-specific ID
      * @param speed The rate at which the animation runs at. Higher is generally faster
      * @param numLed The number of LEDs to run the animation on
      * @param ledOffset Where to start the animation

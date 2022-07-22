@@ -94,7 +94,7 @@ namespace ctre {
 				/**
 				 * Util class to help with talon configs
 				 */
-				class TalonSRXConfigUtil : BaseTalonConfigUtil { 
+				class TalonSRXConfigUtil : BaseTalonConfigUtil {
 				private:
 					static struct TalonSRXConfiguration _default;
 				public:

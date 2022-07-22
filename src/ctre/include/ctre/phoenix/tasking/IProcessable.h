@@ -1,6 +1,6 @@
 #pragma once
 namespace ctre { namespace phoenix { namespace tasking{
-	
+
 /**
  * Interface for processable objects
  */

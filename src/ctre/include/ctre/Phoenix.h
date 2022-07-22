@@ -1,6 +1,6 @@
 #pragma once
 
-/* If you are linking Phoenix on a platform that is *not* the NI RoboRIO, 
+/* If you are linking Phoenix on a platform that is *not* the NI RoboRIO,
  * define Phoenix_No_WPI before the Phoenix.h include.
  * The Phoenix WPI extensions are only available on roboRIO.
  * This is necessary if compiling on RaspberryPi, Jetson, Linux-Desktop, etc.
@@ -49,13 +49,13 @@
 #endif
 
 /*
- * In general it is bad-practice to include namespaces in a C++ header, as this 
+ * In general it is bad-practice to include namespaces in a C++ header, as this
  * can cause a name conflict with other types in other modules.
- * 
- * However doing so allows users to quickly start developing with the Phoenix class library 
+ *
+ * However doing so allows users to quickly start developing with the Phoenix class library
  * with a single include "Phoenix.h", without having to learn the various namespaces.
  * This is particularly useful for aspiring student-programmers who may not understand all of the language features yet.
- * 
+ *
  * Those who understand the benefits of namespaces can instead include the core headers (above)
  * or modify this header if proper namespace-scoping is required.
  */

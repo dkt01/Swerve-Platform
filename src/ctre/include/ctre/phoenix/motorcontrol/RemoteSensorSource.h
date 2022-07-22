@@ -7,7 +7,7 @@ namespace phoenix {
 namespace motorcontrol {
 
 /**
- * Choose the remote sensor source for a motor controller 
+ * Choose the remote sensor source for a motor controller
  */
 enum class RemoteSensorSource {
 	/**
@@ -113,7 +113,7 @@ public:
             case RemoteSensorSource::RemoteSensorSource_GadgeteerPigeon_Pitch   : return "RemoteSensorSource::RemoteSensorSource_GadgeteerPigeon_Pitch";
             case RemoteSensorSource::RemoteSensorSource_GadgeteerPigeon_Roll    : return "RemoteSensorSource::RemoteSensorSource_GadgeteerPigeon_Roll";
 			case RemoteSensorSource::RemoteSensorSource_CANCoder				: return "RemoteSensorSource::RemoteSensorSource_CANCoder";
-            default : return "InvalidValue"; 
+            default : return "InvalidValue";
         }
     }
 };

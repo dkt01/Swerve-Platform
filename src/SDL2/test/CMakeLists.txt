@@ -140,7 +140,7 @@ foreach(APP IN LISTS NEEDS_RESOURCES)
         add_custom_command(TARGET ${APP} POST_BUILD COMMAND ${CMAKE_COMMAND} ARGS -E copy_if_different ${RESOURCE_FILE} $<TARGET_FILE_DIR:${APP}>)
     endforeach(RESOURCE_FILE)
     if(APPLE)
-        # Make sure resource files get installed into macOS/iOS .app bundles.  
+        # Make sure resource files get installed into macOS/iOS .app bundles.
         target_sources(${APP} PRIVATE "${RESOURCE_FILES}")
         set_target_properties(${APP} PROPERTIES RESOURCE "${RESOURCE_FILES}")
     endif()

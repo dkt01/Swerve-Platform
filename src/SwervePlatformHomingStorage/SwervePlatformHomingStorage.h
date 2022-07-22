@@ -9,9 +9,10 @@
 #include <argosLib/general/swerveHomeStorage.h>
 
 class SwervePlatformHomingStorage : public ArgosLib::SwerveHomeStorageInterface {
-  public:
-    virtual bool Save(const ArgosLib::SwerveModulePositions& homePosition) override;
-    virtual std::optional<ArgosLib::SwerveModulePositions> Load() override;
-  private:
-    std::filesystem::path GetFilePath();
+ public:
+  virtual bool Save(const ArgosLib::SwerveModulePositions& homePosition) override;
+  virtual std::optional<ArgosLib::SwerveModulePositions> Load() override;
+
+ private:
+  std::filesystem::path GetFilePath();
 };

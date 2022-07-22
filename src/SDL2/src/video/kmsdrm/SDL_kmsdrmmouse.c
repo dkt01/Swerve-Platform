@@ -68,7 +68,7 @@ void
 KMSDRM_DestroyCursorBO (_THIS, SDL_VideoDisplay *display)
 {
     SDL_DisplayData *dispdata = (SDL_DisplayData *) display->driverdata;
-   
+
     /* Destroy the curso GBM BO. */
     if (dispdata->cursor_bo) {
         KMSDRM_gbm_bo_destroy(dispdata->cursor_bo);
@@ -116,7 +116,7 @@ KMSDRM_CreateCursorBO (SDL_VideoDisplay *display) {
         SDL_SetError("Could not create GBM cursor BO");
         return;
     }
-} 
+}
 
 /* Remove a cursor buffer from a display's DRM cursor BO. */
 static int
@@ -277,7 +277,7 @@ KMSDRM_CreateCursor(SDL_Surface * surface, int hot_x, int hot_y)
     /* All code below assumes ARGB8888 format for the cursor surface,
        like other backends do. Also, the GBM BO pixels have to be
        alpha-premultiplied, but the SDL surface we receive has
-       straight-alpha pixels, so we always have to convert. */ 
+       straight-alpha pixels, so we always have to convert. */
     SDL_PremultiplyAlpha(surface->w, surface->h,
                          surface->format->format, surface->pixels, surface->pitch,
                          SDL_PIXELFORMAT_ARGB8888, curdata->buffer, surface->w * 4);

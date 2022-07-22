@@ -203,7 +203,7 @@ Cocoa_GL_CreateContext(_THIS, SDL_Window * window)
         _this->GL_GetSwapInterval = Cocoa_GLES_GetSwapInterval;
         _this->GL_SwapWindow = Cocoa_GLES_SwapWindow;
         _this->GL_DeleteContext = Cocoa_GLES_DeleteContext;
-        
+
         if (Cocoa_GLES_LoadLibrary(_this, NULL) != 0) {
             return NULL;
         }

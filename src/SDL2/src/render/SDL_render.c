@@ -1361,7 +1361,7 @@ SDL_CreateTextureFromSurface(SDL_Renderer * renderer, SDL_Surface * surface)
 
     if (format == surface->format->format) {
         if (surface->format->Amask && SDL_HasColorKey(surface)) {
-            /* Surface and Renderer formats are identicals. 
+            /* Surface and Renderer formats are identicals.
              * Intermediate conversion is needed to convert color key to alpha (SDL_ConvertColorkeyToAlpha()). */
             direct_update = SDL_FALSE;
         } else {
@@ -2287,9 +2287,9 @@ UpdateLogicalSize(SDL_Renderer *renderer)
         SDL_RenderSetViewport(renderer, NULL);
     } else if (want_aspect > real_aspect) {
         if (scale_policy == 1) {
-            /* We want a wider aspect ratio than is available - 
-             zoom so logical height matches the real height 
-             and the width will grow off the screen 
+            /* We want a wider aspect ratio than is available -
+             zoom so logical height matches the real height
+             and the width will grow off the screen
              */
             scale = (float)h / renderer->logical_h;
             viewport.y = 0;

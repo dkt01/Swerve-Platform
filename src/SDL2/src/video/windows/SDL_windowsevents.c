@@ -605,7 +605,7 @@ static void WIN_CheckICMProfileChanged(SDL_Window* window)
         succeeded = GetICMProfileW(hdc, &fileNameSize, icmFileName);
         DeleteDC(hdc);
         if (succeeded) {
-            
+
             if (SDL_wcsncmp(currentIcmFileName, icmFileName, fileNameSize)) {
                 SDL_wcslcpy(currentIcmFileName, icmFileName, fileNameSize);
                 SDL_SendWindowEvent(window, SDL_WINDOWEVENT_ICCPROF_CHANGED, 0, 0);

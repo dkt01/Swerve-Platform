@@ -38,7 +38,7 @@ namespace ctre {
 				/**
 				 * Get the position of whatever is in the analog pin of the Talon, regardless of
 				 *   whether it is actually being used for feedback.
-				 * 
+				 *
 				 * This method relies on the Status 4 message, which has a default period of 150ms. For more
 				 * information, see: https://phoenix-documentation.readthedocs.io/en/latest/ch18_CommonAPI.html
 				 *
@@ -66,7 +66,7 @@ namespace ctre {
 				/**
 				 * Get the position of whatever is in the analog pin of the Talon, regardless of whether
 				 *   it is actually being used for feedback.
-				 * 
+				 *
 				 * This method relies on the Status 4 message, which has a default period of 150ms. For more
 				 * information, see: https://phoenix-documentation.readthedocs.io/en/latest/ch18_CommonAPI.html
 				 *
@@ -78,7 +78,7 @@ namespace ctre {
 				/**
 				 * Get the velocity of whatever is in the analog pin of the Talon, regardless of
 				 *   whether it is actually being used for feedback.
-				 * 
+				 *
 				 * This method relies on the Status 4 message, which has a default period of 150ms. For more
 				 * information, see: https://phoenix-documentation.readthedocs.io/en/latest/ch18_CommonAPI.html
 				 *
@@ -90,7 +90,7 @@ namespace ctre {
 				/**
 				 * Get the quadrature position of the Talon, regardless of whether
 				 *   it is actually being used for feedback.
-				 * 
+				 *
 				 * This method relies on the Status 3 message, which has a default period of 150ms. For more
 				 * information, see: https://phoenix-documentation.readthedocs.io/en/latest/ch18_CommonAPI.html
 				 *
@@ -140,7 +140,7 @@ namespace ctre {
 				/**
 				 * Get the quadrature velocity, regardless of whether
 				 *   it is actually being used for feedback.
-				 * 
+				 *
 				 * This method relies on the Status 3 message, which has a default period of 150ms. For more
 				 * information, see: https://phoenix-documentation.readthedocs.io/en/latest/ch18_CommonAPI.html
 				 *
@@ -152,7 +152,7 @@ namespace ctre {
 				/**
 				 * Gets pulse width position, regardless of whether
 				 *   it is actually being used for feedback.
-				 * 
+				 *
 				 * This method relies on the Status 8 message, which has a default period of 150ms. For more
 				 * information, see: https://phoenix-documentation.readthedocs.io/en/latest/ch18_CommonAPI.html
 				 *
@@ -177,7 +177,7 @@ namespace ctre {
 				/**
 				 * Gets pulse width velocity, regardless of whether
 				 *   it is actually being used for feedback.
-				 * 
+				 *
 				 * This method relies on the Status 8 message, which has a default period of 150ms. For more
 				 * information, see: https://phoenix-documentation.readthedocs.io/en/latest/ch18_CommonAPI.html
 				 *
@@ -188,7 +188,7 @@ namespace ctre {
 
 				/**
 				 * Gets pulse width rise to fall time.
-				 * 
+				 *
 				 * This method relies on the Status 8 message, which has a default period of 150ms. For more
 				 * information, see: https://phoenix-documentation.readthedocs.io/en/latest/ch18_CommonAPI.html
 				 *
@@ -199,7 +199,7 @@ namespace ctre {
 
 				/**
 				 * Gets pulse width rise to rise time.
-				 * 
+				 *
 				 * This method relies on the Status 8 message, which has a default period of 150ms. For more
 				 * information, see: https://phoenix-documentation.readthedocs.io/en/latest/ch18_CommonAPI.html
 				 *
@@ -210,7 +210,7 @@ namespace ctre {
 
 				/**
 				 * Gets pin state quad a.
-				 * 
+				 *
 				 * This method relies on the Status 3 message, which has a default period of 150ms. For more
 				 * information, see: https://phoenix-documentation.readthedocs.io/en/latest/ch18_CommonAPI.html
 				 *
@@ -221,7 +221,7 @@ namespace ctre {
 
 				/**
 				 * Gets pin state quad b.
-				 * 
+				 *
 				 * This method relies on the Status 3 message, which has a default period of 150ms. For more
 				 * information, see: https://phoenix-documentation.readthedocs.io/en/latest/ch18_CommonAPI.html
 				 *
@@ -232,7 +232,7 @@ namespace ctre {
 
 				/**
 				 * Gets pin state quad index.
-				 * 
+				 *
 				 * This method relies on the Status 3 message, which has a default period of 150ms. For more
 				 * information, see: https://phoenix-documentation.readthedocs.io/en/latest/ch18_CommonAPI.html
 				 *
@@ -243,7 +243,7 @@ namespace ctre {
 
 				/**
 				 * Is forward limit switch closed.
-				 * 
+				 *
 				 * This method relies on the Status 1 message, which has a default period of 10ms. For more
 				 * information, see: https://phoenix-documentation.readthedocs.io/en/latest/ch18_CommonAPI.html
 				 *
@@ -255,7 +255,7 @@ namespace ctre {
 
 				/**
 				 * Is reverse limit switch closed.
-				 * 
+				 *
 				 * This method relies on the Status 1 message, which has a default period of 10ms. For more
 				 * information, see: https://phoenix-documentation.readthedocs.io/en/latest/ch18_CommonAPI.html
 				 *

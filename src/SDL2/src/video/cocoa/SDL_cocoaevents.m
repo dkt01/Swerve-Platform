@@ -345,12 +345,12 @@ LoadMainMenuNibIfAvailable(void)
     infoDict = [[NSBundle mainBundle] infoDictionary];
     if (infoDict) {
         mainNibFileName = [infoDict valueForKey:@"NSMainNibFile"];
-        
+
         if (mainNibFileName) {
             success = [[NSBundle mainBundle] loadNibNamed:mainNibFileName owner:[NSApplication sharedApplication] topLevelObjects:nil];
         }
     }
-    
+
     return success;
 }
 
@@ -368,7 +368,7 @@ CreateApplicationMenus(void)
     if (NSApp == nil) {
         return;
     }
-    
+
     mainMenu = [[NSMenu alloc] init];
 
     /* Create the main menu bar */
@@ -433,7 +433,7 @@ CreateApplicationMenus(void)
     [windowMenu addItemWithTitle:@"Minimize" action:@selector(performMiniaturize:) keyEquivalent:@"m"];
 
     [windowMenu addItemWithTitle:@"Zoom" action:@selector(performZoom:) keyEquivalent:@""];
-    
+
     /* Add the fullscreen toggle menu option, if supported */
     if (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_6) {
         /* Cocoa should update the title to Enter or Exit Full Screen automatically.
@@ -478,7 +478,7 @@ Cocoa_RegisterApp(void)
          */
         if ([NSApp mainMenu] == nil) {
             bool nibLoaded;
-            
+
             nibLoaded = LoadMainMenuNibIfAvailable();
             if (!nibLoaded) {
                 CreateApplicationMenus();

@@ -124,14 +124,14 @@ quit(int rc)
         }
 
 
-/* 
+/*
  * Create shader, load in source, compile, dump debug as necessary.
  *
  * shader: Pointer to return created shader ID.
  * source: Passed-in shader source code.
  * shader_type: Passed to GL, e.g. GL_VERTEX_SHADER.
  */
-void 
+void
 process_shader(GLuint *shader, const char * source, GLint shader_type)
 {
     GLint status = GL_FALSE;
@@ -280,7 +280,7 @@ Render(unsigned int width, unsigned int height, shader_data* data)
 }
 
 
-void renderCopy_angle(float degree_angle) 
+void renderCopy_angle(float degree_angle)
 {
     const float radian_angle = (float)(3.141592 * degree_angle) / 180.0;
     const GLfloat s = (GLfloat) SDL_sin(radian_angle);
@@ -297,7 +297,7 @@ void renderCopy_angle(float degree_angle)
 }
 
 
-void renderCopy_position(SDL_Rect *srcrect, SDL_Rect *dstrect) 
+void renderCopy_position(SDL_Rect *srcrect, SDL_Rect *dstrect)
 {
     GLfloat minx, miny, maxx, maxy;
     GLfloat minu, maxu, minv, maxv;
@@ -361,7 +361,7 @@ void loop()
                 if (sym == SDLK_RIGHT) g_val += 0.05;
                 if (sym == SDLK_UP)    g_angle -= 1;
                 if (sym == SDLK_DOWN)  g_angle += 1;
- 
+
 
                 break;
             }
@@ -401,7 +401,7 @@ void loop()
     matrix_mvp[0][0] = 2.0f / 640.0;
     matrix_mvp[1][1] = -2.0f / 480.0;
     matrix_mvp[3][1] = 1.0f;
-    
+
     if (0)
     {
         float *f = (float *) matrix_mvp;
@@ -426,7 +426,7 @@ void loop()
         rd.x = (w - rd.w) / 2; rd.y = (h - rd.h) / 2;
         renderCopy_position(&rs, &rd);
     }
-    
+
 
     if (!done) {
       for (i = 0; i < state->num_windows; ++i) {
@@ -526,7 +526,7 @@ main(int argc, char *argv[])
         SDL_Log("Out of memory!\n");
         quit(2);
     }
-    
+
     /* Create OpenGL ES contexts */
     for (i = 0; i < state->num_windows; i++) {
         context[i] = SDL_GL_CreateContext(state->windows[i]);
@@ -544,7 +544,7 @@ main(int argc, char *argv[])
     }
 
     SDL_memset(matrix_mvp, 0, sizeof (matrix_mvp));
-    
+
     {
         SDL_Surface *tmp;
         char *f;
@@ -556,7 +556,7 @@ main(int argc, char *argv[])
         } else {
             f = "testgles2_sdf_img_normal.bmp";
         }
-            
+
         SDL_Log("SDF is %s", g_use_SDF ? "enabled" : "disabled");
 
         /* Load SDF BMP image */
@@ -785,9 +785,9 @@ main(int argc, char *argv[])
         SDL_Log("%2.2f frames per second\n",
                ((double) frames * 1000) / (now - then));
     }
-#if !defined(__ANDROID__) && !defined(__NACL__)  
+#if !defined(__ANDROID__) && !defined(__NACL__)
     quit(0);
-#endif    
+#endif
     return 0;
 }
 

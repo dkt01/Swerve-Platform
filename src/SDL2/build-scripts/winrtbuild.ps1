@@ -227,7 +227,7 @@ if ( ! (Build-SDL-WinRT-Variant "SDL" "v120_wp81" "Win32")) { $DidAnyDLLBuildFai
 # Steam's OS-usage surveys indicate that Windows 8.0 use is pretty much nil, plus
 # Microsoft hasn't supported Windows 8.0 development for a few years now.
 # The commented-out lines below may still work on some systems, though.
-# 
+#
 #if ( ! (Build-SDL-WinRT-Variant "SDL" "v110" "ARM"))        { $DidAnyDLLBuildFail = $true }
 #if ( ! (Build-SDL-WinRT-Variant "SDL" "v110" "Win32"))      { $DidAnyDLLBuildFail = $true }
 #if ( ! (Build-SDL-WinRT-Variant "SDL" "v110" "x64"))        { $DidAnyDLLBuildFail = $true }

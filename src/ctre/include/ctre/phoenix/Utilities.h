@@ -2,7 +2,7 @@
 
 namespace ctre {
 namespace phoenix {
-	
+
 /**
  * Class with basic utility methods
  */

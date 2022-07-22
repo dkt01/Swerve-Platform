@@ -22,34 +22,35 @@ void SwervePlatform::SwerveDrive(const double fwVelocity, const double latVeloci
   }
 
   auto moduleStates = RawModuleStates(fwVelocity, latVelocity, rotateVelocity);
+  // printf("FR raw module velocity: %0.2fm/s\n", moduleStates.at(ModuleIndex::frontRight).speed.to<double>());
 
   std::for_each(
       moduleStates.begin(), moduleStates.end(), [](frc::SwerveModuleState& state) { state.angle = -state.angle; });
 
-  moduleStates.at(ModuleIndex::frontLeft) =
-      Optimize(moduleStates.at(ModuleIndex::frontLeft),
-               measureUp::sensorConversion::swerveRotate::toAngle(m_motorTurnFrontLeft.GetSelectedSensorPosition()),
-               measureUp::sensorConversion::swerveRotate::toAngVel(m_motorTurnFrontLeft.GetSelectedSensorVelocity()),
-               measureUp::sensorConversion::swerveDrive::toVel(m_motorDriveFrontLeft.GetSelectedSensorVelocity()),
-               m_maxVelocity);
-  moduleStates.at(ModuleIndex::frontRight) =
-      Optimize(moduleStates.at(ModuleIndex::frontRight),
-               measureUp::sensorConversion::swerveRotate::toAngle(m_motorTurnFrontRight.GetSelectedSensorPosition()),
-               measureUp::sensorConversion::swerveRotate::toAngVel(m_motorTurnFrontRight.GetSelectedSensorVelocity()),
-               measureUp::sensorConversion::swerveDrive::toVel(m_motorDriveFrontRight.GetSelectedSensorVelocity()),
-               m_maxVelocity);
-  moduleStates.at(ModuleIndex::rearRight) =
-      Optimize(moduleStates.at(ModuleIndex::rearRight),
-               measureUp::sensorConversion::swerveRotate::toAngle(m_motorTurnRearRight.GetSelectedSensorPosition()),
-               measureUp::sensorConversion::swerveRotate::toAngVel(m_motorTurnRearRight.GetSelectedSensorVelocity()),
-               measureUp::sensorConversion::swerveDrive::toVel(m_motorDriveRearRight.GetSelectedSensorVelocity()),
-               m_maxVelocity);
-  moduleStates.at(ModuleIndex::rearLeft) =
-      Optimize(moduleStates.at(ModuleIndex::rearLeft),
-               measureUp::sensorConversion::swerveRotate::toAngle(m_motorTurnRearLeft.GetSelectedSensorPosition()),
-               measureUp::sensorConversion::swerveRotate::toAngVel(m_motorTurnRearLeft.GetSelectedSensorVelocity()),
-               measureUp::sensorConversion::swerveDrive::toVel(m_motorDriveRearLeft.GetSelectedSensorVelocity()),
-               m_maxVelocity);
+  moduleStates.at(ModuleIndex::frontLeft) = Optimize(
+      moduleStates.at(ModuleIndex::frontLeft),
+      measureUp::sensorConversion::swerveRotate::toAngle(m_motorTurnFrontLeft.GetSelectedSensorPosition()),
+      0_rpm,  //  measureUp::sensorConversion::swerveRotate::toAngVel(m_motorTurnFrontLeft.GetSelectedSensorVelocity()),
+      0_fps,  //  measureUp::sensorConversion::swerveDrive::toVel(m_motorDriveFrontLeft.GetSelectedSensorVelocity()),
+      m_maxVelocity);
+  moduleStates.at(ModuleIndex::frontRight) = Optimize(
+      moduleStates.at(ModuleIndex::frontRight),
+      measureUp::sensorConversion::swerveRotate::toAngle(m_motorTurnFrontRight.GetSelectedSensorPosition()),
+      0_rpm,  //  measureUp::sensorConversion::swerveRotate::toAngVel(m_motorTurnFrontRight.GetSelectedSensorVelocity()),
+      0_fps,  //  measureUp::sensorConversion::swerveDrive::toVel(m_motorDriveFrontRight.GetSelectedSensorVelocity()),
+      m_maxVelocity);
+  moduleStates.at(ModuleIndex::rearRight) = Optimize(
+      moduleStates.at(ModuleIndex::rearRight),
+      measureUp::sensorConversion::swerveRotate::toAngle(m_motorTurnRearRight.GetSelectedSensorPosition()),
+      0_rpm,  //  measureUp::sensorConversion::swerveRotate::toAngVel(m_motorTurnRearRight.GetSelectedSensorVelocity()),
+      0_fps,  //  measureUp::sensorConversion::swerveDrive::toVel(m_motorDriveRearRight.GetSelectedSensorVelocity()),
+      m_maxVelocity);
+  moduleStates.at(ModuleIndex::rearLeft) = Optimize(
+      moduleStates.at(ModuleIndex::rearLeft),
+      measureUp::sensorConversion::swerveRotate::toAngle(m_motorTurnRearLeft.GetSelectedSensorPosition()),
+      0_rpm,  //  measureUp::sensorConversion::swerveRotate::toAngVel(m_motorTurnRearLeft.GetSelectedSensorVelocity()),
+      0_fps,  //  measureUp::sensorConversion::swerveDrive::toVel(m_motorDriveRearLeft.GetSelectedSensorVelocity()),
+      m_maxVelocity);
 
   ctre::phoenix::motorcontrol::Faults turnFrontLeftFaults, turnFrontRightFaults, turnRearRightFaults,
       turnRearLeftFaults;
@@ -58,22 +59,26 @@ void SwervePlatform::SwerveDrive(const double fwVelocity, const double latVeloci
   m_motorTurnRearRight.GetFaults(turnRearRightFaults);
   m_motorTurnRearLeft.GetFaults(turnRearLeftFaults);
 
-  m_motorDriveFrontLeft.Set(ctre::phoenix::motorcontrol::ControlMode::Velocity,
+  m_motorDriveFrontLeft.Set(
+      ctre::phoenix::motorcontrol::ControlMode::Velocity,
       measureUp::sensorConversion::swerveDrive::fromVel(moduleStates.at(ModuleIndex::frontLeft).speed));
   m_motorTurnFrontLeft.Set(
       ctre::phoenix::motorcontrol::TalonFXControlMode::Position,
       measureUp::sensorConversion::swerveRotate::fromAngle(moduleStates.at(ModuleIndex::frontLeft).angle.Degrees()));
-  m_motorDriveFrontRight.Set(ctre::phoenix::motorcontrol::ControlMode::Velocity,
+  m_motorDriveFrontRight.Set(
+      ctre::phoenix::motorcontrol::ControlMode::Velocity,
       measureUp::sensorConversion::swerveDrive::fromVel(moduleStates.at(ModuleIndex::frontRight).speed));
   m_motorTurnFrontRight.Set(
       ctre::phoenix::motorcontrol::TalonFXControlMode::Position,
       measureUp::sensorConversion::swerveRotate::fromAngle(moduleStates.at(ModuleIndex::frontRight).angle.Degrees()));
-  m_motorDriveRearRight.Set(ctre::phoenix::motorcontrol::ControlMode::Velocity,
+  m_motorDriveRearRight.Set(
+      ctre::phoenix::motorcontrol::ControlMode::Velocity,
       measureUp::sensorConversion::swerveDrive::fromVel(moduleStates.at(ModuleIndex::rearRight).speed));
   m_motorTurnRearRight.Set(
       ctre::phoenix::motorcontrol::TalonFXControlMode::Position,
       measureUp::sensorConversion::swerveRotate::fromAngle(moduleStates.at(ModuleIndex::rearRight).angle.Degrees()));
-  m_motorDriveRearLeft.Set(ctre::phoenix::motorcontrol::ControlMode::Velocity,
+  m_motorDriveRearLeft.Set(
+      ctre::phoenix::motorcontrol::ControlMode::Velocity,
       measureUp::sensorConversion::swerveDrive::fromVel(moduleStates.at(ModuleIndex::rearLeft).speed));
   m_motorTurnRearLeft.Set(
       ctre::phoenix::motorcontrol::TalonFXControlMode::Position,
@@ -81,14 +86,14 @@ void SwervePlatform::SwerveDrive(const double fwVelocity, const double latVeloci
 }
 
 void SwervePlatform::Stop() {
-  for(const auto motor : {&m_motorDriveFrontLeft,
-                          &m_motorDriveFrontRight,
-                          &m_motorDriveRearRight,
-                          &m_motorDriveRearLeft,
-                          &m_motorTurnFrontLeft,
-                          &m_motorTurnFrontRight,
-                          &m_motorTurnRearRight,
-                          &m_motorTurnRearLeft}) {
+  for (const auto motor : {&m_motorDriveFrontLeft,
+                           &m_motorDriveFrontRight,
+                           &m_motorDriveRearRight,
+                           &m_motorDriveRearLeft,
+                           &m_motorTurnFrontLeft,
+                           &m_motorTurnFrontRight,
+                           &m_motorTurnRearRight,
+                           &m_motorTurnRearLeft}) {
     motor->Set(ctre::phoenix::motorcontrol::TalonFXControlMode::PercentOutput, 0);
   }
 }
@@ -101,11 +106,11 @@ void SwervePlatform::Home(const units::degree_t currentAngle) {
   m_encoderTurnRearLeft.SetPosition(currentAngle.to<double>(), 50);
 
   // GetAbsolutePosition returns degrees in configured range
-  const ArgosLib::SwerveModulePositions newHomePositions {
-    .FrontLeft{units::make_unit<units::degree_t>(m_encoderTurnFrontLeft.GetAbsolutePosition()) + currentAngle},
-    .FrontRight{units::make_unit<units::degree_t>(m_encoderTurnFrontRight.GetAbsolutePosition()) + currentAngle},
-    .RearRight{units::make_unit<units::degree_t>(m_encoderTurnRearRight.GetAbsolutePosition()) + currentAngle},
-    .RearLeft{units::make_unit<units::degree_t>(m_encoderTurnRearLeft.GetAbsolutePosition()) + currentAngle},
+  const ArgosLib::SwerveModulePositions newHomePositions{
+      .FrontLeft{units::make_unit<units::degree_t>(m_encoderTurnFrontLeft.GetAbsolutePosition()) + currentAngle},
+      .FrontRight{units::make_unit<units::degree_t>(m_encoderTurnFrontRight.GetAbsolutePosition()) + currentAngle},
+      .RearRight{units::make_unit<units::degree_t>(m_encoderTurnRearRight.GetAbsolutePosition()) + currentAngle},
+      .RearLeft{units::make_unit<units::degree_t>(m_encoderTurnRearLeft.GetAbsolutePosition()) + currentAngle},
   };
 
   m_pHomingStorage->Save(newHomePositions);
@@ -131,11 +136,12 @@ void SwervePlatform::SetControlMode(const ControlMode newControlMode) {
 void SwervePlatform::InitializeTurnEncoderAngles() {
   const auto homeAngles = m_pHomingStorage->Load();
 
-  if(homeAngles) {
+  if (homeAngles) {
     const units::degree_t curFrontLeftPosition =
         units::make_unit<units::degree_t>(m_encoderTurnFrontLeft.GetAbsolutePosition()) - homeAngles.value().FrontLeft;
     const units::degree_t curFrontRighPosition =
-        units::make_unit<units::degree_t>(m_encoderTurnFrontRight.GetAbsolutePosition()) - homeAngles.value().FrontRight;
+        units::make_unit<units::degree_t>(m_encoderTurnFrontRight.GetAbsolutePosition()) -
+        homeAngles.value().FrontRight;
     const units::degree_t curRearRightPosition =
         units::make_unit<units::degree_t>(m_encoderTurnRearRight.GetAbsolutePosition()) - homeAngles.value().RearRight;
     const units::degree_t curRearLeftPosition =

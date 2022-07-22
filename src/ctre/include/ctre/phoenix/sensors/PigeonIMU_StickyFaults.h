@@ -32,7 +32,7 @@ struct PigeonIMU_StickyFaults {
 	}
 	/**
 	 * Creates fault list with specified bit field of faults
-	 * 
+	 *
 	 * @param bits bit field of faults to update with
 	 */
 	PigeonIMU_StickyFaults(uint64_t bits) {

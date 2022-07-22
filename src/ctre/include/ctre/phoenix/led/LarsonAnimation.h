@@ -45,7 +45,7 @@ public:
      * @param mode How the pocket of LEDs will behave once it reaches the end of the strip
      */
     void SetBounceMode(BounceMode mode);
-    
+
     /**
      * Sets the size of the pocket of LEDs
      * @param size The size of the pocket [0, 7]

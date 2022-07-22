@@ -14,31 +14,18 @@
 #include "argosLib/general/interpolation.h"
 
 constexpr SwervePlatform::PlatformDimensions dimensions{
-  .platformLateralWidth = 48_in,
-  .platformLongitudinalLength = 96_in,
-  .frontLeftModule = SwervePlatform::ModuleInset{
-    .lateralInset = 6.75_in,
-    .longitudinalInset = 5.1875_in
-  },
-  .frontRightModule = SwervePlatform::ModuleInset{
-    .lateralInset = 6.75_in,
-    .longitudinalInset = 5.1875_in
-  },
-  .rearRightModule = SwervePlatform::ModuleInset{
-    .lateralInset = 6.75_in,
-    .longitudinalInset = 38.8125_in
-  },
-  .rearLeftModule = SwervePlatform::ModuleInset{
-    .lateralInset = 6.75_in,
-    .longitudinalInset = 38.8125_in
-  }
-};
+    .platformLateralWidth = 48_in,
+    .platformLongitudinalLength = 96_in,
+    .frontLeftModule = SwervePlatform::ModuleInset{.lateralInset = 6.75_in, .longitudinalInset = 5.1875_in},
+    .frontRightModule = SwervePlatform::ModuleInset{.lateralInset = 6.75_in, .longitudinalInset = 5.1875_in},
+    .rearRightModule = SwervePlatform::ModuleInset{.lateralInset = 6.75_in, .longitudinalInset = 38.8125_in},
+    .rearLeftModule = SwervePlatform::ModuleInset{.lateralInset = 6.75_in, .longitudinalInset = 38.8125_in}};
 
 namespace controlLoop {
   namespace main {
     constexpr units::millisecond_t timeout = 100_ms;
     constexpr units::millisecond_t period = 20_ms;
-  }   // namespace main
+  }  // namespace main
   namespace drive {
     namespace drive {
       constexpr double kP = 0.11;
@@ -60,24 +47,21 @@ namespace controlLoop {
 }  // namespace controlLoop
 
 namespace joystickAxisMaps {
-  constexpr std::array driveLongSpeed{interpMapPoint{-1.0,  -1.0},
+  constexpr std::array driveLongSpeed{interpMapPoint{-1.0, -1.0},
                                       interpMapPoint{-0.75, -0.4},
-                                      interpMapPoint{-0.15,  0.0},
-                                      interpMapPoint{ 0.15,  0.0},
-                                      interpMapPoint{ 0.75,  0.4},
-                                      interpMapPoint{ 1.0,   1.0}};
-  constexpr std::array driveLatSpeed{interpMapPoint{-1.0,  -1.0},
+                                      interpMapPoint{-0.15, 0.0},
+                                      interpMapPoint{0.15, 0.0},
+                                      interpMapPoint{0.75, 0.4},
+                                      interpMapPoint{1.0, 1.0}};
+  constexpr std::array driveLatSpeed{interpMapPoint{-1.0, -1.0},
                                      interpMapPoint{-0.75, -0.4},
-                                     interpMapPoint{-0.15,  0.0},
-                                     interpMapPoint{ 0.15,  0.0},
-                                     interpMapPoint{ 0.75,  0.4},
-                                     interpMapPoint{ 1.0,   1.0}};
-  constexpr std::array driveRotSpeed{interpMapPoint{-1.0,  -1.0},
-                                     interpMapPoint{-0.15,  0.0},
-                                     interpMapPoint{ 0.15,  0.0},
-                                     interpMapPoint{ 1.0,   1.0}};
-}
-
+                                     interpMapPoint{-0.15, 0.0},
+                                     interpMapPoint{0.15, 0.0},
+                                     interpMapPoint{0.75, 0.4},
+                                     interpMapPoint{1.0, 1.0}};
+  constexpr std::array driveRotSpeed{
+      interpMapPoint{-1.0, -1.0}, interpMapPoint{-0.15, 0.0}, interpMapPoint{0.15, 0.0}, interpMapPoint{1.0, 1.0}};
+}  // namespace joystickAxisMaps
 
 constexpr static auto canInterfaceName = "can0";
 
@@ -91,7 +75,6 @@ namespace sensorConfig {
       constexpr static auto magOffset = 0;
     };
     struct frontRightTurn {
-
       constexpr static auto address = 10;
       constexpr static bool direction = false;
       constexpr static auto initMode = ctre::phoenix::sensors::SensorInitializationStrategy::BootToAbsolutePosition;
@@ -112,7 +95,7 @@ namespace sensorConfig {
       constexpr static auto range = ctre::phoenix::sensors::AbsoluteSensorRange::Unsigned_0_to_360;
       constexpr static auto magOffset = 0;
     };
-  }    // namespace drive
+  }  // namespace drive
 }  // namespace sensorConfig
 
 namespace motorConfig {
@@ -360,15 +343,16 @@ namespace motorConfig {
       // constexpr static auto reverseLimit_deviceID = 4;
     };
   }  // namespace drive
-} // namespace motorConfig
+}  // namespace motorConfig
 
 class TimedDebounce {
-  public:
-    TimedDebounce(units::second_t activationTime, units::second_t deactivationTime);
-    bool operator()(const bool newValue);
-  private:
-    bool m_activeVal;
-    std::chrono::time_point<std::chrono::steady_clock> m_changeTime;
-    units::second_t m_activationTime;
-    units::second_t m_deactivationTime;
+ public:
+  TimedDebounce(units::second_t activationTime, units::second_t deactivationTime);
+  bool operator()(const bool newValue);
+
+ private:
+  bool m_activeVal;
+  std::chrono::time_point<std::chrono::steady_clock> m_changeTime;
+  units::second_t m_activationTime;
+  units::second_t m_deactivationTime;
 };

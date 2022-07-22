@@ -45,7 +45,7 @@ struct{
 char* disableFrontPoll = NULL;
 char* disableBackPoll = NULL;
 
-void 
+void
 VITA_InitTouch(void)
 {
     disableFrontPoll = SDL_getenv("VITA_DISABLE_TOUCH_FRONT");
@@ -74,13 +74,13 @@ VITA_InitTouch(void)
     SDL_AddTouch((SDL_TouchID)1, SDL_TOUCH_DEVICE_INDIRECT_ABSOLUTE,  "Back");
 }
 
-void 
+void
 VITA_QuitTouch(void){
     sceTouchDisableTouchForce(SCE_TOUCH_PORT_FRONT);
     sceTouchDisableTouchForce(SCE_TOUCH_PORT_BACK);
 }
 
-void 
+void
 VITA_PollTouch(void)
 {
     SDL_FingerID finger_id = 0;

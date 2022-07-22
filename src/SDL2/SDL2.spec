@@ -35,7 +35,7 @@ to develop SDL applications.
 
 
 %prep
-%setup -q 
+%setup -q
 
 %build
 %ifos linux
@@ -96,7 +96,7 @@ rm -rf $RPM_BUILD_ROOT
 
 * Wed Jan 19 2000 Sam Lantinga <slouken@libsdl.org>
 - Re-integrated spec file into SDL distribution
-- 'name' and 'version' come from configure 
+- 'name' and 'version' come from configure
 - Some of the documentation is devel specific
 - Removed SMP support from %build - it doesn't work with libtool anyway
 

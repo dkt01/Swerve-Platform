@@ -152,7 +152,7 @@ loop()
             cy = viewport.y + viewport.h / 2;
             d = (viewport.w + viewport.h) / 5;
 
-            a = (angle * 3.1415) / 180.0; 
+            a = (angle * 3.1415) / 180.0;
             verts[0].position.x = cx + d * SDL_cos(a);
             verts[0].position.y = cy + d * SDL_sin(a);
             verts[0].color.r = 0xFF;
@@ -160,7 +160,7 @@ loop()
             verts[0].color.b = 0;
             verts[0].color.a = 0xFF;
 
-            a = ((angle + 120) * 3.1415) / 180.0; 
+            a = ((angle + 120) * 3.1415) / 180.0;
             verts[1].position.x = cx + d * SDL_cos(a);
             verts[1].position.y = cy + d * SDL_sin(a);
             verts[1].color.r = 0;
@@ -168,7 +168,7 @@ loop()
             verts[1].color.b = 0;
             verts[1].color.a = 0xFF;
 
-            a = ((angle + 240) * 3.1415) / 180.0; 
+            a = ((angle + 240) * 3.1415) / 180.0;
             verts[2].position.x = cx + d * SDL_cos(a);
             verts[2].position.y = cy + d * SDL_sin(a);
             verts[2].color.r = 0;
@@ -294,7 +294,7 @@ main(int argc, char *argv[])
         double fps = ((double) frames * 1000) / (now - then);
         SDL_Log("%2.2f frames per second\n", fps);
     }
-    
+
     quit(0);
 
     return 0;

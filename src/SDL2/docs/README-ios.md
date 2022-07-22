@@ -125,17 +125,17 @@ e.g.
             return 1;
         }
     }
-    
+
     int main(int argc, char *argv[])
     {
         SDL_SetEventFilter(HandleAppEvents, NULL);
-    
+
         ... run your main loop
-    
+
         return 0;
     }
 
-    
+
 Notes -- Accelerometer as Joystick
 ==============================================================================
 
@@ -199,7 +199,7 @@ Once your application is installed its directory tree looks like:
             Preferences/
         tmp/
 
-When your SDL based iPhone application starts up, it sets the working directory to the main bundle (MySDLApp Home/MySDLApp.app), where your application resources are stored.  You cannot write to this directory.  Instead, I advise you to write document files to "../Documents/" and preferences to "../Library/Preferences".  
+When your SDL based iPhone application starts up, it sets the working directory to the main bundle (MySDLApp Home/MySDLApp.app), where your application resources are stored.  You cannot write to this directory.  Instead, I advise you to write document files to "../Documents/" and preferences to "../Library/Preferences".
 
 More information on this subject is available here:
 http://developer.apple.com/library/ios/#documentation/iPhone/Conceptual/iPhoneOSProgrammingGuide/Introduction/Introduction.html
@@ -234,7 +234,7 @@ to your Info.plist:
 <string>MyApp would like to remain connected to nearby bluetooth Game Controllers and Game Pads even when you're not using the app.</string>
 
 
-Game Center 
+Game Center
 ==============================================================================
 
 Game Center integration might require that you break up your main loop in order to yield control back to the system. In other words, instead of running an endless main loop, you run each frame in a callback function, using:
@@ -250,15 +250,15 @@ e.g.
     {
         ... do event handling, frame logic and rendering ...
     }
-    
+
     int main(int argc, char *argv[])
     {
         ... initialize game ...
-    
+
     #if __IPHONEOS__
         // Initialize the Game Center for scoring and matchmaking
         InitGameCenter();
-    
+
         // Set up the game to run in the window animation callback on iOS
         // so that Game Center and so forth works correctly.
         SDL_iPhoneSetAnimationCallback(window, 1, ShowFrame, NULL);

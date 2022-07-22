@@ -69,7 +69,7 @@ struct Faults {
 	 * Supply is rapidly fluctuating and unstable. This fault is specific to Brushless.
 	 */
 	bool SupplyUnstable;
-	
+
 	/**
 	 * @return true if any faults are tripped
 	 */
@@ -113,7 +113,7 @@ struct Faults {
 	}
 	/**
 	 * Creates fault list with specified bit field of faults
-	 * 
+	 *
 	 * @param bits bit field of faults to update with
 	 */
 	Faults(int bits) {

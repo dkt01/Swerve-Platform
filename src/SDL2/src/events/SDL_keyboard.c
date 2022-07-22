@@ -802,7 +802,7 @@ SDL_SendKeyboardKeyInternal(Uint8 source, Uint8 state, SDL_Scancode scancode)
         (keyboard->focus->flags & SDL_WINDOW_KEYBOARD_GRABBED) &&
         (keyboard->focus->flags & SDL_WINDOW_FULLSCREEN) &&
         SDL_GetHintBoolean(SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED, SDL_TRUE)) {
-        /* We will temporarily forfeit our grab by minimizing our window, 
+        /* We will temporarily forfeit our grab by minimizing our window,
            allowing the user to escape the application */
         SDL_MinimizeWindow(keyboard->focus);
     }

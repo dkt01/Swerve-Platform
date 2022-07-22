@@ -417,7 +417,7 @@ struct ref_selector
     T const&,
     const T
   >::type type;
-  
+
   typedef typename conditional<
     bool(traits<T>::Flags & NestByRefBit),
     T &,
@@ -603,7 +603,7 @@ struct plain_row_type
   typedef typename conditional<
     is_same< typename traits<ExpressionType>::XprKind, MatrixXpr >::value,
     MatrixRowType,
-    ArrayRowType 
+    ArrayRowType
   >::type type;
 };
 
@@ -618,7 +618,7 @@ struct plain_col_type
   typedef typename conditional<
     is_same< typename traits<ExpressionType>::XprKind, MatrixXpr >::value,
     MatrixColType,
-    ArrayColType 
+    ArrayColType
   >::type type;
 };
 
@@ -634,7 +634,7 @@ struct plain_diag_type
   typedef typename conditional<
     is_same< typename traits<ExpressionType>::XprKind, MatrixXpr >::value,
     MatrixDiagType,
-    ArrayDiagType 
+    ArrayDiagType
   >::type type;
 };
 
@@ -735,7 +735,7 @@ std::string demangle_flags(int f)
   if(f&DirectAccessBit)             res += " | Direct";
   if(f&NestByRefBit)                res += " | NestByRef";
   if(f&NoPreferredStorageOrderBit)  res += " | NoPreferredStorageOrderBit";
-  
+
   return res;
 }
 #endif
@@ -832,7 +832,7 @@ struct ScalarBinaryOpTraits<void,void,BinaryOp>
 #define EIGEN_CHECK_BINARY_COMPATIBILIY(BINOP,LHS,RHS) \
   EIGEN_STATIC_ASSERT((Eigen::internal::has_ReturnType<ScalarBinaryOpTraits<LHS, RHS,BINOP> >::value), \
     YOU_MIXED_DIFFERENT_NUMERIC_TYPES__YOU_NEED_TO_USE_THE_CAST_METHOD_OF_MATRIXBASE_TO_CAST_NUMERIC_TYPES_EXPLICITLY)
-    
+
 } // end namespace Eigen
 
 #endif // EIGEN_XPRHELPER_H

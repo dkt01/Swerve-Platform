@@ -37,13 +37,13 @@ SceHidMouseReport m_reports[SCE_HID_MAX_REPORT];
 int mouse_hid_handle = 0;
 Uint8 prev_buttons = 0;
 
-void 
+void
 VITA_InitMouse(void)
 {
     sceHidMouseEnumerate(&mouse_hid_handle, 1);
 }
 
-void 
+void
 VITA_PollMouse(void)
 {
     // We skip polling mouse if no window is created

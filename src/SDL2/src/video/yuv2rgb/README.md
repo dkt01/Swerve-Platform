@@ -31,7 +31,7 @@ To generate the rgb file, you can use the ImageMagick convert program:
 Then, for YUV420 to RGB24 conversion, use the test program like that:
 
     ./test_yuv_rgb yuv2rgb image.yuv 4096 2160 image
-  
+
 The second and third parameters are image width and height (that are needed because not available in the raw YUV file), and fourth parameter is the output filename template (several output files will be generated, named for example output_sse.ppm, output_av.ppm, etc.)
 
 Similarly, for RGB24 to YUV420 conversion:

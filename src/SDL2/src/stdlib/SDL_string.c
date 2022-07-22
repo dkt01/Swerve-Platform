@@ -678,7 +678,7 @@ SDL_utf8strlen(const char *str)
             retval++;
         }
     }
-    
+
     return retval;
 }
 

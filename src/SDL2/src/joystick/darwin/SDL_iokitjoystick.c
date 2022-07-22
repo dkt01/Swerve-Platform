@@ -218,7 +218,7 @@ GetHIDScaledCalibratedState(recDevice * pDevice, recElement * pElement, SInt32 m
             *pValue = ((*pValue - pElement->minReport) * deviceScale / readScale) + min;
             returnValue = SDL_TRUE;
         }
-    } 
+    }
     return returnValue;
 }
 
@@ -901,7 +901,7 @@ DARWIN_JoystickRumble(SDL_Joystick *joystick, Uint16 low_frequency_rumble, Uint1
 
     /* Scale and average the two rumble strengths */
     Sint16 magnitude = (Sint16)(((low_frequency_rumble / 2) + (high_frequency_rumble / 2)) / 2);
-    
+
     if (!device) {
         return SDL_SetError("Rumble failed, device disconnected");
     }
@@ -1024,7 +1024,7 @@ DARWIN_JoystickUpdate(SDL_Joystick *joystick)
 
     element = device->firstHat;
     i = 0;
-    
+
     while (element) {
         Uint8 pos = 0;
 
@@ -1073,7 +1073,7 @@ DARWIN_JoystickUpdate(SDL_Joystick *joystick)
 
             SDL_PrivateJoystickHat(joystick, i, pos);
         }
-        
+
         element = element->pNext;
         ++i;
     }

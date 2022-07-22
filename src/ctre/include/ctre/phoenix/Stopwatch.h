@@ -23,7 +23,7 @@ public:
 	 * @return Current time elapsed since start in s
 	 */
 	double Duration();
-	
+
 private:
 	std::chrono::steady_clock::time_point _t0 = std::chrono::steady_clock::now();
 	std::chrono::steady_clock::time_point _t1 = std::chrono::steady_clock::now();

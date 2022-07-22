@@ -55,7 +55,7 @@ public:
 	//IProcessable
 	/**
 	 * Process every ILoopable
-	 * 
+	 *
 	 * Call this every loop
 	 */
 	void Process();

@@ -1,7 +1,7 @@
 PSP
 ======
-SDL port for the Sony PSP contributed by 
-   Captian Lex 
+SDL port for the Sony PSP contributed by
+   Captian Lex
 
 Credit to
    Marcus R.Brown,Jim Paris,Matthew H for the original SDL 1.2 for PSP

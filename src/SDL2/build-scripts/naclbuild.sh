@@ -26,11 +26,11 @@ NCPUS="1"
 case "$OSTYPE" in
     darwin*)
         NCPU=`sysctl -n hw.ncpu`
-        ;; 
+        ;;
     linux*)
         if [ -n `which nproc` ]; then
             NCPUS=`nproc`
-        fi  
+        fi
         ;;
   *);;
 esac

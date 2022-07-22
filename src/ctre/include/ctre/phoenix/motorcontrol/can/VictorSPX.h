@@ -23,7 +23,7 @@ struct VictorSPXPIDSetConfiguration : BasePIDSetConfiguration {
 
 	VictorSPXPIDSetConfiguration() :
 		selectedFeedbackSensor(RemoteFeedbackDevice::None)
-	{                                                              
+	{
 	}
 
     /**
@@ -71,32 +71,32 @@ struct VictorSPXConfiguration : BaseMotorControllerConfiguration {
 	/**
      * Primary PID configuration
      */
-	VictorSPXPIDSetConfiguration primaryPID;	
+	VictorSPXPIDSetConfiguration primaryPID;
     /**
      * Auxiliary PID configuration
      */
-	VictorSPXPIDSetConfiguration auxiliaryPID;	
+	VictorSPXPIDSetConfiguration auxiliaryPID;
     /**
      * Forward Limit Switch Source
-     * 
+     *
      * User can choose between the feedback connector, remote Talon SRX, CANifier, or deactivate the feature
      */
 	RemoteLimitSwitchSource forwardLimitSwitchSource;
     /**
      * Reverse Limit Switch Source
-     * 
+     *
      * User can choose between the feedback connector, remote Talon SRX, CANifier, or deactivate the feature
      */
 	RemoteLimitSwitchSource reverseLimitSwitchSource;
     /**
      * Forward limit switch device ID
-     * 
+     *
      * Limit Switch device id isn't used unless device is a remote
      */
 	int forwardLimitSwitchDeviceID;
     /**
      * Reverse limit switch device ID
-     * 
+     *
      * Limit Switch device id isn't used unless device is a remote
      */
 	int reverseLimitSwitchDeviceID;
@@ -126,18 +126,18 @@ struct VictorSPXConfiguration : BaseMotorControllerConfiguration {
 	RemoteFeedbackDevice diff1Term;
 
 	VictorSPXConfiguration() :
-		forwardLimitSwitchSource(RemoteLimitSwitchSource_Deactivated), 
+		forwardLimitSwitchSource(RemoteLimitSwitchSource_Deactivated),
 		reverseLimitSwitchSource(RemoteLimitSwitchSource_Deactivated),
         forwardLimitSwitchDeviceID(0),
         reverseLimitSwitchDeviceID(0),
-        forwardLimitSwitchNormal(LimitSwitchNormal_NormallyOpen), 
-        reverseLimitSwitchNormal(LimitSwitchNormal_NormallyOpen), 
-	    sum0Term (RemoteFeedbackDevice::None), 
+        forwardLimitSwitchNormal(LimitSwitchNormal_NormallyOpen),
+        reverseLimitSwitchNormal(LimitSwitchNormal_NormallyOpen),
+	    sum0Term (RemoteFeedbackDevice::None),
 	    sum1Term (RemoteFeedbackDevice::None),
 	    diff0Term(RemoteFeedbackDevice::None),
 	    diff1Term(RemoteFeedbackDevice::None)
 	{
-	}	
+	}
 
     /**
      * @return String representation of all the configs
@@ -152,8 +152,8 @@ struct VictorSPXConfiguration : BaseMotorControllerConfiguration {
      * @return String representation of all the configs
      */
     std::string toString(std::string prependString) {
-        std::string retstr = primaryPID.toString(prependString + ".primaryPID");	
-	    retstr += auxiliaryPID.toString(prependString + ".auxiliaryPID");	
+        std::string retstr = primaryPID.toString(prependString + ".primaryPID");
+	    retstr += auxiliaryPID.toString(prependString + ".auxiliaryPID");
 	    retstr += prependString + ".forwardLimitSwitchSource = " + LimitSwitchRoutines::toString(forwardLimitSwitchSource) + ";\n";
 	    retstr += prependString + ".reverseLimitSwitchSource = " + LimitSwitchRoutines::toString(reverseLimitSwitchSource) + ";\n";
         retstr += prependString + ".forwardLimitSwitchDeviceID = " + std::to_string(forwardLimitSwitchDeviceID) + ";\n";
@@ -165,7 +165,7 @@ struct VictorSPXConfiguration : BaseMotorControllerConfiguration {
 	    retstr += prependString + ".diff0Term = " + FeedbackDeviceRoutines::toString(diff0Term) + ";\n";
 	    retstr += prependString + ".diff1Term = " + FeedbackDeviceRoutines::toString(diff1Term) + ";\n";
         retstr += BaseMotorControllerConfiguration::toString(prependString);
-        
+
         return retstr;
     }
 };
@@ -193,7 +193,7 @@ class VictorConfigUtil {
 		static bool Sum1TermDifferent (const VictorSPXConfiguration & settings) { return (!(settings.sum1Term == _default.sum1Term)) || !settings.enableOptimizations; }
 		static bool Diff0TermDifferent (const VictorSPXConfiguration & settings) { return (!(settings.diff0Term == _default.diff0Term)) || !settings.enableOptimizations; }
 		static bool Diff1TermDifferent (const VictorSPXConfiguration & settings) { return (!(settings.diff1Term == _default.diff1Term)) || !settings.enableOptimizations; }
-		
+
 		static bool ForwardLimitSwitchDifferent (const VictorSPXConfiguration & settings) {
 			return ForwardLimitSwitchDeviceIDDifferent(settings) || ForwardLimitSwitchNormalDifferent(settings) || ForwardLimitSwitchSourceDifferent(settings);
 		}
@@ -241,7 +241,7 @@ private:
 public:
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param deviceNumber
 	 *            [0,62]
 	 */
@@ -260,7 +260,7 @@ public:
 	}
 	VictorSPX(VictorSPX const&) = delete;
 	VictorSPX& operator=(VictorSPX const&) = delete;
-	
+
 	// ------ Set output routines. ----------//
 	/**
 	 * Sets the appropriate output on the motor controller, depending on the mode.
@@ -346,7 +346,7 @@ public:
      *              config success and report an error if it times out.
      *              If zero, no blocking or checking is performed.
      *
-     * @return Error Code generated by function. 0 indicates no error. 
+     * @return Error Code generated by function. 0 indicates no error.
      */
 	virtual ctre::phoenix::ErrorCode ConfigAllSettings(const VictorSPXConfiguration &allConfigs, int timeoutMs = 50);
     /**

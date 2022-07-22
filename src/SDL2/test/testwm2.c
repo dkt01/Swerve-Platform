@@ -114,7 +114,7 @@ draw_modes_menu(SDL_Window *window, SDL_Renderer *renderer, SDL_Rect viewport)
         text_length = (int)SDL_strlen(text);
         column_chars = SDL_max(column_chars, text_length);
 
-        /* Check if under mouse */        
+        /* Check if under mouse */
         cell_rect.x = x;
         cell_rect.y = y;
         cell_rect.w = text_length * FONT_CHARACTER_SIZE;
@@ -281,7 +281,7 @@ main(int argc, char *argv[])
         SDL_SetRenderDrawColor(renderer, 0xA0, 0xA0, 0xA0, 0xFF);
         SDL_RenderClear(renderer);
     }
- 
+
     /* Main render loop */
     done = 0;
 #ifdef __EMSCRIPTEN__

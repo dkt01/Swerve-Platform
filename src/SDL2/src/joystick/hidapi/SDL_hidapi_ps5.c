@@ -386,7 +386,7 @@ HIDAPI_DriverPS5_UpdateEffects(SDL_HIDAPI_Device *device, int effect_mask)
     SDL_zero(effects);
 
     /* Make sure the Bluetooth connection sequence has completed before sending LED color change */
-    if (ctx->is_bluetooth && 
+    if (ctx->is_bluetooth &&
         (effect_mask & (k_EDS5EffectLED | k_EDS5EffectPadLights)) != 0) {
         if (ctx->led_reset_state != k_EDS5LEDResetStateComplete) {
             ctx->led_reset_state = k_EDS5LEDResetStatePending;

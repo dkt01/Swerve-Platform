@@ -604,7 +604,7 @@ METAL_CreateTexture(SDL_Renderer * renderer, SDL_Texture * texture)
             mtltexdesc.usage = MTLTextureUsageShaderRead;
         }
     }
-    
+
     id<MTLTexture> mtltexture = [data.mtldevice newTextureWithDescriptor:mtltexdesc];
     if (mtltexture == nil) {
         return SDL_SetError("Texture allocation failed");
@@ -1071,7 +1071,7 @@ METAL_QueueSetDrawColor(SDL_Renderer *renderer, SDL_RenderCommand *cmd)
         return -1;
     }
     /*
-     * FIXME: not needed anymore, some cleanup to do 
+     * FIXME: not needed anymore, some cleanup to do
      *
     *(verts++) = ((float)cmd->data.color.r) / 255.0f;
     *(verts++) = ((float)cmd->data.color.g) / 255.0f;

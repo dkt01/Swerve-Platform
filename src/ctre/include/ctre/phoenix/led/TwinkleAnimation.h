@@ -5,7 +5,7 @@
 namespace ctre {namespace phoenix {namespace led {
 
 /**
- * Animation that randomly turns LEDs on and off to a certain color 
+ * Animation that randomly turns LEDs on and off to a certain color
  */
 class TwinkleAnimation : public BaseTwoSizeAnimation {
 public:

@@ -199,7 +199,7 @@ void ANDROIDAUDIO_ResumeDevices(void)
     }
 }
 
-#else 
+#else
 
 void ANDROIDAUDIO_ResumeDevices(void) {}
 void ANDROIDAUDIO_PauseDevices(void) {}

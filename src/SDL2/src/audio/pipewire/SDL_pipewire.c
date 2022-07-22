@@ -1044,7 +1044,7 @@ PIPEWIRE_OpenDevice(_THIS, void *handle, const char *devname, int iscapture)
     app_name = SDL_GetHint(SDL_HINT_AUDIO_DEVICE_APP_NAME);
     if (!app_name || *app_name == '\0') {
         app_name = SDL_GetHint(SDL_HINT_APP_NAME);
-        if (!app_name || *app_name == '\0') {   
+        if (!app_name || *app_name == '\0') {
             app_name = "SDL Application";
         }
     }

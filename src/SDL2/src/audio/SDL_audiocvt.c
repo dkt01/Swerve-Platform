@@ -398,7 +398,7 @@ SDL_Convert71To61(SDL_AudioCVT * cvt, SDL_AudioFormat format)
 
     for (i = cvt->len_cvt / (sizeof (float) * 8); i; --i, src += 8, dst += 7) {
         dst[0] = src[3]; /* LFE */
-        dst[1] = src[2]; /* FC */ 
+        dst[1] = src[2]; /* FC */
         dst[2] = src[1]; /* FR */
         dst[3] = src[7]; /* SR */
         dst[4] = (src[4] + src[5]) / 0.2f;  /* BackSurround */
@@ -428,7 +428,7 @@ SDL_Convert61To71(SDL_AudioCVT * cvt, SDL_AudioFormat format)
 
     for (i = cvt->len_cvt / (sizeof (float) * 7); i; --i, src += 7, dst += 8) {
         dst[0] = src[6]; /* FL */
-        dst[1] = src[2]; /* FR */ 
+        dst[1] = src[2]; /* FR */
         dst[2] = src[1]; /* FC */
         dst[3] = src[0]; /* LFE */
         dst[4] = src[4]; /* BL */
@@ -459,7 +459,7 @@ SDL_Convert51To61(SDL_AudioCVT * cvt, SDL_AudioFormat format)
 
     for (i = cvt->len_cvt / (sizeof (float) * 6); i; --i, src += 6, dst += 7) {
         dst[0] = src[3]; /* LFE */
-        dst[1] = src[2]; /* FC */ 
+        dst[1] = src[2]; /* FC */
         dst[2] = src[1]; /* FR */
         dst[3] = src[5]; /* SR */
         dst[4] = (src[4] + src[5]) / 0.2f;  /* BackSurround */
@@ -489,7 +489,7 @@ SDL_Convert61To51(SDL_AudioCVT * cvt, SDL_AudioFormat format)
 
     for (i = cvt->len_cvt / (sizeof (float) * 7); i; --i, src += 7, dst += 6) {
         dst[0] = src[6]; /* FL */
-        dst[1] = src[2]; /* FR */ 
+        dst[1] = src[2]; /* FR */
         dst[2] = src[1]; /* FC */
         dst[3] = src[0]; /* LFE */
         dst[4] = src[5]; /* BL */

@@ -124,7 +124,7 @@ testautomation$(EXE): $(srcdir)/testautomation.c \
 		      $(srcdir)/testautomation_timer.c \
 		      $(srcdir)/testautomation_video.c \
 		      $(srcdir)/testautomation_hints.c
-	$(CC) -o $@ $^ $(CFLAGS) $(LIBS) 
+	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
 
 testmultiaudio$(EXE): $(srcdir)/testmultiaudio.c
 	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
@@ -173,7 +173,7 @@ testgeometry$(EXE): $(srcdir)/testgeometry.c
 
 testgesture$(EXE): $(srcdir)/testgesture.c
 	$(CC) -o $@ $^ $(CFLAGS) $(LIBS) @MATHLIB@
- 
+
 testgl2$(EXE): $(srcdir)/testgl2.c
 	$(CC) -o $@ $^ $(CFLAGS) $(LIBS) @MATHLIB@
 

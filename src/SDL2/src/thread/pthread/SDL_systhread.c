@@ -108,7 +108,7 @@ SDL_SYS_CreateThread(SDL_Thread * thread)
         return SDL_SetError("Couldn't initialize pthread attributes");
     }
     pthread_attr_setdetachstate(&type, PTHREAD_CREATE_JOINABLE);
-    
+
     /* Set caller-requested stack size. Otherwise: use the system default. */
     if (thread->stacksize) {
         pthread_attr_setstacksize(&type, thread->stacksize);

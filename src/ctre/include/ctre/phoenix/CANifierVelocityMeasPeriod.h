@@ -5,9 +5,9 @@
 namespace ctre {
 namespace phoenix {
 
-/** 
-* Enum for velocity periods used for CANifier 
-*/ 
+/**
+* Enum for velocity periods used for CANifier
+*/
 enum CANifierVelocityMeasPeriod {
 	/**
 	 * 1ms velocity measurement period

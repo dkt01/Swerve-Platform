@@ -175,7 +175,7 @@ void KMSDRM_Vulkan_GetDrawableSize(_THIS, SDL_Window *window, int *w, int *h)
 /* and we get it here, ready to use.                                   */
 /* Extensions specific for this platform are activated in              */
 /* KMSDRM_Vulkan_GetInstanceExtensions(), like we do with              */
-/* VK_KHR_DISPLAY_EXTENSION_NAME, which is what we need for x-less VK. */                
+/* VK_KHR_DISPLAY_EXTENSION_NAME, which is what we need for x-less VK. */
 /***********************************************************************/
 SDL_bool KMSDRM_Vulkan_CreateSurface(_THIS,
                                   SDL_Window *window,
@@ -310,7 +310,7 @@ SDL_bool KMSDRM_Vulkan_CreateSurface(_THIS,
         );
 
         /* Is this device a real GPU that supports API version 1 at least? */
-        if (device_props->apiVersion >= 1 && 
+        if (device_props->apiVersion >= 1 &&
            (device_props->deviceType == 1 || device_props->deviceType == 2))
         {
             gpu = physical_devices[i];
@@ -444,7 +444,7 @@ SDL_bool KMSDRM_Vulkan_CreateSurface(_THIS,
         /* The plane must be bound to the chosen display, or not in use.
            If none of these is true, iterate to another plane. */
         if (!((plane_props[i].currentDisplay == display) ||
-              (plane_props[i].currentDisplay == VK_NULL_HANDLE))) 
+              (plane_props[i].currentDisplay == VK_NULL_HANDLE)))
             continue;
 
         /* Iterate the list of displays supported by this plane
@@ -488,7 +488,7 @@ SDL_bool KMSDRM_Vulkan_CreateSurface(_THIS,
 
     image_size.width = window->w;
     image_size.height = window->h;
-    
+
     SDL_zero(display_plane_surface_create_info);
     display_plane_surface_create_info.sType = VK_STRUCTURE_TYPE_DISPLAY_SURFACE_CREATE_INFO_KHR;
     display_plane_surface_create_info.displayMode = display_mode;

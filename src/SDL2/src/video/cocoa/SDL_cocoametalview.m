@@ -91,7 +91,7 @@ SDL_MetalViewEventWatch(void *userdata, SDL_Event *event)
 
         [self updateDrawableSize];
     }
-  
+
     return self;
 }
 

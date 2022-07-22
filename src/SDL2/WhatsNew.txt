@@ -482,7 +482,7 @@ iOS:
 
 tvOS:
 * Added support for Apple TV
-* Added a hint SDL_HINT_APPLE_TV_REMOTE_ALLOW_ROTATION to control whether he Apple TV remote's joystick axes will automatically match the rotation of the remote.  
+* Added a hint SDL_HINT_APPLE_TV_REMOTE_ALLOW_ROTATION to control whether he Apple TV remote's joystick axes will automatically match the rotation of the remote.
 
 Android:
 * Fixed SDL not resizing window when Android screen resolution changes
@@ -627,8 +627,8 @@ Linux:
 * Added experimental Wayland and Mir support, disabled by default
 
 Android:
-* Joystick support (minimum SDK version required to build SDL is now 12, 
-  the required runtime version remains at 10, but on such devices joystick 
+* Joystick support (minimum SDK version required to build SDL is now 12,
+  the required runtime version remains at 10, but on such devices joystick
   support won't be available).
 * Hotplugging support for joysticks
 * Added a hint SDL_HINT_ACCELEROMETER_AS_JOYSTICK to control whether the accelerometer should be listed as a 3 axis joystick, which it will by default.
@@ -681,7 +681,7 @@ iOS:
 
 Android:
 IMPORTANT: You MUST get the updated SDLActivity.java to match C code
-* Moved EGL initialization to native code 
+* Moved EGL initialization to native code
 * Fixed the accelerometer axis rotation relative to the device rotation
 * Fixed race conditions when handling the EGL context on pause/resume
 * Touch devices are available for enumeration immediately after init

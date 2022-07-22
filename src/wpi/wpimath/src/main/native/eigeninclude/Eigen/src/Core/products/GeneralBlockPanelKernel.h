@@ -340,10 +340,10 @@ inline void computeProductBlockingSizes(Index& k, Index& m, Index& n, Index num_
 
 /* Vectorization logic
  *  real*real: unpack rhs to constant packets, ...
- * 
+ *
  *  cd*cd : unpack rhs to (b_r,b_r), (b_i,b_i), mul to get (a_r b_r,a_i b_r) (a_r b_i,a_i b_i),
  *          storing each res packet into two packets (2x2),
- *          at the end combine them: swap the second and addsub them 
+ *          at the end combine them: swap the second and addsub them
  *  cf*cf : same but with 2x4 blocks
  *  cplx*real : unpack rhs to constant packets, ...
  *  real*cplx : load lhs as (a0,a0,a1,a1), and mul as usual
@@ -363,7 +363,7 @@ public:
     LhsPacketSize = Vectorizable ? packet_traits<LhsScalar>::size : 1,
     RhsPacketSize = Vectorizable ? packet_traits<RhsScalar>::size : 1,
     ResPacketSize = Vectorizable ? packet_traits<ResScalar>::size : 1,
-    
+
     NumberOfRegisters = EIGEN_ARCH_DEFAULT_NUMBER_OF_REGISTERS,
 
     // register block size along the N direction must be 1 or 4
@@ -379,7 +379,7 @@ public:
 #else
     mr = default_mr,
 #endif
-    
+
     LhsProgress = LhsPacketSize,
     RhsProgress = 1
   };
@@ -393,28 +393,28 @@ public:
   typedef typename conditional<Vectorizable,_ResPacket,ResScalar>::type ResPacket;
 
   typedef ResPacket AccPacket;
-  
+
   EIGEN_STRONG_INLINE void initAcc(AccPacket& p)
   {
     p = pset1<ResPacket>(ResScalar(0));
   }
-  
+
   EIGEN_STRONG_INLINE void broadcastRhs(const RhsScalar* b, RhsPacket& b0, RhsPacket& b1, RhsPacket& b2, RhsPacket& b3)
   {
     pbroadcast4(b, b0, b1, b2, b3);
   }
-  
+
 //   EIGEN_STRONG_INLINE void broadcastRhs(const RhsScalar* b, RhsPacket& b0, RhsPacket& b1)
 //   {
 //     pbroadcast2(b, b0, b1);
 //   }
-  
+
   template<typename RhsPacketType>
   EIGEN_STRONG_INLINE void loadRhs(const RhsScalar* b, RhsPacketType& dest) const
   {
     dest = pset1<RhsPacketType>(*b);
   }
-  
+
   EIGEN_STRONG_INLINE void loadRhsQuad(const RhsScalar* b, RhsPacket& dest) const
   {
     dest = ploadquad<RhsPacket>(b);
@@ -452,7 +452,7 @@ public:
   {
     r = pmadd(c,alpha,r);
   }
-  
+
   template<typename ResPacketHalf>
   EIGEN_STRONG_INLINE void acc(const ResPacketHalf& c, const ResPacketHalf& alpha, ResPacketHalf& r) const
   {
@@ -476,7 +476,7 @@ public:
     LhsPacketSize = Vectorizable ? packet_traits<LhsScalar>::size : 1,
     RhsPacketSize = Vectorizable ? packet_traits<RhsScalar>::size : 1,
     ResPacketSize = Vectorizable ? packet_traits<ResScalar>::size : 1,
-    
+
     NumberOfRegisters = EIGEN_ARCH_DEFAULT_NUMBER_OF_REGISTERS,
     nr = 4,
 #if defined(EIGEN_HAS_SINGLE_INSTRUCTION_MADD) && !defined(EIGEN_VECTORIZE_ALTIVEC) && !defined(EIGEN_VECTORIZE_VSX)
@@ -509,7 +509,7 @@ public:
   {
     dest = pset1<RhsPacket>(*b);
   }
-  
+
   EIGEN_STRONG_INLINE void loadRhsQuad(const RhsScalar* b, RhsPacket& dest) const
   {
     dest = pset1<RhsPacket>(*b);
@@ -529,7 +529,7 @@ public:
   {
     pbroadcast4(b, b0, b1, b2, b3);
   }
-  
+
 //   EIGEN_STRONG_INLINE void broadcastRhs(const RhsScalar* b, RhsPacket& b0, RhsPacket& b1)
 //   {
 //     pbroadcast2(b, b0, b1);
@@ -604,7 +604,7 @@ public:
   typedef std::complex<RealScalar>  LhsScalar;
   typedef std::complex<RealScalar>  RhsScalar;
   typedef std::complex<RealScalar>  ResScalar;
-  
+
   enum {
     ConjLhs = _ConjLhs,
     ConjRhs = _ConjRhs,
@@ -622,7 +622,7 @@ public:
     LhsProgress = ResPacketSize,
     RhsProgress = 1
   };
-  
+
   typedef typename packet_traits<RealScalar>::type RealPacket;
   typedef typename packet_traits<Scalar>::type     ScalarPacket;
   typedef DoublePacket<RealPacket> DoublePacketType;
@@ -631,7 +631,7 @@ public:
   typedef typename conditional<Vectorizable,DoublePacketType,Scalar>::type RhsPacket;
   typedef typename conditional<Vectorizable,ScalarPacket,Scalar>::type ResPacket;
   typedef typename conditional<Vectorizable,DoublePacketType,Scalar>::type AccPacket;
-  
+
   EIGEN_STRONG_INLINE void initAcc(Scalar& p) { p = Scalar(0); }
 
   EIGEN_STRONG_INLINE void initAcc(DoublePacketType& p)
@@ -652,7 +652,7 @@ public:
     dest.first  = pset1<RealPacket>(numext::real(*b));
     dest.second = pset1<RealPacket>(numext::imag(*b));
   }
-  
+
   EIGEN_STRONG_INLINE void loadRhsQuad(const RhsScalar* b, ResPacket& dest) const
   {
     loadRhs(b,dest);
@@ -662,7 +662,7 @@ public:
     eigen_internal_assert(unpacket_traits<ScalarPacket>::size<=4);
     loadRhs(b,dest);
   }
-  
+
   EIGEN_STRONG_INLINE void broadcastRhs(const RhsScalar* b, RhsPacket& b0, RhsPacket& b1, RhsPacket& b2, RhsPacket& b3)
   {
     // FIXME not sure that's the best way to implement it!
@@ -671,7 +671,7 @@ public:
     loadRhs(b+2, b2);
     loadRhs(b+3, b3);
   }
-  
+
   // Vectorized path
   EIGEN_STRONG_INLINE void broadcastRhs(const RhsScalar* b, DoublePacketType& b0, DoublePacketType& b1)
   {
@@ -679,7 +679,7 @@ public:
     loadRhs(b+0, b0);
     loadRhs(b+1, b1);
   }
-  
+
   // Scalar path
   EIGEN_STRONG_INLINE void broadcastRhs(const RhsScalar* b, RhsScalar& b0, RhsScalar& b1)
   {
@@ -709,9 +709,9 @@ public:
   {
     c = cj.pmadd(a,b,c);
   }
-  
+
   EIGEN_STRONG_INLINE void acc(const Scalar& c, const Scalar& alpha, Scalar& r) const { r += alpha * c; }
-  
+
   EIGEN_STRONG_INLINE void acc(const DoublePacketType& c, const ResPacket& alpha, ResPacket& r) const
   {
     // assemble c
@@ -736,7 +736,7 @@ public:
       tmp = pcplxflip(ResPacket(c.second));
       tmp = psub(pconj(ResPacket(c.first)),tmp);
     }
-    
+
     r = pmadd(tmp,alpha,r);
   }
 
@@ -761,7 +761,7 @@ public:
     LhsPacketSize = Vectorizable ? packet_traits<LhsScalar>::size : 1,
     RhsPacketSize = Vectorizable ? packet_traits<RhsScalar>::size : 1,
     ResPacketSize = Vectorizable ? packet_traits<ResScalar>::size : 1,
-    
+
     NumberOfRegisters = EIGEN_ARCH_DEFAULT_NUMBER_OF_REGISTERS,
     // FIXME: should depend on NumberOfRegisters
     nr = 4,
@@ -790,12 +790,12 @@ public:
   {
     dest = pset1<RhsPacket>(*b);
   }
-  
+
   void broadcastRhs(const RhsScalar* b, RhsPacket& b0, RhsPacket& b1, RhsPacket& b2, RhsPacket& b3)
   {
     pbroadcast4(b, b0, b1, b2, b3);
   }
-  
+
 //   EIGEN_STRONG_INLINE void broadcastRhs(const RhsScalar* b, RhsPacket& b0, RhsPacket& b1)
 //   {
 //     // FIXME not sure that's the best way to implement it!
@@ -807,7 +807,7 @@ public:
   {
     dest = ploaddup<LhsPacket>(a);
   }
-  
+
   EIGEN_STRONG_INLINE void loadRhsQuad(const RhsScalar* b, RhsPacket& dest) const
   {
     eigen_internal_assert(unpacket_traits<RhsPacket>::size<=4);
@@ -832,7 +832,7 @@ public:
 #else
     tmp = b; tmp.v = pmul(a,tmp.v); c = padd(c,tmp);
 #endif
-    
+
   }
 
   EIGEN_STRONG_INLINE void madd_impl(const LhsScalar& a, const RhsScalar& b, ResScalar& c, RhsScalar& /*tmp*/, const false_type&) const
@@ -897,7 +897,7 @@ void gebp_kernel<LhsScalar,RhsScalar,Index,DataMapper,mr,nr,ConjugateLhs,Conjuga
   {
     Traits traits;
     SwappedTraits straits;
-    
+
     if(strideA==-1) strideA = depth;
     if(strideB==-1) strideB = depth;
     conj_helper<LhsScalar,RhsScalar,ConjugateLhs,ConjugateRhs> cj;
@@ -907,7 +907,7 @@ void gebp_kernel<LhsScalar,RhsScalar,Index,DataMapper,mr,nr,ConjugateLhs,Conjuga
     const Index peeled_mc1 = mr>=1*Traits::LhsProgress ? (rows/(1*LhsProgress))*(1*LhsProgress) : 0;
     enum { pk = 8 }; // NOTE Such a large peeling factor is important for large matrices (~ +5% when >1000 on Haswell)
     const Index peeled_kc  = depth & ~(pk-1);
-    const Index prefetch_res_offset = 32/sizeof(ResScalar);    
+    const Index prefetch_res_offset = 32/sizeof(ResScalar);
 //     const Index depth2     = depth & ~1;
 
     //---------- Process 3 * LhsProgress rows at once ----------
@@ -932,10 +932,10 @@ void gebp_kernel<LhsScalar,RhsScalar,Index,DataMapper,mr,nr,ConjugateLhs,Conjuga
         {
           for(Index i=i1; i<actual_panel_end; i+=3*LhsProgress)
           {
-          
+
           // We selected a 3*Traits::LhsProgress x nr micro block of res which is entirely
           // stored into 3 x nr registers.
-          
+
           const LhsScalar* blA = &blockA[i*strideA+offsetA*(3*LhsProgress)];
           prefetch(&blA[0]);
 
@@ -1064,7 +1064,7 @@ void gebp_kernel<LhsScalar,RhsScalar,Index,DataMapper,mr,nr,ConjugateLhs,Conjuga
           traits.acc(C11, alphav, R2);
           r3.storePacket(0 * Traits::ResPacketSize, R0);
           r3.storePacket(1 * Traits::ResPacketSize, R1);
-          r3.storePacket(2 * Traits::ResPacketSize, R2);          
+          r3.storePacket(2 * Traits::ResPacketSize, R2);
           }
         }
 
@@ -1089,7 +1089,7 @@ void gebp_kernel<LhsScalar,RhsScalar,Index,DataMapper,mr,nr,ConjugateLhs,Conjuga
           // performs "inner" products
           const RhsScalar* blB = &blockB[j2*strideB+offsetB];
           LhsPacket A0, A1, A2;
-          
+
           for(Index k=0; k<peeled_kc; k+=pk)
           {
             EIGEN_ASM_COMMENT("begin gebp micro kernel 3pX1");
@@ -1107,7 +1107,7 @@ void gebp_kernel<LhsScalar,RhsScalar,Index,DataMapper,mr,nr,ConjugateLhs,Conjuga
               traits.madd(A2, B_0, C8, B_0); \
               EIGEN_ASM_COMMENT("end step of gebp micro kernel 3pX1"); \
             } while(false)
-        
+
             EIGEN_GEBGP_ONESTEP(0);
             EIGEN_GEBGP_ONESTEP(1);
             EIGEN_GEBGP_ONESTEP(2);
@@ -1143,7 +1143,7 @@ void gebp_kernel<LhsScalar,RhsScalar,Index,DataMapper,mr,nr,ConjugateLhs,Conjuga
           traits.acc(C8, alphav, R2);
           r0.storePacket(0 * Traits::ResPacketSize, R0);
           r0.storePacket(1 * Traits::ResPacketSize, R1);
-          r0.storePacket(2 * Traits::ResPacketSize, R2);          
+          r0.storePacket(2 * Traits::ResPacketSize, R2);
           }
         }
       }
@@ -1165,10 +1165,10 @@ void gebp_kernel<LhsScalar,RhsScalar,Index,DataMapper,mr,nr,ConjugateLhs,Conjuga
         {
           for(Index i=i1; i<actual_panel_end; i+=2*LhsProgress)
           {
-          
+
           // We selected a 2*Traits::LhsProgress x nr micro block of res which is entirely
           // stored into 2 x nr registers.
-          
+
           const LhsScalar* blA = &blockA[i*strideA+offsetA*(2*Traits::LhsProgress)];
           prefetch(&blA[0]);
 
@@ -1222,7 +1222,7 @@ void gebp_kernel<LhsScalar,RhsScalar,Index,DataMapper,mr,nr,ConjugateLhs,Conjuga
               EIGEN_GEBP_2PX4_SPILLING_WORKAROUND                               \
               EIGEN_ASM_COMMENT("end step of gebp micro kernel 2pX4");          \
             } while(false)
-            
+
             internal::prefetch(blB+(48+0));
             EIGEN_GEBGP_ONESTEP(0);
             EIGEN_GEBGP_ONESTEP(1);
@@ -1279,7 +1279,7 @@ void gebp_kernel<LhsScalar,RhsScalar,Index,DataMapper,mr,nr,ConjugateLhs,Conjuga
           r3.storePacket(1 * Traits::ResPacketSize, R3);
           }
         }
-      
+
         // Deal with remaining columns of the rhs
         for(Index j2=packet_cols4; j2<cols; j2++)
         {
@@ -1305,7 +1305,7 @@ void gebp_kernel<LhsScalar,RhsScalar,Index,DataMapper,mr,nr,ConjugateLhs,Conjuga
           {
             EIGEN_ASM_COMMENT("begin gebp micro kernel 2pX1");
             RhsPacket B_0, B1;
-        
+
 #define EIGEN_GEBGP_ONESTEP(K) \
             do {                                                                  \
               EIGEN_ASM_COMMENT("begin step of gebp micro kernel 2pX1");          \
@@ -1317,7 +1317,7 @@ void gebp_kernel<LhsScalar,RhsScalar,Index,DataMapper,mr,nr,ConjugateLhs,Conjuga
               traits.madd(A1, B_0, C4, B_0);                                      \
               EIGEN_ASM_COMMENT("end step of gebp micro kernel 2pX1");            \
             } while(false)
-        
+
             EIGEN_GEBGP_ONESTEP(0);
             EIGEN_GEBGP_ONESTEP(1);
             EIGEN_GEBGP_ONESTEP(2);
@@ -1366,7 +1366,7 @@ void gebp_kernel<LhsScalar,RhsScalar,Index,DataMapper,mr,nr,ConjugateLhs,Conjuga
         {
           // We select a 1*Traits::LhsProgress x nr micro block of res which is entirely
           // stored into 1 x nr registers.
-          
+
           const LhsScalar* blA = &blockA[i*strideA+offsetA*(1*Traits::LhsProgress)];
           prefetch(&blA[0]);
 
@@ -1396,7 +1396,7 @@ void gebp_kernel<LhsScalar,RhsScalar,Index,DataMapper,mr,nr,ConjugateLhs,Conjuga
           {
             EIGEN_ASM_COMMENT("begin gebp micro kernel 1pX4");
             RhsPacket B_0, B1, B2, B3;
-               
+
 #define EIGEN_GEBGP_ONESTEP(K) \
             do {                                                                \
               EIGEN_ASM_COMMENT("begin step of gebp micro kernel 1pX4");        \
@@ -1409,7 +1409,7 @@ void gebp_kernel<LhsScalar,RhsScalar,Index,DataMapper,mr,nr,ConjugateLhs,Conjuga
               traits.madd(A0, B3,  C3, B3);                                     \
               EIGEN_ASM_COMMENT("end step of gebp micro kernel 1pX4");          \
             } while(false)
-            
+
             internal::prefetch(blB+(48+0));
             EIGEN_GEBGP_ONESTEP(0);
             EIGEN_GEBGP_ONESTEP(1);
@@ -1475,7 +1475,7 @@ void gebp_kernel<LhsScalar,RhsScalar,Index,DataMapper,mr,nr,ConjugateLhs,Conjuga
           {
             EIGEN_ASM_COMMENT("begin gebp micro kernel 1pX1");
             RhsPacket B_0;
-        
+
 #define EIGEN_GEBGP_ONESTEP(K) \
             do {                                                                \
               EIGEN_ASM_COMMENT("begin step of gebp micro kernel 1pX1");        \
@@ -1638,12 +1638,12 @@ void gebp_kernel<LhsScalar,RhsScalar,Index,DataMapper,mr,nr,ConjugateLhs,Conjuga
               B_1 = blB[1];
               CJMADD(cj,A0,B_0,C0,  B_0);
               CJMADD(cj,A0,B_1,C1,  B_1);
-              
+
               B_0 = blB[2];
               B_1 = blB[3];
               CJMADD(cj,A0,B_0,C2,  B_0);
               CJMADD(cj,A0,B_1,C3,  B_1);
-              
+
               blB += 4;
             }
             res(i, j2 + 0) += alpha * C0;
@@ -2133,7 +2133,7 @@ inline std::ptrdiff_t l2CacheSize()
 }
 
 /** \returns the currently set level 3 cpu cache size (in bytes) used to estimate the ideal blocking size paramete\
-rs.                                                                                                                
+rs.
 * \sa setCpuCacheSize */
 inline std::ptrdiff_t l3CacheSize()
 {

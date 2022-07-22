@@ -49,7 +49,7 @@ namespace ctre {
 					retval |= HardwareFault ? mask : 0; mask <<= 1;
 					retval |= APIError		? mask : 0; mask <<= 1;
 					retval |= UnderVoltage 	? mask : 0; mask <<= 1;
-					retval |= ResetDuringEn ? mask : 0; mask <<= 1; 
+					retval |= ResetDuringEn ? mask : 0; mask <<= 1;
 					mask <<= 3; /* 3 faults currently unused */
 					retval |= MagnetTooWeak ? mask : 0; mask <<= 1;
 					return retval;

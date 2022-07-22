@@ -41,7 +41,7 @@ struct SDL_PrivateAudioData
     /* Resume device if it was paused automatically */
     int resume;
 };
- 
+
 void aaudio_ResumeDevices(void);
 void aaudio_PauseDevices(void);
 SDL_bool aaudio_DetectBrokenPlayState(void);

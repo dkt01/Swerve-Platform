@@ -79,7 +79,7 @@ Wayland_GLES_SetSwapInterval(_THIS, int interval)
     if (!_this->egl_data) {
         return SDL_SetError("EGL not initialized");
     }
-    
+
     /* technically, this is _all_ adaptive vsync (-1), because we can't
        actually wait for the _next_ vsync if you set 1, but things that
        request 1 probably won't care _that_ much. I hope. No matter what

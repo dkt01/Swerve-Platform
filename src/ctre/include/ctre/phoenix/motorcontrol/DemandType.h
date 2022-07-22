@@ -14,7 +14,7 @@ enum DemandType {
 	/**
 	 * When closed-looping, set the target of the aux PID loop to the demand value.
 	 *
-	 * When following, follow the processed output of the combined 
+	 * When following, follow the processed output of the combined
 	 * primary/aux PID output of the master.  The demand value is ignored.
 	 * Although it is much cleaner to use the 2-param Follow() in such cases.
 	 */

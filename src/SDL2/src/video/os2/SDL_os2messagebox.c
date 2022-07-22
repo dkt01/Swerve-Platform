@@ -284,7 +284,7 @@ static HWND _makeDlg(const SDL_MessageBoxData *messageboxdata)
     }
     pcDlgData += pDlgItem->cchText;
 
-    pDlgItem->flStyle = WS_GROUP | WS_VISIBLE | WS_CLIPSIBLINGS | 
+    pDlgItem->flStyle = WS_GROUP | WS_VISIBLE | WS_CLIPSIBLINGS |
                         FS_DLGBORDER | WS_SAVEBITS;
     pDlgItem->x  = 100;
     pDlgItem->y  = 100;

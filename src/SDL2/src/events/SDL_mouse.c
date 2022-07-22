@@ -533,7 +533,7 @@ SDL_PrivateSendMouseButton(SDL_Window * window, SDL_MouseID mouseID, Uint8 state
     Uint32 type;
     Uint32 buttonstate;
     SDL_MouseInputSource *source;
-   
+
     source = GetMouseInputSource(mouse, mouseID);
     if (!source) {
         return 0;

@@ -44,7 +44,7 @@
         }                                       \
     } while (0)
 
-void 
+void
 VITA_GL_KeyboardCallback(ScePigletPreSwapData *data)
 {
     SceCommonDialogUpdateParam commonDialogParam;

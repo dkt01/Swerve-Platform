@@ -1,7 +1,7 @@
 #pragma once
 
 namespace ctre { namespace phoenix { namespace tasking {
-	
+
 /**
  * Interface for loopable objects
  */
@@ -17,7 +17,7 @@ public:
 	 */
 	virtual void OnLoop() = 0;
 	/**
-	 * @return true if object is done 
+	 * @return true if object is done
 	 */
 	virtual bool IsDone() = 0;
 	/**

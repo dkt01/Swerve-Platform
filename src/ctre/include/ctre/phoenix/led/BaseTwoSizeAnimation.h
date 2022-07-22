@@ -2,7 +2,7 @@
 
 #include "ctre/phoenix/led/Animation.h"
 
-namespace ctre{ namespace phoenix{ namespace led{ 
+namespace ctre{ namespace phoenix{ namespace led{
 
 /**
  * The base class for one generic type of animation.
@@ -32,7 +32,7 @@ public:
 
     BaseStandardAnimation *GetBaseStandardAnimation();
     BaseTwoSizeAnimation *GetBaseTwoSizeAnimation();
-    
+
     /**
      * Sets the R value of the LEDs
      * @param r The amount of red to set, a value between [0, 255]

@@ -396,7 +396,7 @@ Wayland_ShowCursor(SDL_Cursor *cursor)
     {
         wl_pointer_set_cursor(pointer, input->pointer_enter_serial, NULL, 0, 0);
     }
-    
+
     return 0;
 }
 

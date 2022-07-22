@@ -22,7 +22,7 @@ def find_element(prefix, bindings):
         i=(i + 1)
 
     return -1
-       
+
 def save_controller(line):
     global controllers
     match = split_pattern.match(line)

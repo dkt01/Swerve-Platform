@@ -2,7 +2,7 @@
 
 namespace ctre {
 namespace phoenix {
-	
+
 /**
  * Class to calculate linear interpolation
  */

@@ -12,7 +12,7 @@ CFLAGS  = -O3 -march=armv7-a -mcpu=cortex-a8 -mtune=cortex-a8 -mfloat-abi=softfp
 
 TARGET  = libSDL2.a
 
-SOURCES = 
+SOURCES =
 	./src/*.c \
 	./src/atomic/*.c \
 	./src/audio/*.c \

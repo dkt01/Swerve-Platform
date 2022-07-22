@@ -146,7 +146,7 @@ SDL_COREMOTION_SensorOpen(SDL_Sensor *sensor, int device_index)
     }
     return 0;
 }
-    
+
 static void
 SDL_COREMOTION_SensorUpdate(SDL_Sensor *sensor)
 {

@@ -122,7 +122,7 @@ hints_setHint(void *arg)
       result = SDL_SetHint(_HintsEnum[i], value);
       SDLTest_AssertPass("Call to SDL_SetHint(%s, %s) (iteration %i)", _HintsEnum[i], value, j);
       SDLTest_AssertCheck(
-        result == SDL_TRUE || result == SDL_FALSE, 
+        result == SDL_TRUE || result == SDL_FALSE,
         "Verify valid result was returned, got: %i",
         (int)result);
       testValue = SDL_GetHint(_HintsEnum[i]);
@@ -138,7 +138,7 @@ hints_setHint(void *arg)
     result = SDL_SetHint(_HintsEnum[i], originalValue);
     SDLTest_AssertPass("Call to SDL_SetHint(%s, originalValue)", _HintsEnum[i]);
     SDLTest_AssertCheck(
-      result == SDL_TRUE || result == SDL_FALSE, 
+      result == SDL_TRUE || result == SDL_FALSE,
       "Verify valid result was returned, got: %i",
       (int)result);
     SDL_free((void *)originalValue);

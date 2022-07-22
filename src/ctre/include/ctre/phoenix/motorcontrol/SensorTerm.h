@@ -42,7 +42,7 @@ public:
             case SensorTerm::SensorTerm_Sum1 : return "SensorTerm::SensorTerm_Sum1";
             case SensorTerm::SensorTerm_Diff0 : return "SensorTerm::SensorTerm_Diff0";
             case SensorTerm::SensorTerm_Diff1 : return "SensorTerm::SensorTerm_Diff1";
-            default : return "InvalidValue"; 
+            default : return "InvalidValue";
         }
     }
 };

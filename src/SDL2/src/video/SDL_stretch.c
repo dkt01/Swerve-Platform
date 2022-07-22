@@ -963,7 +963,7 @@ SDL_LowerSoftStretchNearest(SDL_Surface *s, const SDL_Rect *srcrect,
     int dst_h = dstrect->h;
     int src_pitch = s->pitch;
     int dst_pitch = d->pitch;
-    
+
     const int bpp = d->format->BytesPerPixel;
 
     Uint32 *src = (Uint32 *) ((Uint8 *)s->pixels + srcrect->x * bpp + srcrect->y * src_pitch);

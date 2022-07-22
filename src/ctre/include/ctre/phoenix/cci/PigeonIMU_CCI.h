@@ -20,16 +20,16 @@
  *�SIMILAR COSTS, WHETHER ASSERTED ON THE BASIS OF CONTRACT, TORT
  *�(INCLUDING NEGLIGENCE), BREACH OF WARRANTY, OR OTHERWISE
  */
- 
+
  #pragma once
- 
+
 #include "ctre/phoenix/cci/CCI.h"
 #include "ctre/phoenix/ErrorCode.h"
 #include <map>
 #include <cstddef>
- 
+
  static std::map<void *, bool> pigeonPresent;
- 
+
  extern "C"{
 	CCIEXPORT void *c_PigeonIMU_Create2(int talonDeviceID, const char *version);
 	CCIEXPORT void *c_PigeonIMU_Create1(int deviceNumber, const char *version, const char *canbus);

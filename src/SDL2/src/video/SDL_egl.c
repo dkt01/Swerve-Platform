@@ -1,15 +1,15 @@
 /*
  *  Simple DirectMedia Layer
  *  Copyright (C) 1997-2021 Sam Lantinga <slouken@libsdl.org>
- * 
+ *
  *  This software is provided 'as-is', without any express or implied
  *  warranty.  In no event will the authors be held liable for any damages
  *  arising from the use of this software.
- * 
+ *
  *  Permission is granted to anyone to use this software for any purpose,
  *  including commercial applications, and to alter it and redistribute it
  *  freely, subject to the following restrictions:
- * 
+ *
  *  1. The origin of this software must not be misrepresented; you must not
  *     claim that you wrote the original software. If you use this software
  *     in a product, an acknowledgment in the product documentation would be
@@ -289,7 +289,7 @@ SDL_EGL_UnloadLibrary(_THIS)
             SDL_UnloadObject(_this->egl_data->egl_dll_handle);
             _this->egl_data->egl_dll_handle = NULL;
         }
-        
+
         SDL_free(_this->egl_data);
         _this->egl_data = NULL;
     }
@@ -380,7 +380,7 @@ SDL_EGL_LoadLibraryOnly(_THIS, const char *egl_path)
 #endif
             }
         }
-#ifdef DEFAULT_OGL         
+#ifdef DEFAULT_OGL
         else {
             path = DEFAULT_OGL;
             egl_dll_handle = SDL_LoadObject(path);
@@ -391,7 +391,7 @@ SDL_EGL_LoadLibraryOnly(_THIS, const char *egl_path)
             }
 #endif
         }
-#endif        
+#endif
     }
     _this->egl_data->egl_dll_handle = egl_dll_handle;
 
@@ -402,7 +402,7 @@ SDL_EGL_LoadLibraryOnly(_THIS, const char *egl_path)
     /* Loading libGL* in the previous step took care of loading libEGL.so, but we future proof by double checking */
     if (egl_path != NULL) {
         dll_handle = SDL_LoadObject(egl_path);
-    }   
+    }
     /* Try loading a EGL symbol, if it does not work try the default library paths */
     if (dll_handle == NULL || SDL_LoadFunction(dll_handle, "eglChooseConfig") == NULL) {
         if (dll_handle != NULL) {
@@ -643,7 +643,7 @@ SDL_EGL_InitializeOffscreen(_THIS, int device)
 }
 
 void
-SDL_EGL_SetRequiredVisualId(_THIS, int visual_id) 
+SDL_EGL_SetRequiredVisualId(_THIS, int visual_id)
 {
     _this->egl_data->egl_required_visual_id=visual_id;
 }
@@ -1113,7 +1113,7 @@ SDL_EGL_MakeCurrent(_THIS, EGLSurface egl_surface, SDL_GLContext context)
         _this->egl_data->eglBindAPI(_this->egl_data->apitype);
     }
 
-    /* The android emulator crashes badly if you try to eglMakeCurrent 
+    /* The android emulator crashes badly if you try to eglMakeCurrent
      * with a valid context and invalid surface, so we have to check for both here.
      */
     if (!egl_context || (!egl_surface && !_this->gl_allow_no_surface)) {
@@ -1132,7 +1132,7 @@ int
 SDL_EGL_SetSwapInterval(_THIS, int interval)
 {
     EGLBoolean status;
-    
+
     if (!_this->egl_data) {
         return SDL_SetError("EGL not initialized");
     }
@@ -1143,13 +1143,13 @@ SDL_EGL_SetSwapInterval(_THIS, int interval)
     if (interval < 0) {
         return SDL_SetError("Late swap tearing currently unsupported");
     }
-    
+
     status = _this->egl_data->eglSwapInterval(_this->egl_data->egl_display, interval);
     if (status == EGL_TRUE) {
         _this->egl_data->egl_swapinterval = interval;
         return 0;
     }
-    
+
     return SDL_EGL_SetError("Unable to set the EGL swap interval", "eglSwapInterval");
 }
 
@@ -1160,7 +1160,7 @@ SDL_EGL_GetSwapInterval(_THIS)
         SDL_SetError("EGL not initialized");
         return 0;
     }
-    
+
     return _this->egl_data->egl_swapinterval;
 }
 
@@ -1182,15 +1182,15 @@ SDL_EGL_DeleteContext(_THIS, SDL_GLContext context)
     if (!_this->egl_data) {
         return;
     }
-    
+
     if (egl_context != NULL && egl_context != EGL_NO_CONTEXT) {
         _this->egl_data->eglDestroyContext(_this->egl_data->egl_display, egl_context);
     }
-        
+
 }
 
 EGLSurface *
-SDL_EGL_CreateSurface(_THIS, NativeWindowType nw) 
+SDL_EGL_CreateSurface(_THIS, NativeWindowType nw)
 {
 #if SDL_VIDEO_DRIVER_ANDROID
     EGLint format_wanted;
@@ -1239,7 +1239,7 @@ SDL_EGL_CreateSurface(_THIS, NativeWindowType nw)
 #endif
 
     attribs[attr++] = EGL_NONE;
-    
+
     surface = _this->egl_data->eglCreateWindowSurface(
             _this->egl_data->egl_display,
             _this->egl_data->egl_config,
@@ -1276,12 +1276,12 @@ SDL_EGL_CreateOffscreenSurface(_THIS, int width, int height)
 }
 
 void
-SDL_EGL_DestroySurface(_THIS, EGLSurface egl_surface) 
+SDL_EGL_DestroySurface(_THIS, EGLSurface egl_surface)
 {
     if (!_this->egl_data) {
         return;
     }
-    
+
     if (egl_surface != EGL_NO_SURFACE) {
         _this->egl_data->eglDestroySurface(_this->egl_data->egl_display, egl_surface);
     }

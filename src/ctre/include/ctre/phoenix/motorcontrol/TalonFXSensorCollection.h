@@ -39,7 +39,7 @@ namespace ctre {
 				 * Get the IntegratedSensor position of the Talon FX, regardless of whether
 				 *   it is actually being used for feedback.  The units are 2048 per rotation.
 				 *	Note : Future versions of software may support scaling features (rotations, radians, degrees, etc) depending on the configuration.
-				 * 
+				 *
 				 * This method relies on the Status 21 message, which has a default period of 240ms. For more
 				 * information, see: https://phoenix-documentation.readthedocs.io/en/latest/ch18_CommonAPI.html
 				 *
@@ -52,21 +52,21 @@ namespace ctre {
 				 *   it is actually being used for feedback.  This will be within one rotation (2048 units).
 				 *   The signage and range will depend on the configuration.
 				 *	Note : Future versions of software may support scaling features (rotations, radians, degrees, etc) depending on the configuration.
-				 * 
+				 *
 				 * This method relies on the Status 21 message, which has a default period of 240ms. For more
 				 * information, see: https://phoenix-documentation.readthedocs.io/en/latest/ch18_CommonAPI.html
 				 *
 				 * @return  the IntegratedSensor absolute position.
 				 */
 				double GetIntegratedSensorAbsolutePosition();
-				
+
 				/**
 				 * Get the IntegratedSensor velocity of the Talon FX, regardless of whether
-				 *   it is actually being used for feedback.  
+				 *   it is actually being used for feedback.
 				 *   One unit represents one position unit per 100ms (2048 position units per 100ms).
 				 *   The signage and range will depend on the configuration.
 				 *	Note : Future versions of software may support scaling features (rotations, radians, degrees, etc) depending on the configuration.
-				 * 
+				 *
 				 * This method relies on the Status 21 message, which has a default period of 240ms. For more
 				 * information, see: https://phoenix-documentation.readthedocs.io/en/latest/ch18_CommonAPI.html
 				 *
@@ -79,7 +79,7 @@ namespace ctre {
 				 *   sensor. This only works with IntegratedSensor.  To set the selected sensor position
 				 *   regardless of what type it is, see SetSelectedSensorPosition in the motor controller class.
 				 *
-				 * @param   newPosition The position value to apply to the sensor.  
+				 * @param   newPosition The position value to apply to the sensor.
 				 * @param   timeoutMs
 				 *            Timeout value in ms. If nonzero, function will wait for
 				 *            config success and report an error if it times out.
@@ -104,7 +104,7 @@ namespace ctre {
 
 				/**
 				 * Is forward limit switch closed.
-			 	 * 
+			 	 *
 			 	 * This method relies on the Status 1 message, which has a default period of 10ms. For more
 				 * information, see: https://phoenix-documentation.readthedocs.io/en/latest/ch18_CommonAPI.html
 				 *
@@ -116,7 +116,7 @@ namespace ctre {
 
 				/**
 				 * Is reverse limit switch closed.
-			 	 * 
+			 	 *
 			 	 * This method relies on the Status 1 message, which has a default period of 10ms. For more
 				 * information, see: https://phoenix-documentation.readthedocs.io/en/latest/ch18_CommonAPI.html
 				 *

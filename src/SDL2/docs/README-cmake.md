@@ -3,7 +3,7 @@ CMake
 (www.cmake.org)
 
 SDL's build system was traditionally based on autotools. Over time, this
-approach has suffered from several issues across the different supported 
+approach has suffered from several issues across the different supported
 platforms.
 To solve these problems, a new build system based on CMake is under development.
 It works in parallel to the legacy system, so users can experiment with it

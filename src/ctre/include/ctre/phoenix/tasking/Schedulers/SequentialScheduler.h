@@ -49,7 +49,7 @@ public:
 	//IProcessable
 	/**
 	 * Process the currently active ILoopable
-	 * 
+	 *
 	 * Call this every loop
 	 */
 	void Process();

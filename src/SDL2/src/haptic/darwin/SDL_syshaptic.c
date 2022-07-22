@@ -638,7 +638,7 @@ SDL_SYS_HapticOpenFromJoystick(SDL_Haptic * haptic, SDL_Joystick * joystick)
 #ifdef SDL_JOYSTICK_IOKIT
     int device_index = 0;
     SDL_hapticlist_item *item;
-    
+
     if (joystick->driver != &SDL_DARWIN_JoystickDriver) {
         return -1;
     }
@@ -902,7 +902,7 @@ SDL_SYS_ToFFEFFECT(SDL_Haptic * haptic, FFEFFECT * dest, SDL_HapticEffect * src)
         /* Specifics */
         periodic->dwMagnitude = CONVERT(SDL_abs(hap_periodic->magnitude));
         periodic->lOffset = CONVERT(hap_periodic->offset);
-        periodic->dwPhase = 
+        periodic->dwPhase =
                 (hap_periodic->phase + (hap_periodic->magnitude < 0 ? 18000 : 0)) % 36000;
         periodic->dwPeriod = hap_periodic->period * 1000;
         dest->cbTypeSpecificParams = sizeof(FFPERIODIC);

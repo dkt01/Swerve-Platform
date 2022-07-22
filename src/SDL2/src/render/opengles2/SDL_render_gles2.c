@@ -1201,7 +1201,7 @@ GLES2_RunCommandQueue(SDL_Renderer * renderer, SDL_RenderCommand *cmd, void *ver
                 if (ret == 0) {
                     int op = GL_TRIANGLES; /* SDL_RENDERCMD_GEOMETRY */
                     if (thiscmdtype == SDL_RENDERCMD_DRAW_POINTS) {
-                        op = GL_POINTS; 
+                        op = GL_POINTS;
                     }
                     data->glDrawArrays(op, 0, (GLsizei) count);
                 }

@@ -99,7 +99,7 @@ HAIKU_CreateDevice(int devindex)
     device->CreateWindowFramebuffer = HAIKU_CreateWindowFramebuffer;
     device->UpdateWindowFramebuffer = HAIKU_UpdateWindowFramebuffer;
     device->DestroyWindowFramebuffer = HAIKU_DestroyWindowFramebuffer;
-    
+
     device->shape_driver.CreateShaper = NULL;
     device->shape_driver.SetWindowShape = NULL;
     device->shape_driver.ResizeWindowShape = NULL;
@@ -249,7 +249,7 @@ int HAIKU_VideoInit(_THIS)
     if (SDL_InitBeApp() < 0) {
         return -1;
     }
-    
+
     /* Initialize video modes */
     HAIKU_InitModes(_this);
 

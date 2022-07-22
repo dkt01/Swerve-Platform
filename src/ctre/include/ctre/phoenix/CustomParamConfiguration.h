@@ -11,11 +11,11 @@ struct CustomParamConfiguration {
 	/**
 	 * Custom Param 0
 	 */
-	int customParam0;	
+	int customParam0;
 	/**
 	 * Custom Param 1
 	 */
-	int customParam1;	
+	int customParam1;
 	/**
 	 * Enable optimizations for ConfigAll (defaults true)
 	 */
@@ -41,7 +41,7 @@ struct CustomParamConfiguration {
     std::string toString(std::string prependString) {
         std::string retstr = prependString + ".customParam0 = " + std::to_string(customParam0) + ";\n";
         retstr += prependString + ".customParam1 = " + std::to_string(customParam1) + ";\n";
-        
+
         return retstr;
     }
 };

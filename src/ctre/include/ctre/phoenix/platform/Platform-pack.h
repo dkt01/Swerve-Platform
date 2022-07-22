@@ -1,5 +1,5 @@
 /**
- * This header implements macros for creating storage objects 
+ * This header implements macros for creating storage objects
  * with 1 byte (8bit) packing across all supported platforms.
  *
  * Example use...
@@ -67,7 +67,7 @@
 
 #else
 
-	#define CTRE_IMPLEMENT_SHUTDOWN_HANDLER(shutdown_handler) static void shutdown_handler(int signo)	
+	#define CTRE_IMPLEMENT_SHUTDOWN_HANDLER(shutdown_handler) static void shutdown_handler(int signo)
 	#define CTRE_REGISTER_SHUTDOWN_HANDLER(shutdown_handler)
 
 #endif

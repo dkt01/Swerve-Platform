@@ -185,7 +185,7 @@ public:
 	 * Configure the Mount Pose using the primary axis.
 	 * This is useful if the Pigeon 2.0 is mounted straight, and you only
 	 * need to describe what axis is forward and what axis is up.
-	 * 
+	 *
 	 * @param forward Axis that points forward from the robot
 	 * @param up Axis that points up from the robot
 	 * @param timeoutMs Config timeout in milliseconds.
@@ -216,7 +216,7 @@ public:
 	/**
 	 * Configure the mounting pose Yaw of the Pigeon2.
 	 * See {@link #configMountPose(double, double, double, int)}
-	 * 
+	 *
 	 * @param yaw Yaw angle needed to reach the current orientation in degrees.
 	 * @param timeoutMs Config timeout in milliseconds.
 	 * @return ErrorCode of configSet
@@ -225,7 +225,7 @@ public:
 	/**
 	 * Configure the mounting pose Pitch of the Pigeon2.
 	 * See {@link #configMountPose(double, double, double, int)}
-	 * 
+	 *
 	 * @param pitch Pitch angle needed to reach the current orientation in degrees.
 	 * @param timeoutMs Config timeout in milliseconds.
 	 * @return ErrorCode of configSet
@@ -234,7 +234,7 @@ public:
 	/**
 	 * Configure the mounting pose Roll of the Pigeon2.
 	 * See {@link #configMountPose(double, double, double, int)}
-	 * 
+	 *
 	 * @param roll Roll angle needed to reach the current orientation in degrees.
 	 * @param timeoutMs Config timeout in milliseconds.
 	 * @return ErrorCode of configSet
@@ -264,9 +264,9 @@ public:
 
 	/**
 	 * Enables the magnetometer fusion for Pigeon2. This is **not** recommended for FRC use
-	 * 
+	 *
 	 * @param enable Boolean to enable/disable magnetometer fusion
-	 * @param timeoutMs 
+	 * @param timeoutMs
      *            Timeout value in ms. If nonzero, function will wait for
      *            config success and report an error if it times out.
      *            If zero, no blocking or checking is performed.
@@ -275,9 +275,9 @@ public:
 	ErrorCode ConfigEnableCompass(bool enable, int timeoutMs = 0);
 	/**
 	 * Disables temperature compensation from Pigeon2.
-	 * 
+	 *
 	 * @param disable Boolean to disable/enable temperature compensation
-	 * @param timeoutMs 
+	 * @param timeoutMs
      *            Timeout value in ms. If nonzero, function will wait for
      *            config success and report an error if it times out.
      *            If zero, no blocking or checking is performed.
@@ -286,9 +286,9 @@ public:
 	ErrorCode ConfigDisableTemperatureCompensation(bool disable, int timeoutMs = 0);
 	/**
 	 * Disables the no-motion calibration from Pigeon2
-	 * 
+	 *
 	 * @param disable Boolean to disable/enable no-motion calibration
-	 * @param timeoutMs 
+	 * @param timeoutMs
      *            Timeout value in ms. If nonzero, function will wait for
      *            config success and report an error if it times out.
      *            If zero, no blocking or checking is performed.
@@ -298,8 +298,8 @@ public:
 
 	/**
 	 * Performs an offset calibration on gyro bias
-	 * 
-	 * @param timeoutMs 
+	 *
+	 * @param timeoutMs
      *            Timeout value in ms. If nonzero, function will wait for
      *            config success and report an error if it times out.
      *            If zero, no blocking or checking is performed.
@@ -309,7 +309,7 @@ public:
 
 	/**
 	 * Get the Gravity Vector.
-	 * 
+	 *
 	 * This provides a vector that points toward ground. This is useful for applications like
 	 *  an arm, where the z-value of the gravity vector corresponds to the feed-forward needed
 	 *  to hold the arm steady.

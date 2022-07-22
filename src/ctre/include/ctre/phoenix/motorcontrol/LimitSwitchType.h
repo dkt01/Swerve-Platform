@@ -66,12 +66,12 @@ enum LimitSwitchNormal {
 	LimitSwitchNormal_NormallyOpen = 0,
     /**
      * Limit Switch is tripped when
-     * the circuit is open 
+     * the circuit is open
      */
 	LimitSwitchNormal_NormallyClosed = 1,
     /**
-     * Limit switch is disabled 
-     */ 
+     * Limit switch is disabled
+     */
 	LimitSwitchNormal_Disabled = 2
 };
 
@@ -89,7 +89,7 @@ public:
 			RemoteLimitSwitchSource limitSwitchSource) {
 		return (LimitSwitchSource) limitSwitchSource;
 	}
-	//Checks if a limit switch is a one of the remote values 
+	//Checks if a limit switch is a one of the remote values
 	//(i.e. RemoteTalonSRX or RemoteCANifier)
 	/**
 	 * Checks if a limit switch is one of the remote values

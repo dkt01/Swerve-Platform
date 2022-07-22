@@ -92,7 +92,7 @@ struct Pigeon2_Faults {
 		commonFaults |= APIError ? 1 : 0; commonFaults <<= 1;
 		commonFaults |= UnderVoltage ? 1 : 0; commonFaults <<= 1;
 		commonFaults |= ResetDuringEn ? 1 : 0; commonFaults <<= 1;
-		
+
 		uint64_t deviceFaults = 0;
 		deviceFaults |= SaturatedRotVelocity ? 1 : 0; deviceFaults <<= 1;
 		deviceFaults |= SaturatedAccel ? 1 : 0; deviceFaults <<= 1;
@@ -104,7 +104,7 @@ struct Pigeon2_Faults {
 		deviceFaults |= MagnetometerFault ? 1 : 0; deviceFaults <<= 1;
 		deviceFaults |= GyroFault ? 1 : 0; deviceFaults <<= 1;
 		deviceFaults |= AccelFault ? 1 : 0; deviceFaults <<= 1;
-		
+
 		return commonFaults | (deviceFaults << 30);
 	}
 	/**
@@ -132,7 +132,7 @@ struct Pigeon2_Faults {
 	}
 	/**
 	 * Creates fault list with specified bit field of faults
-	 * 
+	 *
 	 * @param bits bit field of faults to update with
 	 */
 	Pigeon2_Faults(uint64_t bits) {

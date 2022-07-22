@@ -9,15 +9,15 @@
 
 namespace ArgosLib {
 
-struct SwerveModulePositions {
-  units::degree_t FrontLeft;
-  units::degree_t FrontRight;
-  units::degree_t RearRight;
-  units::degree_t RearLeft;
-};
+  struct SwerveModulePositions {
+    units::degree_t FrontLeft;
+    units::degree_t FrontRight;
+    units::degree_t RearRight;
+    units::degree_t RearLeft;
+  };
 
-class SwerveHomeStorageInterface {
-  public:
+  class SwerveHomeStorageInterface {
+   public:
     /**
      * @brief Save home position to persistent storage
      *
@@ -34,6 +34,6 @@ class SwerveHomeStorageInterface {
      *         previously stored
      */
     virtual std::optional<SwerveModulePositions> Load() = 0;
-};
+  };
 
-} // namespace ArgosLib
+}  // namespace ArgosLib

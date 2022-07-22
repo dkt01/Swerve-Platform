@@ -17,7 +17,7 @@ enum ControlFrame {
 	 */
 	Control_4_Advanced = 0x0400C0,
 	/**
-	 * Trajectory points 
+	 * Trajectory points
 	 */
 	Control_6_MotProfAddTrajPoint = 0x040140,
 };

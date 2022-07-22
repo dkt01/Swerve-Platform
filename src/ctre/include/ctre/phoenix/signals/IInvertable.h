@@ -13,7 +13,7 @@ public:
 	virtual ~IInvertable(){}
 	/**
 	 * Inverts the output of the object
-	 * 
+	 *
 	 * @param invert
 	 *            Invert state to set.
 	 */

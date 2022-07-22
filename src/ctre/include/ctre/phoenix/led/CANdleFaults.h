@@ -19,7 +19,7 @@ struct CANdleFaults {
 	 */
 	bool APIError;
     /**
-     * Boot while receiving an enable frame 
+     * Boot while receiving an enable frame
      */
     bool BootDuringEnable;
     /**
@@ -99,7 +99,7 @@ struct CANdleFaults {
     }
     /**
      * Updates current fault list with specified bit field of faults
-     * 
+     *
      * @param bits bit field of faults to update with
      */
     CANdleFaults(int bits) {
@@ -122,7 +122,7 @@ struct CANdleStickyFaults {
 	 */
 	bool APIError;
     /**
-     * Boot while receiving an enable frame 
+     * Boot while receiving an enable frame
      */
     bool BootDuringEnable;
     /**
@@ -202,7 +202,7 @@ struct CANdleStickyFaults {
     }
     /**
      * Updates current fault list with specified bit field of faults
-     * 
+     *
      * @param bits bit field of faults to update with
      */
     CANdleStickyFaults(int bits) {

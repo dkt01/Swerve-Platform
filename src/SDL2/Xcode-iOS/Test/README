@@ -6,6 +6,6 @@ testthread:
 testlock:
 	Locks appear to work, but there doesn't appear to be a simple way to send the process SIGINT.
 
-testsprite2: 
+testsprite2:
 	SDL_CreateTextureFromSurface requests an ARGB pixel format, but iPhone's SDL video driver only supports ABGR.
 

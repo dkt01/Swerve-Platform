@@ -1,7 +1,7 @@
 #pragma once
 
 namespace ctre{ namespace phoenix{ namespace led{
-    
+
     /**
      * The various methods of managing the VBat output behavior
      */

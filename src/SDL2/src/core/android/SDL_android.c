@@ -2609,7 +2609,7 @@ int Android_JNI_GetLocale(char *buf, size_t buflen)
                 buf[id++] = country[1];
             }
         }
-        
+
         buf[id++] = '\0';
         SDL_assert(id <= buflen);
     }

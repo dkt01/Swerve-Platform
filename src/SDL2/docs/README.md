@@ -17,7 +17,7 @@ and many Humble Bundle games.
 SDL officially supports Windows, Mac OS X, Linux, iOS, and Android.
 Support for other platforms may be found in the source code.
 
-SDL is written in C, works natively with C++, and there are bindings 
+SDL is written in C, works natively with C++, and there are bindings
 available for several other languages, including C# and Python.
 
 This library is distributed under the zlib license, which can be found

@@ -22,7 +22,7 @@ struct CANifierStickyFaults {
 	}
 	/**
 	 * Updates current fault list with specified bit field of faults
-	 * 
+	 *
 	 * @param bits bit field of faults to update with
 	 */
 	CANifierStickyFaults(int bits) {

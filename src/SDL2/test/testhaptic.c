@@ -144,7 +144,7 @@ main(int argc, char **argv)
         }
         nefx++;
     }
-    
+
     /* Now the classical constant effect. */
     if (supported & SDL_HAPTIC_CONSTANT) {
         SDL_Log("   effect %d: Constant Force\n", nefx);
@@ -162,7 +162,7 @@ main(int argc, char **argv)
         }
         nefx++;
     }
-    
+
     /* The cute spring effect. */
     if (supported & SDL_HAPTIC_SPRING) {
         SDL_Log("   effect %d: Condition Spring\n", nefx);
@@ -237,7 +237,7 @@ main(int argc, char **argv)
         }
         nefx++;
     }
-    
+
     /* Now we'll try a ramp effect */
     if (supported & SDL_HAPTIC_RAMP) {
         SDL_Log("   effect %d: Ramp\n", nefx);

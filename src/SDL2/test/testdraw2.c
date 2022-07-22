@@ -269,8 +269,8 @@ main(int argc, char *argv[])
             }
         }
         if (consumed < 0) {
-            static const char *options[] = { 
-                "[--blend none|blend|add|mod]", 
+            static const char *options[] = {
+                "[--blend none|blend|add|mod]",
                 "[--cyclecolor]",
                 "[--cyclealpha]",
                 "[num_objects]",

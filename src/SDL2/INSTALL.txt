@@ -29,7 +29,7 @@ To compile and install SDL:
     2.  Look at the example programs in ./test, and check out the online
         documentation at https://wiki.libsdl.org/
 
-    3.  Join the SDL developer discussions, sign up on 
+    3.  Join the SDL developer discussions, sign up on
         https://discourse.libsdl.org/
         and go to the development forum
         https://discourse.libsdl.org/c/sdl-development/6

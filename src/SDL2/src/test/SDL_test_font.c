@@ -3166,7 +3166,7 @@ int SDLTest_DrawCharacter(SDL_Renderer *renderer, int x, int y, char c)
     }
 
     /* Allocate a new cache for this renderer if needed */
-    if (cache == NULL) {        
+    if (cache == NULL) {
         cache = (struct SDLTest_CharTextureCache*)SDL_calloc(1, sizeof(struct SDLTest_CharTextureCache));
         cache->renderer = renderer;
         cache->next = SDLTest_CharTextureCacheList;

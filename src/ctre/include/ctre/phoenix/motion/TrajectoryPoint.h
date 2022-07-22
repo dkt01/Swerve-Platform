@@ -81,9 +81,9 @@ namespace ctre {
 
 				/**
 				 * Create a trajectory point with specified values
-				 * 
+				 *
 				 * @param position The position to servo to (in sensor units).
-				 * @param velocity The velocity to feed-forward (in sensor-units per 100ms). 
+				 * @param velocity The velocity to feed-forward (in sensor-units per 100ms).
 				 * @param arbFeedFwd Added to the output of PID[0], should be within [-1,+1] where 0.01 = 1%.
 				 * @param auxiliaryPos The position for auxiliary PID[1] to target (in sensor units).
 				 * @param auxiliaryVel The velocity for auxiliary PID[1] to target. (in sensor-units per 100ms).
@@ -96,16 +96,16 @@ namespace ctre {
 				 * @param useAuxPID Enables the auxiliary PID
 				 */
 
-				TrajectoryPoint(double position, 
-								double velocity, 
+				TrajectoryPoint(double position,
+								double velocity,
 								double arbFeedFwd,
-								double auxiliaryPos, 
-								double auxiliaryVel, 
-								double auxiliaryArbFeedFwd, 
-								uint32_t profileSlotSelect0, 
+								double auxiliaryPos,
+								double auxiliaryVel,
+								double auxiliaryArbFeedFwd,
+								uint32_t profileSlotSelect0,
 								uint32_t profileSlotSelect1,
 								bool isLastPoint,
-								bool zeroPos, 
+								bool zeroPos,
 								uint32_t timeDur,
 								bool useAuxPID) {
 

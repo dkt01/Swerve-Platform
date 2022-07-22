@@ -450,7 +450,7 @@ KMSDRM_WaitPageflip(_THIS, SDL_WindowData *windata) {
                If it's not, we keep iterating on the loop. */
             KMSDRM_drmHandleEvent(viddata->drm_fd, &ev);
         }
-            
+
         /* If we got to this point in the loop, we may iterate or exit the loop:
            -A legit (non-error) event arrived, and it was a POLLING event, and it was consumed
             by drmHandleEvent().
@@ -460,7 +460,7 @@ KMSDRM_WaitPageflip(_THIS, SDL_WindowData *windata) {
                iterare back to polling.
            -A legit (non-error) event arrived, but it's not a POLLIN event, so it hasn't to be
             consumed by drmHandleEvent(), so waiting_for_flip isn't set and we iterate back
-            to polling. */ 
+            to polling. */
 
     }
 
@@ -512,8 +512,8 @@ KMSDRM_DeinitDisplays (_THIS) {
 
     /* Iterate on the SDL Display list. */
     for (i = 0; i < num_displays; i++) {
-  
-        /* Get the driverdata for this display */   
+
+        /* Get the driverdata for this display */
         dispdata = (SDL_DisplayData *)SDL_GetDisplayDriverData(i);
 
         /* Free connector */
@@ -1234,7 +1234,7 @@ KMSDRM_DestroyWindow(_THIS, SDL_Window *window)
 /* We simply IGNORE if it's a fullscreen window, window->flags don't  */
 /* reflect it: if it's fullscreen, KMSDRM_SetWindwoFullscreen() will  */
 /* be called by SDL later, and we can manage it there.                */
-/**********************************************************************/ 
+/**********************************************************************/
 int
 KMSDRM_CreateWindow(_THIS, SDL_Window * window)
 {
@@ -1269,7 +1269,7 @@ KMSDRM_CreateWindow(_THIS, SDL_Window * window)
             /* After SDL_CreateWindow, most SDL2 programs will do SDL_CreateRenderer(),
                which will in turn call GL_CreateRenderer() or GLES2_CreateRenderer().
                In order for the GL_CreateRenderer() or GLES2_CreateRenderer() call to
-               succeed without an unnecessary window re-creation, we must: 
+               succeed without an unnecessary window re-creation, we must:
                -Mark the window as being OPENGL
                -Load the GL library (which can't be done until the GBM device has been
                 created, so we have to do it here instead of doing it on VideoInit())
@@ -1360,7 +1360,7 @@ KMSDRM_CreateWindow(_THIS, SDL_Window * window)
 
     /* Allocated windata will be freed in KMSDRM_DestroyWindow,
        and KMSDRM_DestroyWindow() will be called by SDL_CreateWindow()
-       if we return error on any of the previous returns of the function. */ 
+       if we return error on any of the previous returns of the function. */
     return ret;
 }
 

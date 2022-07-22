@@ -2,7 +2,7 @@
 
 #include "ctre/phoenix/led/Animation.h"
 
-namespace ctre{ namespace phoenix{ namespace led{ 
+namespace ctre{ namespace phoenix{ namespace led{
 
 /**
  * The base class for one generic type of animation.
@@ -25,7 +25,7 @@ public:
      */
     BaseStandardAnimation(int idx, double brightness, double speed, int numLed, double param4, double param5, bool reverseDirection, int ledOffset);
     ~BaseStandardAnimation();
-    
+
     BaseStandardAnimation *GetBaseStandardAnimation();
     BaseTwoSizeAnimation *GetBaseTwoSizeAnimation();
 

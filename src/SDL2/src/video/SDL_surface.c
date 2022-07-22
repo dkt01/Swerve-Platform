@@ -326,7 +326,7 @@ SDL_GetColorKey(SDL_Surface * surface, Uint32 * key)
     return 0;
 }
 
-/* This is a fairly slow function to switch from colorkey to alpha 
+/* This is a fairly slow function to switch from colorkey to alpha
    NB: it doesn't handle bpp 1 or 3, because they have no alpha channel */
 static void
 SDL_ConvertColorkeyToAlpha(SDL_Surface * surface, SDL_bool ignore_alpha)

@@ -30,7 +30,7 @@ namespace ctre{ namespace phoenix{ namespace led{
          */
         BRGW = 8,
     };
-    
+
 } // namespace led
 } // namespace phoenix
 } // namespace ctre

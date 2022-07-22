@@ -52,7 +52,7 @@ VIRTUAL_FreeHWData(joystick_hwdata *hwdata)
 {
     joystick_hwdata * cur = g_VJoys;
     joystick_hwdata * prev = NULL;
- 
+
     if (!hwdata) {
         return;
     }

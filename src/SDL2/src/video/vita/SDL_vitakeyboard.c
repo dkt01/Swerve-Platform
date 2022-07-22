@@ -39,7 +39,7 @@ Uint8 prev_modifiers = 0;
 Uint8 locks = 0;
 Uint8 lock_key_down = 0;
 
-void 
+void
 VITA_InitKeyboard(void)
 {
 #if defined(SDL_VIDEO_VITA_PVR)
@@ -48,7 +48,7 @@ VITA_InitKeyboard(void)
     sceHidKeyboardEnumerate(&keyboard_hid_handle, 1);
 }
 
-void 
+void
 VITA_PollKeyboard(void)
 {
     // We skip polling keyboard if no window is created

@@ -21,7 +21,7 @@ namespace ctre {
 			  */
 			class BasePigeonSimCollection {
 			public:
-				/** 
+				/**
 				  * @param pigeon Pigeon IMU to connect so sim collection
 				  */
 				BasePigeonSimCollection(ctre::phoenix::sensors::BasePigeon& pigeon, bool isRibbonCable);

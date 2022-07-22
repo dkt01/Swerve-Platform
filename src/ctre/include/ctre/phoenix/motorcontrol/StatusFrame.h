@@ -8,7 +8,7 @@ namespace motorcontrol {
  * The different status frames available to enhanced motor controllers
  */
 enum StatusFrameEnhanced {
-	/** 
+	/**
 	 * General Status
 	 */
 	Status_1_General = 0x1400,
@@ -17,7 +17,7 @@ enum StatusFrameEnhanced {
 	 */
 	Status_2_Feedback0 = 0x1440,
 	/**
-	 * Analog sensor, motor controller 
+	 * Analog sensor, motor controller
 	 * temperature, and voltage at input leads
 	 */
 	Status_4_AinTempVbat = 0x14C0,
@@ -64,13 +64,13 @@ enum StatusFrameEnhanced {
 	 * [[deprecated("Use Status_15_FirmwareApiStatus instead.")]]
 	 */
 	Status_15_FirmareApiStatus = 0x1780,
-	/** 
-	 * MotionProfile Targets for Auxiliary PID1. 
+	/**
+	 * MotionProfile Targets for Auxiliary PID1.
 	 */
 	Status_17_Targets1 = 0x1C00,
 
 	/**
-	 * Quadrature sensor 
+	 * Quadrature sensor
 	 */
 	Status_3_Quadrature = 0x1480,
 	/**
@@ -92,7 +92,7 @@ enum StatusFrameEnhanced {
  * The different status frames available to motor controllers
  */
 enum StatusFrame {
-	/** 
+	/**
 	 * General Status
 	 */
 	Status_1_General_ = 0x1400,
@@ -101,7 +101,7 @@ enum StatusFrame {
 	 */
 	Status_2_Feedback0_ = 0x1440,
 	/**
-	 * Analog sensor, motor controller 
+	 * Analog sensor, motor controller
 	 * temperature, and voltage at input leads
 	 */
 	Status_4_AinTempVbat_ = 0x14C0,
@@ -148,8 +148,8 @@ enum StatusFrame {
 	 * [[deprecated("Use Status_15_FirmwareApiStatus_ instead.")]]
 	 */
 	Status_15_FirmareApiStatus_ = 0x1780,
-	/** 
-	 * MotionProfile Targets for Auxiliary PID1. 
+	/**
+	 * MotionProfile Targets for Auxiliary PID1.
 	 */
 	Status_17_Targets1_ = 0x1C00,
 };

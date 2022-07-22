@@ -1,6 +1,6 @@
 # sdl2 cmake project-config input for ./configure scripts
 
-set(prefix "@prefix@") 
+set(prefix "@prefix@")
 set(exec_prefix "@exec_prefix@")
 set(libdir "@libdir@")
 set(includedir "@includedir@")
@@ -48,7 +48,7 @@ else() # (not WIN32) or MSVC
 
   if(MSVC)
     # This file is generated when building SDL2 with autotools and MinGW, and MinGW/dlltool
-    # isn't able to generate .lib files that are usable by recent MSVC versions 
+    # isn't able to generate .lib files that are usable by recent MSVC versions
     # (something about "module unsafe for SAFESEH"; SAFESEH is enabled by default in MSVC).
     # The .lib file for SDL2.dll *could* be generated with `gendef SDL2.dll` and then
     # `lib.exe /machine:x86 /def:SDL2.def /out:SDL2.lib` (or /machine:amd64)

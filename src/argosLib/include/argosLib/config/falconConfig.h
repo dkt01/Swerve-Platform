@@ -9,7 +9,7 @@
 #include <units/voltage.h>
 
 #include "compileTimeMemberCheck.h"
-#define Phoenix_No_WPI // remove WPI dependencies
+#define Phoenix_No_WPI  // remove WPI dependencies
 #include "ctre/Phoenix.h"
 
 HAS_MEMBER(forwardLimit_deviceID)
@@ -230,7 +230,7 @@ bool FalconConfig(TalonFX& motorController, units::millisecond_t configTimeout) 
   }
 
   auto retVal = motorController.ConfigAllSettings(config, timeout);
-  if(0 != retVal) {
+  if (0 != retVal) {
     std::cout << "Error code (" << motorController.GetDeviceID() << "): " << retVal << '\n';
   }
 

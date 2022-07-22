@@ -6,7 +6,7 @@
 
 namespace ctre{
 namespace phoenix {
-	
+
 /**
  * Class to convert RC PWM signals into CAN signals using CANifier
  */
@@ -46,7 +46,7 @@ public:
 		 */
 		Okay,
 	};
-	
+
 	/**
 	 * Current status of CANifier
 	 */

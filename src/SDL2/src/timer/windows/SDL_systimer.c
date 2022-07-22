@@ -31,7 +31,7 @@
 
 /* The first (low-resolution) ticks value of the application */
 static DWORD start = 0;
-static BOOL ticks_started = FALSE; 
+static BOOL ticks_started = FALSE;
 
 /* The first high-resolution ticks value of the application */
 static LARGE_INTEGER start_ticks;

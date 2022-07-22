@@ -824,7 +824,7 @@ static Uint8 RemapButton(SDL_DriverSwitch_Context *ctx, Uint8 button)
     }
     return button;
 }
- 
+
 static SDL_bool
 HIDAPI_DriverSwitch_InitDevice(SDL_HIDAPI_Device *device)
 {
@@ -902,7 +902,7 @@ HIDAPI_DriverSwitch_OpenJoystick(SDL_HIDAPI_Device *device, SDL_Joystick *joysti
                 device->product_id == USB_PRODUCT_NINTENDO_SWITCH_JOY_CON_RIGHT)) {
             input_mode = k_eSwitchInputReportIDs_FullControllerState;
         }
-        
+
         if (input_mode == k_eSwitchInputReportIDs_FullControllerState) {
             SDL_PrivateJoystickAddSensor(joystick, SDL_SENSOR_GYRO, 200.0f);
             SDL_PrivateJoystickAddSensor(joystick, SDL_SENSOR_ACCEL, 200.0f);
@@ -1136,7 +1136,7 @@ static int
 HIDAPI_DriverSwitch_SetJoystickSensorsEnabled(SDL_HIDAPI_Device *device, SDL_Joystick *joystick, SDL_bool enabled)
 {
     SDL_DriverSwitch_Context* ctx = (SDL_DriverSwitch_Context*)device->context;
-    
+
     if (!ctx->m_bHasSensors) {
         return SDL_Unsupported();
     }
