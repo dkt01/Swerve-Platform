@@ -109,6 +109,7 @@ std::optional<XBoxController::ControllerState> XBoxController::CurrentState() {
   if (m_pJoystick != nullptr) {
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
+      m_lastHeartbeat = std::chrono::steady_clock::now();
       switch (event.type) {
         case SDL_QUIT:
           Deinitialize();
@@ -259,6 +260,10 @@ std::optional<XBoxController::ControllerState> XBoxController::CurrentState() {
     }
 
     UpdateVibration();
+    if (std::chrono::steady_clock::now() - m_lastHeartbeat > std::chrono::milliseconds(2000)) {
+      printf("Timeout!\n");
+      return std::nullopt;
+    }
 
     return m_latestState;
   }

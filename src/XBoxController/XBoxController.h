@@ -89,6 +89,8 @@ class XBoxController {
   SDL_GameController* m_pJoystick;
   ControllerState m_latestState;
 
+  std::chrono::steady_clock::time_point m_lastHeartbeat;
+
   ArgosLib::VibrationModel m_vibrationModel;
 
   constexpr static auto JsIntToPct = [](int jsVal) { return static_cast<double>(jsVal) / 32767.0; };
