@@ -81,6 +81,11 @@ bool XBoxController::Initialize() {
     SDL_GameControllerEventState(SDL_ENABLE);
     m_pJoystick = candidateJoystick;
     return true;
+  } else if (num_axes == 7 && num_buttons == 15 && num_hats == 1) {
+    std::cout << "Connected to new XBox Series controller\n";
+    SDL_GameControllerEventState(SDL_ENABLE);
+    m_pJoystick = candidateJoystick;
+    return true;
   } else {
     std::cout << "VendorID: " << SDL_GameControllerGetVendor(m_pJoystick)
               << ", ProductID: " << SDL_GameControllerGetProduct(m_pJoystick) << '\n';
@@ -101,15 +106,21 @@ void XBoxController::Deinitialize() {
 }
 
 std::optional<XBoxController::ControllerState> XBoxController::CurrentState() {
+  SDL_JoystickUpdate();
+
   // Try getting controller if it was lost
   if (m_pJoystick == nullptr) {
     Initialize();
   }
 
   if (m_pJoystick != nullptr) {
+    if (!SDL_GameControllerGetAttached(m_pJoystick)) {
+      std::cout << "Game controller gone\n";
+      Deinitialize();
+      return std::nullopt;
+    }
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
-      m_lastHeartbeat = std::chrono::steady_clock::now();
       switch (event.type) {
         case SDL_QUIT:
           Deinitialize();
@@ -119,6 +130,12 @@ std::optional<XBoxController::ControllerState> XBoxController::CurrentState() {
         // Handle new controller attaching
         case SDL_CONTROLLERDEVICEADDED:
           std::cout << "DEVICEADDED cdevice.which = " << event.cdevice.which << std::endl;
+          break;
+
+        case SDL_CONTROLLERDEVICEREMOVED:
+          std::cout << "DEVICEREMOVED" << std::endl;
+          Deinitialize();
+          return std::nullopt;
           break;
 
         // If a controller button is pressed
@@ -260,10 +277,6 @@ std::optional<XBoxController::ControllerState> XBoxController::CurrentState() {
     }
 
     UpdateVibration();
-    if (std::chrono::steady_clock::now() - m_lastHeartbeat > std::chrono::milliseconds(2000)) {
-      printf("Timeout!\n");
-      return std::nullopt;
-    }
 
     return m_latestState;
   }

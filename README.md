@@ -145,9 +145,10 @@ Add the following lines to `/boot/config.txt`
 
 ### xpadneo
 1. `sudo apt install dkms linux-headers`
-2. `git clone https://github.com/atar-axis/xpadneo.git`
-3. `cd xpadneo`
-4. `sudo ./install.sh`
+2. Reboot
+3. `git clone https://github.com/atar-axis/xpadneo.git`
+4. `cd xpadneo`
+5. `sudo ./install.sh`
 
 ## Bare Minimum To Pair XBox Series Controller
 
