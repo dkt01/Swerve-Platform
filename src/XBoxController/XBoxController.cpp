@@ -81,7 +81,8 @@ bool XBoxController::Initialize() {
     SDL_GameControllerEventState(SDL_ENABLE);
     m_pJoystick = candidateJoystick;
     return true;
-  } else if (num_axes == 7 && (num_buttons == 15 || num_buttons == 12) && num_hats == 1) {
+  } else if ((num_axes == 7 || num_axes == 6) && (num_buttons == 16 || num_buttons == 15 || num_buttons == 12) &&
+             num_hats == 1) {
     std::cout << "Connected to new XBox Series controller\n";
     SDL_GameControllerEventState(SDL_ENABLE);
     m_pJoystick = candidateJoystick;
