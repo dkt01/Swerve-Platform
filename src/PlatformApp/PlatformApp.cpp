@@ -96,6 +96,7 @@ int main(int /*argc*/, char** /*argv*/) {
       swervePlatform.Stop();
       driveMode = false;
     } else {
+      // std::cerr << controllerState.value() << '\n';
       if (homingModeDebounce(controllerState.value().Buttons.LT && controllerState.value().Buttons.RT &&
                              !controllerState.value().Buttons.RB && !driveMode)) {
         if (!calMode) {
@@ -132,8 +133,8 @@ int main(int /*argc*/, char** /*argv*/) {
           }
         }
         if (active) {
-          swervePlatform.SwerveDrive(driveMapLon.map(controllerState.value().Axes.LeftY),
-                                     driveMapLat.map(controllerState.value().Axes.LeftX),
+          swervePlatform.SwerveDrive(driveMapLon.map(-controllerState.value().Axes.LeftY),
+                                     driveMapLat.map(-controllerState.value().Axes.LeftX),
                                      driveMapRot.map(controllerState.value().Axes.RightX));
         } else {
           swervePlatform.Stop();

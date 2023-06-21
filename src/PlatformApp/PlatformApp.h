@@ -41,26 +41,30 @@ namespace controlLoop {
       constexpr double kD = 0.0;
       constexpr double kF = 0.0;
       constexpr double iZone = 100.0;
-      constexpr double allowableError = 1.0;
+      constexpr double allowableError = 0.0;
     }  // namespace rotate
   }    // namespace drive
 }  // namespace controlLoop
 
 namespace joystickAxisMaps {
   constexpr std::array driveLongSpeed{interpMapPoint{-1.0, -1.0},
-                                      interpMapPoint{-0.75, -0.4},
+                                      interpMapPoint{-0.75, -0.3},
                                       interpMapPoint{-0.15, 0.0},
                                       interpMapPoint{0.15, 0.0},
-                                      interpMapPoint{0.75, 0.4},
+                                      interpMapPoint{0.75, 0.3},
                                       interpMapPoint{1.0, 1.0}};
   constexpr std::array driveLatSpeed{interpMapPoint{-1.0, -1.0},
-                                     interpMapPoint{-0.75, -0.4},
+                                     interpMapPoint{-0.75, -0.3},
                                      interpMapPoint{-0.15, 0.0},
                                      interpMapPoint{0.15, 0.0},
-                                     interpMapPoint{0.75, 0.4},
+                                     interpMapPoint{0.75, 0.3},
                                      interpMapPoint{1.0, 1.0}};
-  constexpr std::array driveRotSpeed{
-      interpMapPoint{-1.0, -1.0}, interpMapPoint{-0.15, 0.0}, interpMapPoint{0.15, 0.0}, interpMapPoint{1.0, 1.0}};
+  constexpr std::array driveRotSpeed{interpMapPoint{-1.0, -1.0},
+                                     interpMapPoint{-0.75, -0.3},
+                                     interpMapPoint{-0.15, 0.0},
+                                     interpMapPoint{0.15, 0.0},
+                                     interpMapPoint{0.75, 0.3},
+                                     interpMapPoint{1.0, 1.0}};
 }  // namespace joystickAxisMaps
 
 constexpr static auto canInterfaceName = "can0";
