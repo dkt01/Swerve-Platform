@@ -5,6 +5,7 @@ add_subdirectory("argosLib")
 add_subdirectory("SDL2")
 
 # Application content
+add_subdirectory("SerialLineSensor")
 add_subdirectory("SwervePlatform")
 add_subdirectory("SwervePlatformHomingStorage")
 add_subdirectory("XBoxController")

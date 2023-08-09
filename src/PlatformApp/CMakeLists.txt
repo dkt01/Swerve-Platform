@@ -4,7 +4,8 @@ add_executable(${PROJECT_NAME} PlatformApp.cpp)
 
 find_package (Threads REQUIRED)
 
-target_link_libraries(${PROJECT_NAME} SwervePlatform
+target_link_libraries(${PROJECT_NAME} SerialLineSensor
+                                      SwervePlatform
                                       SwervePlatformHomingStorage
                                       XBoxController
                                       wpimath

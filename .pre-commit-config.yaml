@@ -17,3 +17,4 @@ repos:
     rev: 'v14.0.6'  # Use the sha / tag you want to point at
     hooks:
     -   id: clang-format
+        types: [c++]

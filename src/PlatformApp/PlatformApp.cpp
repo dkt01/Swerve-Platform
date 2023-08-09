@@ -7,6 +7,7 @@
 
 #include "ctre/phoenix/platform/Platform.h"
 #include "ctre/phoenix/unmanaged/Unmanaged.h"
+#include "SerialLineSensor.h"
 #include "SwervePlatformHomingStorage.h"
 #include <chrono>
 #include <unistd.h>
@@ -84,6 +85,8 @@ int main(int /*argc*/, char** /*argv*/) {
   static bool driveMode = false;
   static bool calMode = false;
   static bool calTrigger = false;
+
+  SerialLineSensor lineSensor{"/dev/ttyACM0", std::chrono::milliseconds(100)};
 
   while (!shutdown) {
     /// @todo robot mode management

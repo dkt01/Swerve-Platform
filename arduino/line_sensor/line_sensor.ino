@@ -3,6 +3,7 @@ void setup() {
 }
 
 void loop() {
+  unsigned char humanReadable[128];
   unsigned char buffer[8];
   int leftSensorValue = analogRead(A0);
   int centerSensorValue = analogRead(A1);
@@ -15,6 +16,10 @@ void loop() {
   buffer[5] = (unsigned char)((rightSensorValue >> 8) & 0xff);
   buffer[6] = '\r';
   buffer[7] = '\n';
-  Serial.write(buffer, 8);
+
+  snprintf(humanReadable, 128, "l: %04d, c: %04d, r: %04d", leftSensorValue, centerSensorValue, rightSensorValue);
+  //  Serial.write(buffer, 8);
+  Serial.write(humanReadable, strlen(humanReadable));
+  Serial.println();
   delay(20);
 }
