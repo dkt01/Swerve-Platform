@@ -1,4 +1,5 @@
 {
+  "cmake.configureSettings": {"CMAKE_TOOLCHAIN_FILE": "../utils/armv8-rpi3-linux-gnueabihf.cmake"},
   "editor.tabSize": 2,
   "files.eol": "\n",
   "files.insertFinalNewline": true,
