@@ -19,7 +19,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Set up directories
       run: mkdir build
@@ -29,7 +29,7 @@ jobs:
       working-directory: build
 
     - name: Setup cmake
-      uses: jwlawson/actions-setup-cmake@v1.9
+      uses: jwlawson/actions-setup-cmake@v1.14
       with:
         cmake-version: '3.22.x'
 
@@ -48,7 +48,7 @@ jobs:
       run: tar czf ../Swerve-Platform.tar.gz .
       working-directory: output
 
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
         name: raw-build-output
         path: Swerve-Platform.tar.gz
@@ -79,7 +79,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v3
 
     - name: APT update
       run: sudo apt update
@@ -101,7 +101,7 @@ jobs:
       working-directory: image
 
     - name: Upload built image
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: built-image
         path: image/deploy/image_*Swerve-Platform.zip
