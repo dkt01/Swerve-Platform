@@ -86,7 +86,7 @@ int main(int /*argc*/, char** /*argv*/) {
   static bool calMode = false;
   static bool calTrigger = false;
 
-  SerialLineSensor lineSensor{"/dev/ttyACM0", std::chrono::milliseconds(100)};
+  SerialLineSensor lineSensor{std::chrono::milliseconds(100)};
 
   while (!shutdown) {
     /// @todo robot mode management

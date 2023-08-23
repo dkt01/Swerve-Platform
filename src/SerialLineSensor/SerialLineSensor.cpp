@@ -12,6 +12,12 @@ SerialLineSensor::SerialLineSensor(const std::string& serialDeviceName, const st
   m_receiveThread = std::thread(&SerialLineSensor::ReceiverThread, this);
 }
 
+SerialLineSensor::SerialLineSensor(const std::chrono::milliseconds timeout)
+    : m_serialDeviceName{""}, m_timeout{timeout} {
+  m_runThread.store(true);
+  m_receiveThread = std::thread(&SerialLineSensor::ReceiverThread, this);
+}
+
 SerialLineSensor::~SerialLineSensor() {
   m_runThread.store(false);
   m_receiveThread.join();
@@ -65,6 +71,19 @@ void SerialLineSensor::ReceiverThread() {
   while (m_runThread.load()) {
     // Connect
     while (m_runThread.load() && !m_connected) {
+      std::string portFName = m_serialDeviceName;
+      if (portFName.empty()) {
+        auto discoveredPort = DiscoverSerialDevice();
+        if (discoveredPort) {
+          portFName = discoveredPort.value().string();
+        }
+      }
+
+      if (portFName.empty()) {
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        continue;
+      }
+
       m_serialPort = open(m_serialDeviceName.c_str(), O_RDWR | O_NOCTTY);
       if (m_serialPort >= 0) {
         struct termios tty;
@@ -140,7 +159,8 @@ void SerialLineSensor::ReceiverThread() {
           m_currentCenter = rawStates.value().center;
           m_currentRight = rawStates.value().right;
           m_lastUpdateTime = std::chrono::steady_clock::now();
-          // std::cout << rawStates.value().left << ' ' << rawStates.value().center << ' ' << rawStates.value().right << '\n';
+          std::cout << rawStates.value().left << ' ' << rawStates.value().center << ' ' << rawStates.value().right
+                    << '\n';
         }
       }
     }
@@ -171,6 +191,24 @@ void SerialLineSensor::ReceiverThread() {
     return std::nullopt;
   } catch (std::out_of_range&) {
     std::cerr << "Out of range\n";
+    return std::nullopt;
+  }
+}
+
+[[nodiscard]] std::optional<std::filesystem::path> SerialLineSensor::DiscoverSerialDevice() {
+  try {
+    for (const auto& candidatePort : std::filesystem::directory_iterator("/dev/serial/by-id")) {
+      auto candidatePortFname = candidatePort.path().filename().string();
+      std::transform(
+          candidatePortFname.begin(), candidatePortFname.end(), candidatePortFname.begin(), [](unsigned char c) {
+            return std::tolower(c);
+          });
+      if (candidatePortFname.find("arduino") != std::string::npos) {
+        return candidatePort;
+      }
+    }
+    return std::nullopt;
+  } catch (std::filesystem::filesystem_error const&) {
     return std::nullopt;
   }
 }

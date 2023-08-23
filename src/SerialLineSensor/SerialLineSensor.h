@@ -7,6 +7,7 @@
 #include <optional>
 #include <string>
 #include <thread>
+#include <filesystem>
 
 struct SensorArrayStatus {
   bool leftLineDetected;
@@ -23,6 +24,7 @@ struct RawSensorArrayStatus {
 class SerialLineSensor {
  public:
   SerialLineSensor(const std::string& serialDeviceName, const std::chrono::milliseconds timeout);
+  SerialLineSensor(const std::chrono::milliseconds timeout);
   ~SerialLineSensor();
 
   [[nodiscard]] std::optional<int16_t> GetRawLeft() const;
@@ -48,4 +50,5 @@ class SerialLineSensor {
 
   void ReceiverThread();
   [[nodiscard]] static std::optional<RawSensorArrayStatus> ParseMessage(std::string_view message);
+  [[nodiscard]] static std::optional<std::filesystem::path> DiscoverSerialDevice();
 };
