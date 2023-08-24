@@ -14,7 +14,10 @@ target_link_libraries(${PROJECT_NAME} SerialLineSensor
                                       CTRE_Phoenix
                                       CTRE_PhoenixCCI
                                       Threads::Threads
-                                      SDL2)
+                                      SDL2-static
+                                      stdc++fs
+                                      -static-libgcc
+                                      -static-libstdc++)
 
 target_include_directories(${PROJECT_NAME}
     PUBLIC

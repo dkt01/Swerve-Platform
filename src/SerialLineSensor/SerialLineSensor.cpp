@@ -79,12 +79,14 @@ void SerialLineSensor::ReceiverThread() {
         }
       }
 
+      std::cout << "Port name: " << portFName << '\n';
+
       if (portFName.empty()) {
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
         continue;
       }
 
-      m_serialPort = open(m_serialDeviceName.c_str(), O_RDWR | O_NOCTTY);
+      m_serialPort = open(portFName.c_str(), O_RDWR | O_NOCTTY);
       if (m_serialPort >= 0) {
         struct termios tty;
 
@@ -162,6 +164,11 @@ void SerialLineSensor::ReceiverThread() {
           std::cout << rawStates.value().left << ' ' << rawStates.value().center << ' ' << rawStates.value().right
                     << '\n';
         }
+      } else if (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() -
+                                                                       m_lastUpdateTime) > m_timeout) {
+        std::cerr << "Lost connection\n";
+        close(m_serialPort);
+        m_connected = false;
       }
     }
   }
@@ -204,7 +211,8 @@ void SerialLineSensor::ReceiverThread() {
             return std::tolower(c);
           });
       if (candidatePortFname.find("arduino") != std::string::npos) {
-        return candidatePort;
+        return std::filesystem::canonical(candidatePort.path().parent_path() /
+                                          std::filesystem::read_symlink(candidatePort.path()));
       }
     }
     return std::nullopt;

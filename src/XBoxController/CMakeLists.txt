@@ -2,7 +2,7 @@ project(XBoxController)
 
 add_library(${PROJECT_NAME} XBoxController.cpp)
 
-target_link_libraries(${PROJECT_NAME} SDL2
+target_link_libraries(${PROJECT_NAME} SDL2-static
                                       argosLib)
 
 target_include_directories(${PROJECT_NAME}
