@@ -109,7 +109,7 @@ int main(int /*argc*/, char** /*argv*/) {
         if (homingCalDebounce(controllerState.value().Buttons.A)) {
           if (!calTrigger) {
             calTrigger = true;
-            swervePlatform.Home(0_deg);
+            // swervePlatform.Home(0_deg);
           }
           controller.SetVibration(ArgosLib::VibrationConstant(0.5));
         } else {
@@ -125,7 +125,8 @@ int main(int /*argc*/, char** /*argv*/) {
         if (!driveMode) {
           if (driveMapLon.map(controllerState.value().Axes.LeftY) == 0 &&
               driveMapLat.map(controllerState.value().Axes.LeftX) == 0 &&
-              driveMapRot.map(controllerState.value().Axes.RightX) == 0) {
+              driveMapRot.map(controllerState.value().Axes.RightX) == 0 && !controllerState.value().Buttons.DUp &&
+              !controllerState.value().Buttons.DDown) {
             // Vibration pulse to indicate drive mode activated
             controller.SetVibration(0.3, 0.3, 500ms);
             driveMode = true;
@@ -135,10 +136,13 @@ int main(int /*argc*/, char** /*argv*/) {
             active = false;
           }
         }
-        if (active) {
+        if (active && !controllerState.value().Buttons.LB) {
           swervePlatform.SwerveDrive(driveMapLon.map(controllerState.value().Axes.LeftY),
                                      driveMapLat.map(controllerState.value().Axes.LeftX),
                                      driveMapRot.map(controllerState.value().Axes.RightX));
+        } else if (active) {
+          swervePlatform.LineFollow(
+              controllerState.value().Buttons.DUp, controllerState.value().Buttons.DDown, lineSensor.GetArrayStatus());
         } else {
           swervePlatform.Stop();
         }

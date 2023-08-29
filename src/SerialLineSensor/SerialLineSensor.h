@@ -37,7 +37,7 @@ class SerialLineSensor {
  private:
   std::string m_serialDeviceName;
   int m_serialPort;
-  uint16_t m_calibrationThreshold;
+  uint16_t m_calibrationThreshold{1015};
   std::optional<uint16_t> m_currentLeft{std::nullopt};
   std::optional<uint16_t> m_currentCenter{std::nullopt};
   std::optional<uint16_t> m_currentRight{std::nullopt};

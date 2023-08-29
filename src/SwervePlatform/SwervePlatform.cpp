@@ -7,7 +7,11 @@
 
 #include "argosLib/general/swerveUtils.h"
 
-void SwervePlatform::SwerveDrive(const double fwVelocity, const double latVelocity, const double rotateVelocity) {
+void SwervePlatform::SwerveDrive(const double fwVelocity,
+                                 const double latVelocity,
+                                 const double rotateVelocity,
+                                 const bool lineFollow,
+                                 frc::Translation2d offset) {
   // Halt motion
   if (fwVelocity == 0 && latVelocity == 0 && rotateVelocity == 0) {
     m_motorDriveFrontLeft.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, 0.0);
@@ -21,7 +25,11 @@ void SwervePlatform::SwerveDrive(const double fwVelocity, const double latVeloci
     return;
   }
 
-  auto moduleStates = RawModuleStates(fwVelocity, latVelocity, rotateVelocity);
+  if (!lineFollow) {
+    m_followDirection = LineFollowDirection::unknown;
+  }
+
+  auto moduleStates = RawModuleStates(fwVelocity, latVelocity, rotateVelocity, offset);
   // printf("FR raw module velocity: %0.2fm/s\n", moduleStates.at(ModuleIndex::frontRight).speed.to<double>());
 
   std::for_each(
@@ -83,6 +91,56 @@ void SwervePlatform::SwerveDrive(const double fwVelocity, const double latVeloci
   m_motorTurnRearLeft.Set(
       ctre::phoenix::motorcontrol::TalonFXControlMode::Position,
       measureUp::sensorConversion::swerveRotate::fromAngle(moduleStates.at(ModuleIndex::rearLeft).angle.Degrees()));
+}
+
+void SwervePlatform::LineFollow(bool forward, bool reverse, std::optional<SensorArrayStatus> arrayStatus) {
+  if (!arrayStatus || (!forward && !reverse) ||
+      (!arrayStatus.value().leftLineDetected && !arrayStatus.value().centerLineDetected &&
+       !arrayStatus.value().rightLineDetected)) {
+    Stop();
+    return;
+  }
+
+  auto desiredFollowDirection = forward ? LineFollowDirection::forward : LineFollowDirection::reverse;
+
+  const double forwardSpeed = desiredFollowDirection == LineFollowDirection::forward ? 0.5 : -0.5;
+
+  if (arrayStatus.value().leftLineDetected && arrayStatus.value().centerLineDetected &&
+      arrayStatus.value().rightLineDetected) {
+    if (desiredFollowDirection == m_followDirection) {
+      // Reached end of line, don't cross
+      Stop();
+      return;
+    } else {
+      // Leaving end line.  Don't change stored direction because then the platform will stop next loop
+      SwerveDrive(forwardSpeed, 0, 0, true);
+      return;
+    }
+  }
+  m_followDirection = desiredFollowDirection;
+
+  frc::Translation2d offset{-2_m, 0_m};
+  if (desiredFollowDirection == LineFollowDirection::reverse) {
+    offset *= -1.0;
+  }
+
+  double leftTurnSpeed = 0;
+
+  if (arrayStatus.value().leftLineDetected) {
+    leftTurnSpeed = -0.1;
+  } else if (arrayStatus.value().rightLineDetected) {
+    leftTurnSpeed = 0.1;
+  }
+
+  if (arrayStatus.value().centerLineDetected) {
+    leftTurnSpeed *= 0.5;
+  }
+
+  if (desiredFollowDirection == LineFollowDirection::reverse) {
+    leftTurnSpeed *= -1.0;
+  }
+
+  SwerveDrive(forwardSpeed, 0, leftTurnSpeed, true, offset);
 }
 
 void SwervePlatform::Stop() {
@@ -166,7 +224,8 @@ double SwervePlatform::ModuleDriveSpeed(const units::velocity::feet_per_second_t
 
 wpi::array<frc::SwerveModuleState, 4> SwervePlatform::RawModuleStates(const double fwVelocity,
                                                                       const double latVelocity,
-                                                                      const double rotateVelocity) {
+                                                                      const double rotateVelocity,
+                                                                      frc::Translation2d offset) {
   const auto desiredFwVelocity = m_maxVelocity * fwVelocity;
   const auto desiredLatVelocity = m_maxVelocity * latVelocity;
   const auto desiredRotVelocity = m_maxAngularRate * rotateVelocity;
@@ -180,7 +239,7 @@ wpi::array<frc::SwerveModuleState, 4> SwervePlatform::RawModuleStates(const doub
     // }
     case ControlMode::robotCentric:
       return m_pSwerveKinematicsModel->ToSwerveModuleStates(
-          frc::ChassisSpeeds{desiredFwVelocity, desiredLatVelocity, desiredRotVelocity});
+          frc::ChassisSpeeds{desiredFwVelocity, desiredLatVelocity, desiredRotVelocity}, offset);
   }
   // This shouldn't be reachable (and there will be a compiler warning if a switch case is unhandled), but stop if in unknown drive state
   return m_pSwerveKinematicsModel->ToSwerveModuleStates(frc::ChassisSpeeds{0_mps, 0_mps, 0_rpm});

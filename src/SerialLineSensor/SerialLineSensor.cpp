@@ -52,9 +52,9 @@ SerialLineSensor::~SerialLineSensor() {
   if (!rawValues) {
     return std::nullopt;
   }
-  return SensorArrayStatus{.leftLineDetected = rawValues.value().left < m_calibrationThreshold,
-                           .centerLineDetected = rawValues.value().center < m_calibrationThreshold,
-                           .rightLineDetected = rawValues.value().right < m_calibrationThreshold};
+  return SensorArrayStatus{.leftLineDetected = rawValues.value().left < m_calibrationActivateThreshold,
+                           .centerLineDetected = rawValues.value().center < m_calibrationActivateThreshold,
+                           .rightLineDetected = rawValues.value().right < m_calibrationActivateThreshold};
 }
 
 [[nodiscard]] std::optional<RawSensorArrayStatus> SerialLineSensor::GetRawArrayStatus() const {
@@ -157,12 +157,12 @@ void SerialLineSensor::ReceiverThread() {
         auto rawStates = ParseMessage(std::string_view(buf, nBytes));
         if (rawStates) {
           std::scoped_lock lock(m_dataMutex);
-          m_currentLeft = rawStates.value().left;
+          /// @todo fix left/right in arduino code or something...
+          m_currentLeft = rawStates.value().right;
           m_currentCenter = rawStates.value().center;
-          m_currentRight = rawStates.value().right;
+          m_currentRight = rawStates.value().left;
           m_lastUpdateTime = std::chrono::steady_clock::now();
-          std::cout << rawStates.value().left << ' ' << rawStates.value().center << ' ' << rawStates.value().right
-                    << '\n';
+          std::cout << m_currentLeft.value() << ' ' << m_currentCenter.value() << ' ' << m_currentRight.value() << '\n';
         }
       } else if (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() -
                                                                        m_lastUpdateTime) > m_timeout) {
