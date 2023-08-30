@@ -23,6 +23,7 @@ class SwervePlatform {
  public:
   enum ModuleIndex { frontLeft, frontRight, rearRight, rearLeft };
   enum class LineFollowDirection { forward, reverse, unknown };
+  enum class LineFollowState { normal, pastEnd, endStop };
 
   enum class ControlMode {
     fieldCentric,
@@ -65,8 +66,8 @@ class SwervePlatform {
                    const double rotateVelocity,
                    const bool lineFollow = false,
                    frc::Translation2d offset = frc::Translation2d{});
-  void LineFollow(bool forward, bool reverse, std::optional<SensorArrayStatus> arrayStatus);
-  void Stop();
+  void LineFollow(bool forward, bool reverse, std::optional<ProportionalArrayStatus> arrayStatus);
+  void Stop(bool active = false);
 
   void Home(const units::degree_t currentAngle);
   void SetFieldOrientation(const units::degree_t);
@@ -107,6 +108,7 @@ class SwervePlatform {
 
   ControlMode m_activeControlMode;
   LineFollowDirection m_followDirection{LineFollowDirection::unknown};
+  LineFollowState m_followState{LineFollowState::normal};
 };
 
 namespace measureUp {

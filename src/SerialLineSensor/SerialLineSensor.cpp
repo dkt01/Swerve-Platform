@@ -57,6 +57,18 @@ SerialLineSensor::~SerialLineSensor() {
                            .rightLineDetected = rawValues.value().right < m_calibrationActivateThreshold};
 }
 
+[[nodiscard]] std::optional<ProportionalArrayStatus> SerialLineSensor::GetProportionalArrayStatus() const {
+  auto rawValues = GetRawArrayStatus();
+  if (!rawValues) {
+    return std::nullopt;
+  }
+  double range = m_calibrationDeactivateThreshold - m_calibrationActivateThreshold;
+  return ProportionalArrayStatus{
+      .left = std::clamp((m_calibrationDeactivateThreshold - rawValues.value().left) / range, 0.0, 1.0),
+      .center = std::clamp((m_calibrationDeactivateThreshold - rawValues.value().center) / range, 0.0, 1.0),
+      .right = std::clamp((m_calibrationDeactivateThreshold - rawValues.value().right) / range, 0.0, 1.0)};
+}
+
 [[nodiscard]] std::optional<RawSensorArrayStatus> SerialLineSensor::GetRawArrayStatus() const {
   std::scoped_lock lock(m_dataMutex);
   auto timeout = (std::chrono::steady_clock::now() - m_lastUpdateTime) > m_timeout;

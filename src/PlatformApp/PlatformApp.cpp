@@ -141,8 +141,9 @@ int main(int /*argc*/, char** /*argv*/) {
                                      driveMapLat.map(controllerState.value().Axes.LeftX),
                                      driveMapRot.map(controllerState.value().Axes.RightX));
         } else if (active) {
-          swervePlatform.LineFollow(
-              controllerState.value().Buttons.DUp, controllerState.value().Buttons.DDown, lineSensor.GetArrayStatus());
+          swervePlatform.LineFollow(controllerState.value().Buttons.DUp,
+                                    controllerState.value().Buttons.DDown,
+                                    lineSensor.GetProportionalArrayStatus());
         } else {
           swervePlatform.Stop();
         }
