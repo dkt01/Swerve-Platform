@@ -102,7 +102,6 @@ void SwervePlatform::LineFollow(bool forward, bool reverse, std::optional<Propor
        arrayStatus.value().center < std::numeric_limits<double>::epsilon() &&
        arrayStatus.value().right < std::numeric_limits<double>::epsilon())) {
     Stop();
-    m_followState = LineFollowState::normal;
     return;
   }
 
