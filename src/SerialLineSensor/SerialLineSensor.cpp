@@ -12,6 +12,12 @@ SerialLineSensor::SerialLineSensor(const std::string& serialDeviceName, const st
   m_receiveThread = std::thread(&SerialLineSensor::ReceiverThread, this);
 }
 
+SerialLineSensor::SerialLineSensor(const std::chrono::milliseconds timeout)
+    : m_serialDeviceName{""}, m_timeout{timeout} {
+  m_runThread.store(true);
+  m_receiveThread = std::thread(&SerialLineSensor::ReceiverThread, this);
+}
+
 SerialLineSensor::~SerialLineSensor() {
   m_runThread.store(false);
   m_receiveThread.join();
@@ -46,9 +52,21 @@ SerialLineSensor::~SerialLineSensor() {
   if (!rawValues) {
     return std::nullopt;
   }
-  return SensorArrayStatus{.leftLineDetected = rawValues.value().left < m_calibrationThreshold,
-                           .centerLineDetected = rawValues.value().center < m_calibrationThreshold,
-                           .rightLineDetected = rawValues.value().right < m_calibrationThreshold};
+  return SensorArrayStatus{.leftLineDetected = rawValues.value().left < m_calibrationActivateThreshold,
+                           .centerLineDetected = rawValues.value().center < m_calibrationActivateThreshold,
+                           .rightLineDetected = rawValues.value().right < m_calibrationActivateThreshold};
+}
+
+[[nodiscard]] std::optional<ProportionalArrayStatus> SerialLineSensor::GetProportionalArrayStatus() const {
+  auto rawValues = GetRawArrayStatus();
+  if (!rawValues) {
+    return std::nullopt;
+  }
+  double range = m_calibrationDeactivateThreshold - m_calibrationActivateThreshold;
+  return ProportionalArrayStatus{
+      .left = std::clamp((m_calibrationDeactivateThreshold - rawValues.value().left) / range, 0.0, 1.0),
+      .center = std::clamp((m_calibrationDeactivateThreshold - rawValues.value().center) / range, 0.0, 1.0),
+      .right = std::clamp((m_calibrationDeactivateThreshold - rawValues.value().right) / range, 0.0, 1.0)};
 }
 
 [[nodiscard]] std::optional<RawSensorArrayStatus> SerialLineSensor::GetRawArrayStatus() const {
@@ -65,7 +83,22 @@ void SerialLineSensor::ReceiverThread() {
   while (m_runThread.load()) {
     // Connect
     while (m_runThread.load() && !m_connected) {
-      m_serialPort = open(m_serialDeviceName.c_str(), O_RDWR | O_NOCTTY);
+      std::string portFName = m_serialDeviceName;
+      if (portFName.empty()) {
+        auto discoveredPort = DiscoverSerialDevice();
+        if (discoveredPort) {
+          portFName = discoveredPort.value().string();
+        }
+      }
+
+      std::cout << "Port name: " << portFName << '\n';
+
+      if (portFName.empty()) {
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        continue;
+      }
+
+      m_serialPort = open(portFName.c_str(), O_RDWR | O_NOCTTY);
       if (m_serialPort >= 0) {
         struct termios tty;
 
@@ -136,12 +169,18 @@ void SerialLineSensor::ReceiverThread() {
         auto rawStates = ParseMessage(std::string_view(buf, nBytes));
         if (rawStates) {
           std::scoped_lock lock(m_dataMutex);
-          m_currentLeft = rawStates.value().left;
+          /// @todo fix left/right in arduino code or something...
+          m_currentLeft = rawStates.value().right;
           m_currentCenter = rawStates.value().center;
-          m_currentRight = rawStates.value().right;
+          m_currentRight = rawStates.value().left;
           m_lastUpdateTime = std::chrono::steady_clock::now();
-          // std::cout << rawStates.value().left << ' ' << rawStates.value().center << ' ' << rawStates.value().right << '\n';
+          std::cout << m_currentLeft.value() << ' ' << m_currentCenter.value() << ' ' << m_currentRight.value() << '\n';
         }
+      } else if (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() -
+                                                                       m_lastUpdateTime) > m_timeout) {
+        std::cerr << "Lost connection\n";
+        close(m_serialPort);
+        m_connected = false;
       }
     }
   }
@@ -171,6 +210,25 @@ void SerialLineSensor::ReceiverThread() {
     return std::nullopt;
   } catch (std::out_of_range&) {
     std::cerr << "Out of range\n";
+    return std::nullopt;
+  }
+}
+
+[[nodiscard]] std::optional<std::filesystem::path> SerialLineSensor::DiscoverSerialDevice() {
+  try {
+    for (const auto& candidatePort : std::filesystem::directory_iterator("/dev/serial/by-id")) {
+      auto candidatePortFname = candidatePort.path().filename().string();
+      std::transform(
+          candidatePortFname.begin(), candidatePortFname.end(), candidatePortFname.begin(), [](unsigned char c) {
+            return std::tolower(c);
+          });
+      if (candidatePortFname.find("arduino") != std::string::npos) {
+        return std::filesystem::canonical(candidatePort.path().parent_path() /
+                                          std::filesystem::read_symlink(candidatePort.path()));
+      }
+    }
+    return std::nullopt;
+  } catch (std::filesystem::filesystem_error const&) {
     return std::nullopt;
   }
 }

@@ -7,6 +7,7 @@
 #include <optional>
 #include <string>
 #include <thread>
+#include <filesystem>
 
 struct SensorArrayStatus {
   bool leftLineDetected;
@@ -20,9 +21,16 @@ struct RawSensorArrayStatus {
   uint16_t right;
 };
 
+struct ProportionalArrayStatus {
+  double left;    ///< 0=no line, 1=full line
+  double center;  ///< 0=no line, 1=full line
+  double right;   ///< 0=no line, 1=full line
+};
+
 class SerialLineSensor {
  public:
   SerialLineSensor(const std::string& serialDeviceName, const std::chrono::milliseconds timeout);
+  SerialLineSensor(const std::chrono::milliseconds timeout);
   ~SerialLineSensor();
 
   [[nodiscard]] std::optional<int16_t> GetRawLeft() const;
@@ -31,11 +39,14 @@ class SerialLineSensor {
 
   [[nodiscard]] std::optional<SensorArrayStatus> GetArrayStatus() const;
   [[nodiscard]] std::optional<RawSensorArrayStatus> GetRawArrayStatus() const;
+  [[nodiscard]] std::optional<ProportionalArrayStatus> GetProportionalArrayStatus() const;
 
  private:
   std::string m_serialDeviceName;
   int m_serialPort;
-  uint16_t m_calibrationThreshold;
+  /// @todo calibration procedure...
+  uint16_t m_calibrationActivateThreshold{940};
+  uint16_t m_calibrationDeactivateThreshold{1000};
   std::optional<uint16_t> m_currentLeft{std::nullopt};
   std::optional<uint16_t> m_currentCenter{std::nullopt};
   std::optional<uint16_t> m_currentRight{std::nullopt};
@@ -48,4 +59,5 @@ class SerialLineSensor {
 
   void ReceiverThread();
   [[nodiscard]] static std::optional<RawSensorArrayStatus> ParseMessage(std::string_view message);
+  [[nodiscard]] static std::optional<std::filesystem::path> DiscoverSerialDevice();
 };

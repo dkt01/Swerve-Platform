@@ -1,5 +1,6 @@
 {
   "cmake.configureSettings": {"CMAKE_TOOLCHAIN_FILE": "../utils/armv8-rpi3-linux-gnueabihf.cmake"},
+  "cmake.configureArgs": ["-DBUILD_SHARED_LIBS=OFF"],
   "editor.tabSize": 2,
   "files.eol": "\n",
   "files.insertFinalNewline": true,
@@ -78,6 +79,18 @@
     "format": "cpp",
     "forward_list": "cpp",
     "iomanip": "cpp",
-    "span": "cpp"
+    "span": "cpp",
+    "cfenv": "cpp",
+    "csetjmp": "cpp",
+    "csignal": "cpp",
+    "cuchar": "cpp",
+    "netfwd": "cpp",
+    "regex": "cpp",
+    "rope": "cpp",
+    "slist": "cpp",
+    "future": "cpp",
+    "scoped_allocator": "cpp",
+    "shared_mutex": "cpp",
+    "typeindex": "cpp"
   }
 }

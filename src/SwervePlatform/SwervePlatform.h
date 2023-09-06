@@ -11,15 +11,19 @@
 #include "ctre/Phoenix.h"
 #include <frc/kinematics/SwerveDriveKinematics.h>
 #include <frc/kinematics/SwerveModuleState.h>
+#include <frc/geometry/Translation2d.h>
 #include <units/length.h>
 #include <units/velocity.h>
 #include <argosLib/general/swerveHomeStorage.h>
+#include "SerialLineSensor.h"
 
 using units::feet_per_second_t;
 
 class SwervePlatform {
  public:
   enum ModuleIndex { frontLeft, frontRight, rearRight, rearLeft };
+  enum class LineFollowDirection { forward, reverse, unknown };
+  enum class LineFollowState { normal, pastEnd, endStop };
 
   enum class ControlMode {
     fieldCentric,
@@ -57,8 +61,13 @@ class SwervePlatform {
                  const auto& rearRightTurnEncoderConfig,
                  const auto& rearLeftTurnEncoderConfig);
 
-  void SwerveDrive(const double fwVelocity, const double latVelocity, const double rotateVelocity);
-  void Stop();
+  void SwerveDrive(const double fwVelocity,
+                   const double latVelocity,
+                   const double rotateVelocity,
+                   const bool lineFollow = false,
+                   frc::Translation2d offset = frc::Translation2d{});
+  void LineFollow(bool forward, bool reverse, std::optional<ProportionalArrayStatus> arrayStatus);
+  void Stop(bool active = false);
 
   void Home(const units::degree_t currentAngle);
   void SetFieldOrientation(const units::degree_t);
@@ -71,7 +80,10 @@ class SwervePlatform {
   double ModuleDriveSpeed(const units::velocity::feet_per_second_t,
                           const units::velocity::feet_per_second_t,
                           const ctre::phoenix::motorcontrol::Faults);
-  wpi::array<frc::SwerveModuleState, 4> RawModuleStates(const double, const double, const double);
+  wpi::array<frc::SwerveModuleState, 4> RawModuleStates(const double,
+                                                        const double,
+                                                        const double,
+                                                        frc::Translation2d offset = frc::Translation2d{});
 
   TalonFX m_motorDriveFrontLeft;
   TalonFX m_motorDriveFrontRight;
@@ -95,6 +107,8 @@ class SwervePlatform {
   std::unique_ptr<ArgosLib::SwerveHomeStorageInterface> m_pHomingStorage;
 
   ControlMode m_activeControlMode;
+  LineFollowDirection m_followDirection{LineFollowDirection::unknown};
+  LineFollowState m_followState{LineFollowState::normal};
 };
 
 namespace measureUp {
