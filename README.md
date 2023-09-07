@@ -68,6 +68,10 @@ Tested in Linux, but might work in other environments because most of build is c
 
 Steps 1-4 may be skipped once the environment is set up appropriately.
 
+## Codespaces
+
+A GitHub codespace container is available for this project.
+
 ## Pre-Commit
 
 This project uses [pre-commit](https://pre-commit.com/) to check code formatting before accepting commits.
