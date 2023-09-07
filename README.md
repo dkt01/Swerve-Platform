@@ -16,6 +16,8 @@ Control is all using an XBox Series wireless controller.
 | Left Joystick Forward/Reverse | Drive forward/reverse |
 | Left Joystick Left/Right | Drive left/right |
 | Right Joystick Left/Right | Rotate counter-clockwise/clockwise |
+| <kbd>RB</kbd> + <kbd>LB</kbd> | Hold to enable line following |
+| D-pad Up/Down | Line follow forward/reverse |
 | <kbd>LT</kbd> + <kbd>RT</kbd> | Hold for 2 seconds to enable module homing |
 | <kbd>A</kbd> | When in homing mode, hold for 1 second to save new home position |
 
