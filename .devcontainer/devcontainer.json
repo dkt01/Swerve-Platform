@@ -1,0 +1,22 @@
+{
+	"name": "Swerve-Platform",
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
+	"features": {
+		"ghcr.io/devcontainers/features/docker-in-docker:2": {}
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"yzhang.markdown-all-in-one",
+				"ms-vscode-remote.remote-containers",
+				"GitHub.codespaces",
+				"ms-vscode.cpptools",
+				"twxs.cmake",
+				"ms-python.python",
+				"ms-azuretools.vscode-docker"
+			]
+		}
+	}
+}
