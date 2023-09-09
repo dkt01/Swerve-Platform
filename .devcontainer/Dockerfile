@@ -1,6 +1,7 @@
 FROM mcr.microsoft.com/devcontainers/base:ubuntu
 
-
+# git already installed
+# docker already installed
 # python already installed
 RUN apt-get -y update
 RUN apt-get -y upgrade
