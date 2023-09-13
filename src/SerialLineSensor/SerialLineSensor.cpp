@@ -79,6 +79,25 @@ SerialLineSensor::~SerialLineSensor() {
       .left = m_currentLeft.value(), .center = m_currentCenter.value(), .right = m_currentRight.value()};
 }
 
+[[nodiscard]] SerialLineSensor::RecoveryDirection SerialLineSensor::GetRecoveryDirection() {
+  std::scoped_lock lock(m_dataMutex);
+  if (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - m_recoveryStartTime) >
+      m_recoveryTime) {
+    m_activeRecoveryDirection = RecoveryDirection::Timeout;
+  }
+  return m_activeRecoveryDirection;
+}
+
+[[nodiscard]] bool SerialLineSensor::GetRecoveryActive() {
+  switch (GetRecoveryDirection()) {
+    case RecoveryDirection::Left:
+    case RecoveryDirection::Right:
+      return true;
+    default:
+      return false;
+  }
+}
+
 void SerialLineSensor::ReceiverThread() {
   while (m_runThread.load()) {
     // Connect
@@ -169,10 +188,21 @@ void SerialLineSensor::ReceiverThread() {
         auto rawStates = ParseMessage(std::string_view(buf, nBytes));
         if (rawStates) {
           std::scoped_lock lock(m_dataMutex);
+          if (m_currentLeft <= m_calibrationDeactivateThreshold && m_currentRight > m_calibrationDeactivateThreshold) {
+            m_activeRecoveryDirection = RecoveryDirection::Left;
+          } else if (m_currentRight <= m_calibrationDeactivateThreshold &&
+                     m_currentLeft > m_calibrationDeactivateThreshold) {
+            m_activeRecoveryDirection = RecoveryDirection::Right;
+          }
           /// @todo fix left/right in arduino code or something...
           m_currentLeft = rawStates.value().right;
           m_currentCenter = rawStates.value().center;
           m_currentRight = rawStates.value().left;
+          if (m_currentLeft < m_calibrationDeactivateThreshold || m_currentCenter < m_calibrationDeactivateThreshold ||
+              m_currentRight < m_calibrationDeactivateThreshold) {
+            m_activeRecoveryDirection = RecoveryDirection::LineDetected;
+            m_recoveryStartTime = std::chrono::steady_clock::now();
+          }
           m_lastUpdateTime = std::chrono::steady_clock::now();
           std::cout << m_currentLeft.value() << ' ' << m_currentCenter.value() << ' ' << m_currentRight.value() << '\n';
         }

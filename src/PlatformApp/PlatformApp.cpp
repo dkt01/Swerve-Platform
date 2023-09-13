@@ -143,7 +143,8 @@ int main(int /*argc*/, char** /*argv*/) {
         } else if (active) {
           swervePlatform.LineFollow(controllerState.value().Buttons.DUp,
                                     controllerState.value().Buttons.DDown,
-                                    lineSensor.GetProportionalArrayStatus());
+                                    lineSensor.GetProportionalArrayStatus(),
+                                    lineSensor);
         } else {
           swervePlatform.Stop();
         }
