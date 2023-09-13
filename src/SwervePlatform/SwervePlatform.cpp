@@ -133,7 +133,7 @@ void SwervePlatform::LineFollow(bool forward,
     Stop(true);
     std::cout << "Stop (past end)!\n";
     return;
-  } else {
+  } else if (m_followState != LineFollowState::pastEnd) {
     m_followState = LineFollowState::normal;
   }
 
