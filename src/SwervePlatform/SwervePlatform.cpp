@@ -96,11 +96,14 @@ void SwervePlatform::SwerveDrive(const double fwVelocity,
       measureUp::sensorConversion::swerveRotate::fromAngle(moduleStates.at(ModuleIndex::rearLeft).angle.Degrees()));
 }
 
-void SwervePlatform::LineFollow(bool forward, bool reverse, std::optional<ProportionalArrayStatus> arrayStatus) {
+void SwervePlatform::LineFollow(bool forward,
+                                bool reverse,
+                                std::optional<ProportionalArrayStatus> arrayStatus,
+                                SerialLineSensor& lineSensor) {
   if (!arrayStatus || (!forward && !reverse) ||
-      (arrayStatus.value().left < std::numeric_limits<double>::epsilon() &&
-       arrayStatus.value().center < std::numeric_limits<double>::epsilon() &&
-       arrayStatus.value().right < std::numeric_limits<double>::epsilon())) {
+      (!lineSensor.GetRecoveryActive() && (arrayStatus.value().left < std::numeric_limits<double>::epsilon() &&
+                                           arrayStatus.value().center < std::numeric_limits<double>::epsilon() &&
+                                           arrayStatus.value().right < std::numeric_limits<double>::epsilon()))) {
     Stop();
     return;
   }
@@ -142,11 +145,15 @@ void SwervePlatform::LineFollow(bool forward, bool reverse, std::optional<Propor
   double leftTurnSpeed = 0;
 
   if (arrayStatus.value().left > std::numeric_limits<double>::epsilon()) {
-    leftTurnSpeed = -0.05 * (arrayStatus.value().left +
-                             std::clamp(arrayStatus.value().left - arrayStatus.value().center, 0.0, 1.0));
+    leftTurnSpeed = -0.075 * (arrayStatus.value().left +
+                              std::clamp(arrayStatus.value().left - arrayStatus.value().center, 0.0, 1.0));
   } else if (arrayStatus.value().right > std::numeric_limits<double>::epsilon()) {
-    leftTurnSpeed = 0.05 * (arrayStatus.value().right +
-                            std::clamp(arrayStatus.value().right - arrayStatus.value().center, 0.0, 1.0));
+    leftTurnSpeed = 0.075 * (arrayStatus.value().right +
+                             std::clamp(arrayStatus.value().right - arrayStatus.value().center, 0.0, 1.0));
+  } else if (lineSensor.GetRecoveryDirection() == SerialLineSensor::RecoveryDirection::Left) {
+    leftTurnSpeed = -0.15;
+  } else if (lineSensor.GetRecoveryDirection() == SerialLineSensor::RecoveryDirection::Right) {
+    leftTurnSpeed = 0.15;
   }
 
   if (desiredFollowDirection == LineFollowDirection::reverse) {
