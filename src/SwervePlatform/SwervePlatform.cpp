@@ -145,11 +145,17 @@ void SwervePlatform::LineFollow(bool forward,
   double leftTurnSpeed = 0;
 
   if (arrayStatus.value().left > std::numeric_limits<double>::epsilon()) {
-    leftTurnSpeed = -0.075 * (arrayStatus.value().left +
-                              std::clamp(arrayStatus.value().left - arrayStatus.value().center, 0.0, 1.0));
+    leftTurnSpeed = arrayStatus.value().left;
+    if (arrayStatus.value().center <= std::numeric_limits<double>::epsilon() && arrayStatus.value().left < 0.75) {
+      leftTurnSpeed = (2.0 - arrayStatus.value().left);
+    }
+    leftTurnSpeed *= -0.075;
   } else if (arrayStatus.value().right > std::numeric_limits<double>::epsilon()) {
-    leftTurnSpeed = 0.075 * (arrayStatus.value().right +
-                             std::clamp(arrayStatus.value().right - arrayStatus.value().center, 0.0, 1.0));
+    leftTurnSpeed = arrayStatus.value().right;
+    if (arrayStatus.value().center <= std::numeric_limits<double>::epsilon() && arrayStatus.value().right < 0.75) {
+      leftTurnSpeed = (2.0 - arrayStatus.value().right);
+    }
+    leftTurnSpeed *= 0.075;
   } else if (lineSensor.GetRecoveryDirection() == SerialLineSensor::RecoveryDirection::Left) {
     leftTurnSpeed = -0.15;
   } else if (lineSensor.GetRecoveryDirection() == SerialLineSensor::RecoveryDirection::Right) {
