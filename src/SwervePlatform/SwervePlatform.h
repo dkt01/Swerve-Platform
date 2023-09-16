@@ -66,7 +66,10 @@ class SwervePlatform {
                    const double rotateVelocity,
                    const bool lineFollow = false,
                    frc::Translation2d offset = frc::Translation2d{});
-  void LineFollow(bool forward, bool reverse, std::optional<ProportionalArrayStatus> arrayStatus);
+  void LineFollow(bool forward,
+                  bool reverse,
+                  std::optional<ProportionalArrayStatus> arrayStatus,
+                  SerialLineSensor& lineSensor);
   void Stop(bool active = false);
 
   void Home(const units::degree_t currentAngle);

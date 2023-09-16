@@ -96,13 +96,15 @@ void SwervePlatform::SwerveDrive(const double fwVelocity,
       measureUp::sensorConversion::swerveRotate::fromAngle(moduleStates.at(ModuleIndex::rearLeft).angle.Degrees()));
 }
 
-void SwervePlatform::LineFollow(bool forward, bool reverse, std::optional<ProportionalArrayStatus> arrayStatus) {
+void SwervePlatform::LineFollow(bool forward,
+                                bool reverse,
+                                std::optional<ProportionalArrayStatus> arrayStatus,
+                                SerialLineSensor& lineSensor) {
   if (!arrayStatus || (!forward && !reverse) ||
-      (arrayStatus.value().left < std::numeric_limits<double>::epsilon() &&
-       arrayStatus.value().center < std::numeric_limits<double>::epsilon() &&
-       arrayStatus.value().right < std::numeric_limits<double>::epsilon())) {
+      (!lineSensor.GetRecoveryActive() && (arrayStatus.value().left < std::numeric_limits<double>::epsilon() &&
+                                           arrayStatus.value().center < std::numeric_limits<double>::epsilon() &&
+                                           arrayStatus.value().right < std::numeric_limits<double>::epsilon()))) {
     Stop();
-    m_followState = LineFollowState::normal;
     return;
   }
 
@@ -131,7 +133,7 @@ void SwervePlatform::LineFollow(bool forward, bool reverse, std::optional<Propor
     Stop(true);
     std::cout << "Stop (past end)!\n";
     return;
-  } else {
+  } else if (m_followState != LineFollowState::pastEnd) {
     m_followState = LineFollowState::normal;
   }
 
@@ -143,11 +145,21 @@ void SwervePlatform::LineFollow(bool forward, bool reverse, std::optional<Propor
   double leftTurnSpeed = 0;
 
   if (arrayStatus.value().left > std::numeric_limits<double>::epsilon()) {
-    leftTurnSpeed = -0.05 * (arrayStatus.value().left +
-                             std::clamp(arrayStatus.value().left - arrayStatus.value().center, 0.0, 1.0));
+    leftTurnSpeed = arrayStatus.value().left;
+    if (arrayStatus.value().center <= std::numeric_limits<double>::epsilon() && arrayStatus.value().left < 0.75) {
+      leftTurnSpeed = (2.0 - arrayStatus.value().left);
+    }
+    leftTurnSpeed *= -0.075;
   } else if (arrayStatus.value().right > std::numeric_limits<double>::epsilon()) {
-    leftTurnSpeed = 0.05 * (arrayStatus.value().right +
-                            std::clamp(arrayStatus.value().right - arrayStatus.value().center, 0.0, 1.0));
+    leftTurnSpeed = arrayStatus.value().right;
+    if (arrayStatus.value().center <= std::numeric_limits<double>::epsilon() && arrayStatus.value().right < 0.75) {
+      leftTurnSpeed = (2.0 - arrayStatus.value().right);
+    }
+    leftTurnSpeed *= 0.075;
+  } else if (lineSensor.GetRecoveryDirection() == SerialLineSensor::RecoveryDirection::Left) {
+    leftTurnSpeed = -0.15;
+  } else if (lineSensor.GetRecoveryDirection() == SerialLineSensor::RecoveryDirection::Right) {
+    leftTurnSpeed = 0.15;
   }
 
   if (desiredFollowDirection == LineFollowDirection::reverse) {

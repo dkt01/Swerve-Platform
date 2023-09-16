@@ -29,6 +29,7 @@ struct ProportionalArrayStatus {
 
 class SerialLineSensor {
  public:
+  enum class RecoveryDirection { LineDetected, Left, Right, Timeout };
   SerialLineSensor(const std::string& serialDeviceName, const std::chrono::milliseconds timeout);
   SerialLineSensor(const std::chrono::milliseconds timeout);
   ~SerialLineSensor();
@@ -41,6 +42,10 @@ class SerialLineSensor {
   [[nodiscard]] std::optional<RawSensorArrayStatus> GetRawArrayStatus() const;
   [[nodiscard]] std::optional<ProportionalArrayStatus> GetProportionalArrayStatus() const;
 
+  [[nodiscard]] RecoveryDirection GetRecoveryDirection();
+
+  [[nodiscard]] bool GetRecoveryActive();
+
  private:
   std::string m_serialDeviceName;
   int m_serialPort;
@@ -52,6 +57,9 @@ class SerialLineSensor {
   std::optional<uint16_t> m_currentRight{std::nullopt};
   std::chrono::time_point<std::chrono::steady_clock> m_lastUpdateTime;
   std::chrono::milliseconds m_timeout{std::chrono::milliseconds{100}};
+  std::chrono::milliseconds m_recoveryTime{std::chrono::milliseconds{1000}};
+  std::chrono::time_point<std::chrono::steady_clock> m_recoveryStartTime;
+  RecoveryDirection m_activeRecoveryDirection{RecoveryDirection::Timeout};
   std::thread m_receiveThread;
   std::atomic<bool> m_runThread{false};
   bool m_connected{false};
