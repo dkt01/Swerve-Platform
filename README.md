@@ -51,6 +51,16 @@ To save a new home position, do the following:
 
 Homing values save to `/home/pi/.config/Swerve-Platform/moduleHomes` on the Raspberry Pi, so everything is saved across power cycles.
 
+### Line Following
+
+The robot is able to follow a 2 in white line on a black floor in the forward and reverse direction.  Manual driving takes priority over line following.
+
+The start and end of the line can be established by a perpindicular line at least 6 in wide at least 12 in from the end of the line.  When line following is first enabled, the robot assumes it is inbetween both end stops.  If line following continues to be enabled, then the robot will stop when it detects an end stop and will only allow movement in the direction it came from.  If line following is disabled after it reaches the end stop, then the robot assumes it is inbetween both ends stops and movement in the wrong direction will be allowed.
+
+The robot centers itself on the line through rotation.  Therefore, over time robot yaw may drift.  The easiest way to correct this while keeping the robot on the line is to manually rotate the robot after it has come to a stop.
+
+If the robot does not detect the line, then it will attempt to steer back towards the direction it last saw the line.  If the robot still does not detect the line after some time, then line following is disabled and the robot must be manually centered back on the line.
+
 ## How To Build
 
 ### Prerequisites
