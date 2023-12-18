@@ -59,7 +59,7 @@ jobs:
     needs: [build]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: raw-build-output
       - uses: softprops/action-gh-release@v1
@@ -85,7 +85,7 @@ jobs:
       run: sudo apt update
 
     # Get artifacts from CI build
-    - uses: actions/download-artifact@v3
+    - uses: actions/download-artifact@v4
       with:
         name: raw-build-output
 
@@ -113,7 +113,7 @@ jobs:
     needs: [build-image]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: built-image
       - uses: softprops/action-gh-release@v1
