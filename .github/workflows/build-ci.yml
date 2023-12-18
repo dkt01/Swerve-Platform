@@ -48,7 +48,7 @@ jobs:
       run: tar czf ../Swerve-Platform.tar.gz .
       working-directory: output
 
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: raw-build-output
         path: Swerve-Platform.tar.gz
@@ -101,7 +101,7 @@ jobs:
       working-directory: image
 
     - name: Upload built image
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: built-image
         path: image/deploy/image_*Swerve-Platform.zip
