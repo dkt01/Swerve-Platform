@@ -62,7 +62,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: raw-build-output
-      - uses: softprops/action-gh-release@v1
+      - uses: softprops/action-gh-release@v2
         with:
           files: '**/*'
         env:
@@ -116,7 +116,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: built-image
-      - uses: softprops/action-gh-release@v1
+      - uses: softprops/action-gh-release@v2
         with:
           files: '**/*'
         env:
