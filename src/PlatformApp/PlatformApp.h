@@ -49,22 +49,22 @@ namespace controlLoop {
 
 namespace joystickAxisMaps {
   constexpr std::array driveLongSpeed{interpMapPoint{-1.0, -1.0},
-                                      interpMapPoint{-0.75, -0.3},
+                                      interpMapPoint{-0.75, -0.5},
                                       interpMapPoint{-0.15, 0.0},
                                       interpMapPoint{0.15, 0.0},
-                                      interpMapPoint{0.75, 0.3},
+                                      interpMapPoint{0.75, 0.5},
                                       interpMapPoint{1.0, 1.0}};
   constexpr std::array driveLatSpeed{interpMapPoint{-1.0, -1.0},
-                                     interpMapPoint{-0.75, -0.3},
+                                     interpMapPoint{-0.75, -0.5},
                                      interpMapPoint{-0.15, 0.0},
                                      interpMapPoint{0.15, 0.0},
-                                     interpMapPoint{0.75, 0.3},
+                                     interpMapPoint{0.75, 0.5},
                                      interpMapPoint{1.0, 1.0}};
   constexpr std::array driveRotSpeed{interpMapPoint{-1.0, -1.0},
-                                     interpMapPoint{-0.75, -0.3},
+                                     interpMapPoint{-0.75, -0.5},
                                      interpMapPoint{-0.15, 0.0},
                                      interpMapPoint{0.15, 0.0},
-                                     interpMapPoint{0.75, 0.3},
+                                     interpMapPoint{0.75, 0.5},
                                      interpMapPoint{1.0, 1.0}};
 }  // namespace joystickAxisMaps
 
@@ -114,10 +114,8 @@ namespace motorConfig {
       constexpr static auto voltCompSat = 11.0_V;
       constexpr static auto nominalOutputForward = 0.0;
       constexpr static auto nominalOutputReverse = 0.0;
-      // constexpr static auto peakOutputForward = 0.2;
-      // constexpr static auto peakOutputReverse = -0.2;
-      // constexpr static auto openLoopRamp = controlLoop::rampRate;
-      // constexpr static auto closedLoopRamp = controlLoop::rampRate;
+      constexpr static auto peakOutputForward = 0.3;
+      constexpr static auto peakOutputReverse = -0.3;
       constexpr static auto pid0_selectedSensor = ctre::phoenix::motorcontrol::FeedbackDevice::IntegratedSensor;
       constexpr static auto pid0_kP = controlLoop::drive::drive::kP;
       constexpr static auto pid0_kI = controlLoop::drive::drive::kI;
@@ -144,10 +142,8 @@ namespace motorConfig {
       constexpr static auto voltCompSat = 11.0_V;
       constexpr static auto nominalOutputForward = 0.0;
       constexpr static auto nominalOutputReverse = 0.0;
-      // constexpr static auto peakOutputForward = 0.2;
-      // constexpr static auto peakOutputReverse = -0.2;
-      // constexpr static auto openLoopRamp = controlLoop::rampRate;
-      // constexpr static auto closedLoopRamp = controlLoop::rampRate;
+      constexpr static auto peakOutputForward = 0.3;
+      constexpr static auto peakOutputReverse = -0.3;
       constexpr static auto pid0_selectedSensor = ctre::phoenix::motorcontrol::FeedbackDevice::IntegratedSensor;
       constexpr static auto pid0_kP = controlLoop::drive::drive::kP;
       constexpr static auto pid0_kI = controlLoop::drive::drive::kI;
@@ -174,10 +170,8 @@ namespace motorConfig {
       constexpr static auto voltCompSat = 11.0_V;
       constexpr static auto nominalOutputForward = 0.0;
       constexpr static auto nominalOutputReverse = 0.0;
-      // constexpr static auto peakOutputForward = 0.2;
-      // constexpr static auto peakOutputReverse = -0.2;
-      // constexpr static auto openLoopRamp = controlLoop::rampRate;
-      // constexpr static auto closedLoopRamp = controlLoop::rampRate;
+      constexpr static auto peakOutputForward = 0.3;
+      constexpr static auto peakOutputReverse = -0.3;
       constexpr static auto pid0_selectedSensor = ctre::phoenix::motorcontrol::FeedbackDevice::IntegratedSensor;
       constexpr static auto pid0_kP = controlLoop::drive::drive::kP;
       constexpr static auto pid0_kI = controlLoop::drive::drive::kI;
@@ -204,10 +198,8 @@ namespace motorConfig {
       constexpr static auto voltCompSat = 11.0_V;
       constexpr static auto nominalOutputForward = 0.0;
       constexpr static auto nominalOutputReverse = 0.0;
-      // constexpr static auto peakOutputForward = 0.2;
-      // constexpr static auto peakOutputReverse = -0.2;
-      // constexpr static auto openLoopRamp = controlLoop::rampRate;
-      // constexpr static auto closedLoopRamp = controlLoop::rampRate;
+      constexpr static auto peakOutputForward = 0.3;
+      constexpr static auto peakOutputReverse = -0.3;
       constexpr static auto pid0_selectedSensor = ctre::phoenix::motorcontrol::FeedbackDevice::IntegratedSensor;
       constexpr static auto pid0_kP = controlLoop::drive::drive::kP;
       constexpr static auto pid0_kI = controlLoop::drive::drive::kI;
@@ -230,10 +222,6 @@ namespace motorConfig {
       constexpr static auto neutralDeadband = 0.001;
       constexpr static auto neutralMode = ctre::phoenix::motorcontrol::NeutralMode::Brake;
       constexpr static auto voltCompSat = 11.0_V;
-      // constexpr static auto nominalOutputForward = 0.1;
-      // constexpr static auto nominalOutputReverse = -0.1;
-      // constexpr static auto openLoopRamp = closedLoop::rampRate;
-      // constexpr static auto closedLoopRamp = closedLoop::rampRate;
       constexpr static auto remoteFilter0_addr = sensorConfig::drive::frontLeftTurn::address;
       constexpr static auto remoteFilter0_type =
           ctre::phoenix::motorcontrol::RemoteSensorSource::RemoteSensorSource_CANCoder;
@@ -261,10 +249,6 @@ namespace motorConfig {
       constexpr static auto neutralDeadband = 0.001;
       constexpr static auto neutralMode = ctre::phoenix::motorcontrol::NeutralMode::Brake;
       constexpr static auto voltCompSat = 11.0_V;
-      // constexpr static auto nominalOutputForward = 0.1;
-      // constexpr static auto nominalOutputReverse = -0.1;
-      // constexpr static auto openLoopRamp = closedLoop::rampRate;
-      // constexpr static auto closedLoopRamp = closedLoop::rampRate;
       constexpr static auto remoteFilter0_addr = sensorConfig::drive::frontRightTurn::address;
       constexpr static auto remoteFilter0_type =
           ctre::phoenix::motorcontrol::RemoteSensorSource::RemoteSensorSource_CANCoder;
@@ -292,10 +276,6 @@ namespace motorConfig {
       constexpr static auto neutralDeadband = 0.001;
       constexpr static auto neutralMode = ctre::phoenix::motorcontrol::NeutralMode::Brake;
       constexpr static auto voltCompSat = 11.0_V;
-      // constexpr static auto nominalOutputForward = 0.1;
-      // constexpr static auto nominalOutputReverse = -0.1;
-      // constexpr static auto openLoopRamp = closedLoop::rampRate;
-      // constexpr static auto closedLoopRamp = closedLoop::rampRate;
       constexpr static auto remoteFilter0_addr = sensorConfig::drive::rearRightTurn::address;
       constexpr static auto remoteFilter0_type =
           ctre::phoenix::motorcontrol::RemoteSensorSource::RemoteSensorSource_CANCoder;
@@ -323,10 +303,6 @@ namespace motorConfig {
       constexpr static auto neutralDeadband = 0.001;
       constexpr static auto neutralMode = ctre::phoenix::motorcontrol::NeutralMode::Brake;
       constexpr static auto voltCompSat = 11.0_V;
-      // constexpr static auto nominalOutputForward = 0.1;
-      // constexpr static auto nominalOutputReverse = -0.1;
-      // constexpr static auto openLoopRamp = closedLoop::rampRate;
-      // constexpr static auto closedLoopRamp = closedLoop::rampRate;
       constexpr static auto remoteFilter0_addr = sensorConfig::drive::rearLeftTurn::address;
       constexpr static auto remoteFilter0_type =
           ctre::phoenix::motorcontrol::RemoteSensorSource::RemoteSensorSource_CANCoder;

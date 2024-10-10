@@ -53,7 +53,7 @@ int main(int /*argc*/, char** /*argv*/) {
   XBoxController controller(0);
 
   SwervePlatform swervePlatform(dimensions,
-                                2_fps,
+                                4_fps,
                                 std::make_unique<SwervePlatformHomingStorage>(),
                                 canInterfaceName,
                                 motorConfig::drive::frontLeftDrive{},
